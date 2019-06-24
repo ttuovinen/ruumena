@@ -1,33 +1,117 @@
-.App {
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+  font-size: 100%;
+	font: inherit;
+    vertical-align: baseline;
+}
+body {
+    font-family: "Helvetica neue", Arial, Helvetica, sans-serif;
+    background: hsl(250, 9%, 94%);
+    font-size: 18px;
+    line-height: 1.8;
+}
+.main-content {
+    max-width: 680px;
+    margin: 100px auto;
+}
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin: 1rem 0;
+    color: hsl(70, 20%, 30%);
+    
+}
+
+.editor {
+    display: block;
+    background: white;
+    width: 100%;
+    border: 1px solid #999;
+    border-radius: 2px;
+    margin: 0 auto 1rem;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    padding: 1rem;
+    line-height: 1.8;
+    word-wrap: break-word;
+}
+
+button {
+    padding: 6px 10px;
+    margin: 0 5px 10px;
+    font-size: 0.8rem;
+    min-width: 50px;
+    border-radius: 2px; 
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid hsl(70, 12%, 20%);
+    background: hsl(70, 20%, 30%);
+    color: white;
+    opacity: 1;
+    transition: opacity .2s ease-out;
+}
+button:hover,
+button:focus {
+    opacity: .8;
+}
+.button-wrapper {
   text-align: center;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.tab-wrapper {
+  margin: 1rem 0 1rem;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.tab {
+  border: none;
+  color: hsl(70, 10%, 40%);
+  background: none;
+  font-size: 0.9rem; 
+  margin: 0;
 }
-
-.App-link {
-  color: #61dafb;
+.tab:hover,
+.tab:focus {
+  outline: none;
+  text-decoration: underline;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.tab__right {
+  float: right;
+}
+.tab__active {
+  color: hsl(70, 20%, 10%);
+  font-weight: 600;
+}
+.options-wrapper {
+  text-align: center;
+  margin: 0 0 1rem;
+  font-size: 1rem;
+}
+input[type="checkbox"] {
+  margin: 0 .25rem 0 .75rem;
+  width: 1.5em;
+  height: 1.5em;
+}
+.output-area {
+    margin: 0;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    padding: 2rem;
+    font-family: 'Courier New', Courier, monospace;
 }
