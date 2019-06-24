@@ -98,6 +98,10 @@ button:focus {
   color: hsl(70, 20%, 10%);
   font-weight: 600;
 }
+.tab__active:hover,
+.tab__active:focus {
+  text-decoration: none;
+}
 .options-wrapper {
   text-align: center;
   margin: 0 0 1rem;
