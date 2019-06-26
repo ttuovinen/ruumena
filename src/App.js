@@ -52,14 +52,22 @@ function App() {
   }
 
   const removeConstant = () => {
+    let curOffset = removeOffset
     setOutput(
       rawText
+        .replace(/\n/g, '\n ') // new word on line break
         .split(' ')
-        .map((word, idx) => (
-          (((idx % removeN) - ((removeOffset - 1) % removeN) === 0) && (idx >= removeOffset - 1))
+        .filter(word => word) // remove empty strings
+        .map((word, idx) => {
+          if (word.replace(/\s/g, '').length === 0) {
+            curOffset++
+            return word
+          }
+          return (((idx % removeN) - ((curOffset - 1) % removeN) === 0) && (idx >= curOffset - 1))
             ? word.replace(/./g, '_') : word
-        ))
+        })
         .join(' ')
+        .replace(/\n /g, '\n')
     )
   }
   const removeRandom = () => {
@@ -121,8 +129,8 @@ function App() {
           step="1"
           value={removeN}
           onChange={event => {
-           setRemoveN(event.target.value)
-           setRemoveOffset(event.target.value)
+            setRemoveN(event.target.value)
+            setRemoveOffset(event.target.value)
           }}
         />
         {removeN}. sana alkaen
