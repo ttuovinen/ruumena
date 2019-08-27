@@ -14,7 +14,7 @@ const esim = "Päivä oli jo niin matalalla kuin ennen muinoin Turussa siihen ai
 // Random retro emoticons =O :P ;DD
 const randomFrom = options => (options[Math.floor(Math.random() * options.length)])
 const emoEyes = [':', ':', ':', ';', '=']
-const emoMouths = [')', ')', ')', 'D', 'DD','(', 'O', 'P', '|', '/', 'F']
+const emoMouths = [')', ')', ')', 'D', 'DD','(', 'O', 'P', '|', '/']
 const randomEmoticon = () => {
   return `${randomFrom(emoEyes)}${randomFrom(emoMouths)}`
 }
@@ -95,7 +95,9 @@ function App() {
     }
     setOutput(
       newText.split('\n').map(line => (
-        `${line} ${randomEmoticon()}`
+        line.replace(/[ \t]/g, '').length
+          ? `${line} ${randomEmoticon()}`
+          : line
       )).join('\n')
     )
   }
