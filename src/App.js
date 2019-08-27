@@ -151,14 +151,8 @@ function App() {
   const renderPlayTools = () => (
     <>
       <div className="button-wrapper">
-        {/* <input
-          type="text"
-          name="kontti-word"
-          value={konttiWord}
-          onChange={event => setKonttiWord(event.target.value)} 
-        /> */}
-        <button onClick={kontti}>kontti</button>
-        <button onClick={duha}>duha</button>
+        <button onClick={kontti}>kontinkieli</button>
+        <button onClick={duha}>duhainen</button>
       </div>
       <div className="button-wrapper">
         {[...'aeiouyäö'].map(vowel => (
@@ -189,7 +183,7 @@ function App() {
         className="editor"
         value={rawText}
         spellCheck="false"
-        rows="10"
+        rows="12"
         onChange={event => setRawText(event.target.value)}
       />
 
