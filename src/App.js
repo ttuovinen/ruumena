@@ -51,15 +51,18 @@ function App() {
             ? word.replace(/./g, '_') : word
         })
         .join(' ')
-        .replace(/\n /g, '\n')
+        .replace(/\n /g, '\n')// remove earlier added spaces
     )
   }
   const removeRandom = () => {
     setOutput(
       rawText
+        .replace(/\n/g, '\n ') // new word on line break
         .split(' ')
+        .filter(word => word) // remove empty strings
         .map(word => (Math.random() < removePercent / 100) ? word.replace(/./g, '_') : word)
         .join(' ')
+        .replace(/\n /g, '\n') // remove earlier added spaces
     )
   }
 
