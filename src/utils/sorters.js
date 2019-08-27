@@ -16,7 +16,7 @@ const shuffle = CreateSorter(i => Math.random() - 0.5)
 const specialChars = /[^ a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9]/g
 
 /* Function for creating wordlist functions */
-const CreateWordlister = (sorter) => (seed, reverse, noDuplicates) => {
+const CreateWordLister = (sorter) => (seed, reverse, noDuplicates) => {
     let words = seed
         .replace(/\s+/g, ' ')
         .replace(specialChars, '')
@@ -29,8 +29,8 @@ const CreateWordlister = (sorter) => (seed, reverse, noDuplicates) => {
     return words.join(' ')
 }
 
-/* Let's create also a bunch of wordlisters and export them */
-export const lengthsortWords = CreateWordlister(byLength)
-export const alphasortWords = CreateWordlister(fromStart)
-export const alphasortWordsFromEnd = CreateWordlister(fromEnd)
-export const shuffleWords = CreateWordlister(shuffle)
+/* Let's create also a bunch of word listers with our sorters and export them */
+export const lengthsortWords = CreateWordLister(byLength)
+export const alphasortWords = CreateWordLister(fromStart)
+export const alphasortWordsFromEnd = CreateWordLister(fromEnd)
+export const shuffleWords = CreateWordLister(shuffle)
