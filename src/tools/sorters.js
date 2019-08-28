@@ -1,9 +1,9 @@
 /* Function for creating sorter functions */
 const CreateSorter = (preProcess) => (a, b) => {
-    const [a2, b2] = [a, b].map(i => (
-        preProcess(i)
-    ))
-    return a2 < b2 ? -1 : a2 > b2 ? 1 : 0
+  const [a2, b2] = [a, b].map(i => (
+    preProcess(i)
+  ))
+  return a2 < b2 ? -1 : a2 > b2 ? 1 : 0
 }
 
 /* Let's create a bunch of them */
@@ -16,17 +16,17 @@ const shuffle = CreateSorter(i => Math.random() - 0.5)
 const specialChars = /[^ a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9]/g
 
 /* Function for creating wordlist functions */
-const CreateWordLister = (sorter) => (seed, reverse, noDuplicates) => {
-    let words = seed
-        .replace(/\s+/g, ' ')
-        .replace(specialChars, '')
-        .toLowerCase()
-        .split(' ')
-        .filter(word => word) // remove empty strings
-        .sort(sorter)
-    if (reverse) { words = words.reverse() }
-    if (noDuplicates) { words = [...new Set(words)] }
-    return words.join(' ')
+const CreateWordLister = (sorter) => ({ seed, reverse, noDuplicates }) => {
+  let words = seed
+    .replace(/\s+/g, ' ')
+    .replace(specialChars, '')
+    .toLowerCase()
+    .split(' ')
+    .filter(word => word) // remove empty strings
+    .sort(sorter)
+  if (reverse) { words = words.reverse() }
+  if (noDuplicates) { words = [...new Set(words)] }
+  return words.join(' ')
 }
 
 /* Let's create also a bunch of word listers with our sorters and export them */

@@ -35,14 +35,20 @@ function App() {
   const [removePercent, setRemovePercent] = useState(33)
   const [activeTab, setActiveTab] = useState('sort')
 
-  const sortWords = (wordSorter) => {
-    setOutput(wordSorter(rawText, reverse, noDuplicates))
+  const handleSortWords = (wordSorter) => {
+    setOutput(
+      wordSorter({
+        seed: rawText,
+        reverse: reverse,
+        noDuplicates: noDuplicates
+      })
+    )
   }
 
   const handleRemoveConstant = () => {
     setOutput(
       removeConstantWords({
-        rawText: rawText,
+        seed: rawText,
         removeN: removeN,
         removeOffset: removeOffset,
       })
@@ -52,7 +58,7 @@ function App() {
   const handleRemoveRandom = () => {
     setOutput(
       removeRandomWords({
-        rawText: rawText,
+        seed: rawText,
         removePercent: removePercent,
       })
     )
@@ -114,10 +120,10 @@ function App() {
         />kukin sana vain kerran
     </div>
       <div className="button-wrapper">
-        <button onClick={() => sortWords(alphasortWords)}>Aakkosta</button>
-        <button onClick={() => sortWords(alphasortWordsFromEnd)}>Aakkosta lopusta</button>
-        <button onClick={() => sortWords(lengthsortWords)}>Pituuden mukaan</button>
-        <button onClick={() => sortWords(shuffleWords)}>Sekoita</button>
+        <button onClick={() => handleSortWords(alphasortWords)}>Aakkosta</button>
+        <button onClick={() => handleSortWords(alphasortWordsFromEnd)}>Aakkosta lopusta</button>
+        <button onClick={() => handleSortWords(lengthsortWords)}>Pituuden mukaan</button>
+        <button onClick={() => handleSortWords(shuffleWords)}>Sekoita</button>
       </div>
     </>
   )
