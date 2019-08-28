@@ -26,6 +26,7 @@ body {
 }
 .main-content {
     max-width: 680px;
+    padding: 0 20px;
     margin: 100px auto;
 }
 
@@ -113,9 +114,8 @@ input[type="checkbox"] {
   height: 1.5em;
 }
 .output-area {
-    margin: 0;
+    margin: 2rem 0;
     word-wrap: break-word;
     white-space: pre-wrap;
-    padding: 2rem;
     font-family: 'Courier New', Courier, monospace;
 }
