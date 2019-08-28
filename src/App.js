@@ -11,7 +11,7 @@ import {
   removeRandomWords,
 } from './tools/removers.js'
 import {
-  randomEmoticon,
+  emoticonize,
 } from './tools/emoticons.js'
 import './App.css';
 
@@ -60,14 +60,7 @@ function App() {
     )
   }
 
-  const uniVowelize = (vowel) => {
-    setOutput(
-      rawText
-        .replace(/[aeiouyäö]/g, vowel.toLowerCase())
-        .replace(/[AEIOUYÄÖ]/g, vowel.toUpperCase())
-    )
-  }
-  const kontti = () => {
+  const handleKontti = () => {
     setOutput(
       rawText
         .replace(/\s+/g, ' ')
@@ -78,26 +71,27 @@ function App() {
         .join(' ')
     )
   }
-  const duha = () => {
+
+  const handleDuha = () => {
     setOutput(
       rawText
         .replace(/N/g, 'D')
         .replace(/n/g, 'd')
     )
   }
-  const emoticonize = () => {
-    let newText = rawText
-    while (newText.match(/[.!?] /)) {
-      newText = newText.replace(/[.!?] /, ` ${randomEmoticon()} `)
-    }
+
+  const handleEmoticonize = () => {
+    setOutput(emoticonize(rawText))
+  }
+
+  const uniVowelize = (vowel) => {
     setOutput(
-      newText.split('\n').map(line => (
-        line.replace(/[ \t]/g, '').length
-          ? `${line} ${randomEmoticon()}`
-          : line
-      )).join('\n')
+      rawText
+        .replace(/[aeiouyäö]/g, vowel.toLowerCase())
+        .replace(/[AEIOUYÄÖ]/g, vowel.toUpperCase())
     )
   }
+
 
   const renderSortTools = () => (
     <>
@@ -172,9 +166,9 @@ function App() {
   const renderPlayTools = () => (
     <>
       <div className="button-wrapper">
-        <button onClick={kontti}>kontinkieli</button>
-        <button onClick={duha}>duhainen</button>
-        <button onClick={emoticonize}>=)</button>
+        <button onClick={handleKontti}>kontinkieli</button>
+        <button onClick={handleDuha}>duhainen</button>
+        <button onClick={handleEmoticonize}>=)</button>
       </div>
       <div className="button-wrapper">
         {[...'aeiouyäö'].map(vowel => (
