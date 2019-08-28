@@ -1,4 +1,3 @@
-
 /* From 'seed' input string, replaces every
    'removeN':th word's  characters with ____'s
    starting from 'removeOffset':th word */
@@ -40,4 +39,3 @@ export const removeRandomWords = ({ seed, removePercent }) => (
     .join(' ')
     .replace(/\n /g, '\n') // remove earlier added spaces
 )
-

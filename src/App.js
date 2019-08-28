@@ -147,7 +147,7 @@ function App() {
           {removePercent}% sanoista
       </div>
         <button onClick={handleRemoveConstant}>Poista säännöllisesti</button>
-        joka
+        {' joka'}
         <input
           type="range"
           name="step"
@@ -170,7 +170,7 @@ function App() {
           value={removeOffset}
           onChange={event => setRemoveOffset(event.target.value)}
         />
-        {removeOffset}
+        {removeOffset}.
       </div>
     </>
   )

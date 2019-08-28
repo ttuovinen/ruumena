@@ -24,6 +24,9 @@ body {
     font-size: 18px;
     line-height: 1.8;
 }
+*:focus {
+  outline-color: hsl(250, 50%, 50%);;
+}
 .main-content {
     max-width: 680px;
     padding: 0 20px;
@@ -31,11 +34,16 @@ body {
 }
 
 h1 {
-    font-size: 2rem;
-    text-align: center;
-    margin: 1rem 0;
-    color: hsl(70, 20%, 30%);
-    
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: hsl(70, 20%, 30%);
+  font-weight: 300;
+  letter-spacing: 0.05rem;
+}
+h1::first-letter {
+  font-size: 2.8rem;
+  letter-spacing: 0.15rem;
 }
 
 .editor {
@@ -63,8 +71,8 @@ button {
     text-transform: uppercase;
     cursor: pointer;
     border: 1px solid hsl(70, 12%, 20%);
-    background: hsl(70, 20%, 30%);
-    color: white;
+    color: hsl(70, 20%, 30%);
+    background: none;
     opacity: 1;
     transition: opacity .2s ease-out;
 }
@@ -112,6 +120,9 @@ input[type="checkbox"] {
   margin: 0 .25rem 0 .75rem;
   width: 1.5em;
   height: 1.5em;
+}
+input[type="range"] {
+  margin: 0 0.5rem;
 }
 .output-area {
     margin: 2rem 0;
