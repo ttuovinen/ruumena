@@ -116,6 +116,9 @@ button:focus {
   margin: 0 0 1rem;
   font-size: 1rem;
 }
+label:hover {
+  cursor:pointer;
+ }
 input[type="checkbox"] {
   margin: 0 .25rem 0 .75rem;
   width: 1.5em;

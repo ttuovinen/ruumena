@@ -108,19 +108,25 @@ function App() {
   const renderSortTools = () => (
     <>
       <div className="options-wrapper">
-        <input
-          type="checkbox"
-          label="takaperin"
-          checked={!!reverse}
-          onChange={() => setReverse(!reverse)}
-        />takaperin
-      <input
-          type="checkbox"
-          label="no-duplicates"
-          checked={!!noDuplicates}
-          onChange={() => setNoDuplicates(!noDuplicates)}
-        />kukin sana vain kerran
-    </div>
+        <label>
+          <input
+            type="checkbox"
+            label="takaperin"
+            checked={reverse}
+            onChange={() => setReverse(!reverse)}
+          />
+          takaperin
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            label="no-duplicates"
+            checked={noDuplicates}
+            onChange={() => setNoDuplicates(!noDuplicates)}
+          />
+          kukin sana vain kerran
+        </label>
+      </div>
       <div className="button-wrapper">
         <button onClick={() => handleSortWords(alphasortWords)}>Aakkosta</button>
         <button onClick={() => handleSortWords(alphasortWordsFromEnd)}>Aakkosta lopusta</button>
@@ -241,7 +247,7 @@ function App() {
           {renderCurrentTools()}
         </div>
 
-        <div className="output-area">
+        <div className="output-area" aria-live="polite">
           {output}
         </div>
       </div>
