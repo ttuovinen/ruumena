@@ -63,7 +63,7 @@ h1::first-letter {
 
 button {
     padding: 6px 10px;
-    margin: 0 5px 10px;
+    margin: 0 5px 5px;
     font-size: 0.8rem;
     min-width: 50px;
     border-radius: 2px; 
@@ -82,6 +82,7 @@ button:focus {
 }
 .button-wrapper {
   text-align: center;
+  margin-bottom: 5px;
 }
 .tab-wrapper {
   margin: 1.5rem 0;
@@ -120,12 +121,19 @@ label:hover {
   cursor:pointer;
  }
 input[type="checkbox"] {
-  margin: 0 .25rem 0 .75rem;
+  margin: 0 0.25rem 0 0.75rem;
   width: 1.5em;
   height: 1.5em;
 }
 input[type="range"] {
   margin: 0 0.5rem;
+}
+.tools input[type="text"] {
+  padding: 4px 4px;
+  font-size: 0.8rem;
+  margin: 0 0.5rem 5px;
+  border-radius: 2px;
+  border: 1px solid #999;
 }
 .output-area {
     margin: 2rem 0;

@@ -94,7 +94,7 @@ const RemoveTools = ({ setOutputWith }) => {
         {removeOffset}.
       </div>
       <div className="button-wrapper">
-        {'Poista sanat jotka '}
+        {'Poista sanat, jotka '}
         <label htmlFor="include">
           <input
             type="radio"
@@ -115,7 +115,7 @@ const RemoveTools = ({ setOutputWith }) => {
             checked={filterType === 'exclude'}
             onChange={event => setFilterType(event.target.value)}
           />
-          {' eivät sisällä '}
+          {' eivät sisällä'}
         </label>
         <input
           type="text"

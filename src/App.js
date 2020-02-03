@@ -5,6 +5,7 @@ import RemoveTools from './components/RemoveTools';
 import PlayTools from './components/PlayTools';
 import ToolTabs from './components/ToolTabs';
 import ActiveTools from './components/ActiveTools';
+import GenerateTools from './components/GenerateTools';
 import { exampleText } from './example';
 import './App.css';
 
@@ -14,6 +15,8 @@ const getActiveToolsComponent = activeTab => {
       return SortTools;
     case 'remove':
       return RemoveTools;
+    case 'generate':
+      return GenerateTools;
     case 'play':
       return PlayTools;
     default:
@@ -63,6 +66,19 @@ function App() {
         <div className="output-area" aria-live="polite">
           {output}
         </div>
+        {!!output && (
+          <div className="button-wrapper">
+            {/* <button type="button" onClick={() => setRawText(output)}>
+              laita boksiin
+            </button> */}
+            <button
+              type="button"
+              onClick={() => navigator.clipboard.writeText(output)}
+            >
+              kopioi leikepöydälle
+            </button>
+          </div>
+        )}
       </div>
 
       <Footer />

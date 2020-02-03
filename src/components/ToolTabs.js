@@ -19,6 +19,13 @@ const ToolTabs = ({ activeTab, setActiveTab }) => (
     </button>
     <button
       type="button"
+      className={activeTab === 'generate' ? 'tab tab__active' : 'tab'}
+      onClick={() => setActiveTab('generate')}
+    >
+      Generoi
+    </button>
+    <button
+      type="button"
       className={
         activeTab === 'play' ? 'tab tab__right tab__active' : 'tab tab__right'
       }
