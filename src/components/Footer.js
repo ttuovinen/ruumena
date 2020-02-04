@@ -9,7 +9,7 @@ const Footer = () => (
       <a href="https://nokturno.fi" target="_blank" rel="noopener noreferrer">
         nokturno.fi
       </a>{' '}
-      | 2019
+      | 2019-2020
     </p>
     <p>
       esimerkkiteksti: ote{' '}
