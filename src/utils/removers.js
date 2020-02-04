@@ -40,7 +40,7 @@ export const removeRandomWords = ({ seed, removePercent }) =>
     .replace(/\n /g, '\n'); // remove earlier added spaces
 
 /* From 'seed' input string, replaces each word's 
-   characters with ____'s by includes/exludes filterText */
+   characters with ____'s if it includes/exludes filterText */
 export const removeFilteredWords = ({ seed, filterText, include }) =>
   seed
     .replace(/\n/g, '\n ') // new word on line break
