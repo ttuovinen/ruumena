@@ -1,23 +1,19 @@
 const randomFrom = arr => arr[Math.floor(Math.random() * arr.length)];
 
 const isLowerCaseLetter = char =>
-  char.charAt(0) === char.charAt(0).toLowerCase() &&
-  char.charAt(0) !== char.charAt(0).toUpperCase();
+  char === char.toLowerCase() && char !== char.toUpperCase();
 
 const isUpperCaseLetter = char =>
-  char.charAt(0) === char.charAt(0).toUpperCase() &&
-  char.charAt(0) !== char.charAt(0).toLowerCase();
+  char === char.toUpperCase() && char !== char.toLowerCase();
 
 const getSafeBeginning = (chain, nSize, beginning) => {
   const chainKeys = Object.keys(chain);
-  // if no beginning given use random gram (preferably upper case)
+  // if no beginning given use random gram (which preferably starts with uppercase)
   if (!beginning)
     return (
       randomFrom(
         chainKeys.filter(
-          item =>
-            isUpperCaseLetter(item.charAt(0)) &&
-            isLowerCaseLetter(item.charAt(1))
+          item => isUpperCaseLetter(item[0]) && isLowerCaseLetter(item[1])
         )
       ) || randomFrom(chainKeys)
     );
@@ -74,9 +70,7 @@ export const markovMe = (seed, nSize = 5, outputSize = 200, beginning) => {
       // if we hit the last gram, let's try to start a new sentence
       ` ${randomFrom(
         Object.keys(chain).filter(
-          item =>
-            isUpperCaseLetter(item.charAt(0)) &&
-            isLowerCaseLetter(item.charAt(1))
+          item => isUpperCaseLetter(item[0]) && isLowerCaseLetter(item[1])
         )
       ) || randomFrom(Object.keys(chain))}`;
     result += nextChar;
