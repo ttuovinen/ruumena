@@ -1,0 +1,15 @@
+{
+    "workbench.colorCustomizations": {
+        "sideBar.background": "#331e3a",
+        "activityBar.background": "#251b29"
+    } ,
+    "files.associations": {
+        "*.js": "javascriptreact"
+      },
+    // Set the default
+    "editor.formatOnSave": false,
+    // Enable per-language
+    "[javascriptreact]": {
+    "editor.formatOnSave": true
+    }
+}
