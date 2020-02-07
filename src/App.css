@@ -141,3 +141,19 @@ input[type="range"] {
     white-space: pre-wrap;
     font-family: 'Courier New', Courier, monospace;
 }
+.snack {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  border-radius: 3px;
+  padding: 5px 15px;
+  box-shadow: 1px 1px 3px #0003;
+  background: hsl(70, 20%, 30%);
+  color: white;
+  opacity: 0;
+  animation: fade 2s linear;
+}
+@keyframes fade {
+  0%,100% { opacity: 0 }
+  25%,75% { opacity: 1 }
+}

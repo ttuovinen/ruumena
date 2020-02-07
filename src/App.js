@@ -28,8 +28,10 @@ function App() {
   const [rawText, setRawText] = useState(exampleText);
   const [output, setOutput] = useState('');
   const [activeTab, setActiveTab] = useState('sort');
+  const [snack, setSnack] = useState(null);
 
   const scrollRef = useRef();
+  const interval = useRef();
 
   useEffect(() => {
     if (output) {
@@ -41,6 +43,22 @@ function App() {
   }, [output]);
 
   const setOutputWith = operator => setOutput(operator(rawText));
+
+  const showSnack = text => {
+    setSnack(text);
+    if (interval.current) {
+      clearInterval(interval.current);
+    }
+    interval.current = setInterval(() => {
+      setSnack(null);
+    }, 2500);
+    console.log(interval.current);
+  };
+
+  const handleClipboardCopy = () => {
+    navigator.clipboard.writeText(output);
+    showSnack('kopioitu leikepöydälle');
+  };
 
   return (
     <>
@@ -71,12 +89,14 @@ function App() {
             {/* <button type="button" onClick={() => setRawText(output)}>
               laita boksiin
             </button> */}
-            <button
-              type="button"
-              onClick={() => navigator.clipboard.writeText(output)}
-            >
+            <button type="button" onClick={handleClipboardCopy}>
               kopioi leikepöydälle
             </button>
+            {!!snack && (
+              <div className="snack" key={interval}>
+                {snack}
+              </div>
+            )}
           </div>
         )}
       </div>
