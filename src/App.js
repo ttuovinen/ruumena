@@ -66,7 +66,7 @@ function App() {
     }
     interval.current = setInterval(() => {
       setSnack(null);
-    }, 2500);
+    }, 3000);
   };
 
   const handleClipboardCopy = () => {
@@ -91,7 +91,7 @@ function App() {
             onChange={e => setExampleIndex(e.target.value)}
           >
             {examples.map(({ title }, index) => (
-              <option value={index} selected={index === exampleIndex}>
+              <option key={title} value={index}>
                 {title}
               </option>
             ))}
@@ -114,7 +114,7 @@ function App() {
           spellCheck="false"
           rows="12"
           onChange={event => setRawText(event.target.value)}
-          placeholder="Liitä lähdeteksti tai valitse esimerkki yltä. Käsittele sitä alta löytyvillä työkaluilla."
+          placeholder="Liitä lähdeteksti tähän tai valitse esimerkkiteksti yltä. Käsittele sitä alta löytyvillä työkaluilla."
         />
 
         <div className="tab-wrapper" ref={tabsRef}>
@@ -132,9 +132,6 @@ function App() {
           </div>
           {!!output && (
             <div className="button-wrapper">
-              {/* <button type="button" onClick={() => setRawText(output)}>
-              laita boksiin
-            </button> */}
               <button type="button" onClick={handleClipboardCopy}>
                 kopioi leikepöydälle
               </button>
