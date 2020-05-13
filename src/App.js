@@ -26,7 +26,7 @@ const getActiveToolsComponent = activeTab => {
 
 function App() {
   const [rawText, setRawText] = useState('');
-  const [exampleIndex, setExampleIndex] = useState(0);
+  const [selectedExample, setSelectedExample] = useState('0');
   const [output, setOutput] = useState('');
   const [activeTab, setActiveTab] = useState('sort');
   const [snack, setSnack] = useState(null);
@@ -50,7 +50,11 @@ function App() {
   };
 
   const insertExampleText = () => {
-    setRawText(examples[exampleIndex].content);
+    if (selectedExample === 'output') {
+      setRawText(output);
+    } else {
+      setRawText(examples[selectedExample].content);
+    }
     window.scrollTo({
       top: exampleRef.current.offsetTop - 20,
       behavior: 'smooth',
@@ -88,13 +92,18 @@ function App() {
           <select
             id="example"
             className="example-select"
-            onChange={e => setExampleIndex(e.target.value)}
+            onChange={e => setSelectedExample(e.target.value)}
           >
             {examples.map(({ title }, index) => (
               <option key={title} value={index}>
                 {title}
               </option>
             ))}
+            {!!output && (
+              <option key="output" value="output">
+                KOHDETEKSTI (&quot;{output.substring(0, 32)}...&quot;)
+              </option>
+            )}
           </select>
           <button type="button" onClick={insertExampleText}>
             käytä lähdetekstinä
