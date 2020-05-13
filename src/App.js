@@ -3,10 +3,11 @@ import Footer from './components/Footer';
 import SortTools from './components/SortTools';
 import RemoveTools from './components/RemoveTools';
 import PlayTools from './components/PlayTools';
+import StatTools from './components/StatTools';
 import ToolTabs from './components/ToolTabs';
 import ActiveTools from './components/ActiveTools';
 import GenerateTools from './components/GenerateTools';
-import { exampleText } from './example';
+import examples from './examples';
 import './App.css';
 
 const getActiveToolsComponent = activeTab => {
@@ -25,22 +26,37 @@ const getActiveToolsComponent = activeTab => {
 };
 
 function App() {
-  const [rawText, setRawText] = useState(exampleText);
+  const [rawText, setRawText] = useState(null);
+  const [exampleIndex, setExampleIndex] = useState(0);
   const [output, setOutput] = useState('');
   const [activeTab, setActiveTab] = useState('sort');
   const [snack, setSnack] = useState(null);
 
-  const scrollRef = useRef();
+  const exampleRef = useRef();
+  const tabsRef = useRef();
   const interval = useRef();
 
   useEffect(() => {
     if (output) {
       window.scrollTo({
-        top: scrollRef.current.offsetTop - 20,
+        top: tabsRef.current.offsetTop - 20,
         behavior: 'smooth',
       });
     }
   }, [output]);
+
+  const changeActiveTab = newTab => {
+    setActiveTab(newTab);
+    setOutput(null);
+  };
+
+  const insertExampleText = () => {
+    setRawText(examples[exampleIndex].content);
+    window.scrollTo({
+      top: exampleRef.current.offsetTop - 20,
+      behavior: 'smooth',
+    });
+  };
 
   const setOutputWith = operator => setOutput(operator(rawText));
 
@@ -52,53 +68,85 @@ function App() {
     interval.current = setInterval(() => {
       setSnack(null);
     }, 2500);
-    console.log(interval.current);
   };
 
   const handleClipboardCopy = () => {
     navigator.clipboard.writeText(output);
-    showSnack('kopioitu leikepöydälle');
+    showSnack('kohdeteksti kopioitu leikepöydälle');
   };
 
   return (
     <>
       <div className="main-content">
-        <h1>RUUMENA</h1>
+        <div className="title-area">
+          <h1 className="maintitle">RUUMENA</h1>
+          <div className="subtitle">
+            ~ työkalu menetelmällisiin tekstikokeiluihin ~
+          </div>
+        </div>
+
+        <div className="example-area" ref={exampleRef}>
+          <select
+            id="example"
+            className="example-select"
+            onChange={e => setExampleIndex(e.target.value)}
+          >
+            {examples.map(({ title }, index) => (
+              <option value={index} selected={index === exampleIndex}>
+                {title}
+              </option>
+            ))}
+          </select>
+          <button type="button" onClick={insertExampleText}>
+            käytä lähdetekstinä
+          </button>
+          <button
+            type="button"
+            className="no-border"
+            onClick={() => setRawText('')}
+            disabled={!rawText}
+          >
+            tyhjennä
+          </button>
+        </div>
         <textarea
           className="editor"
           value={rawText}
           spellCheck="false"
           rows="12"
           onChange={event => setRawText(event.target.value)}
+          placeholder="Liitä lähdeteksti tai valitse esimerkki yltä. Käsittele sitä alta löytyvillä työkaluilla."
         />
 
-        <div className="tab-wrapper" ref={scrollRef}>
-          <ToolTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <div className="tab-wrapper" ref={tabsRef}>
+          <ToolTabs activeTab={activeTab} changeActiveTab={changeActiveTab} />
         </div>
 
-        <ActiveTools
-          component={getActiveToolsComponent(activeTab)}
-          setOutputWith={setOutputWith}
-        />
+        <div className="output-area-wrapper">
+          <ActiveTools
+            component={getActiveToolsComponent(activeTab)}
+            setOutputWith={setOutputWith}
+          />
 
-        <div className="output-area" aria-live="polite">
-          {output}
-        </div>
-        {!!output && (
-          <div className="button-wrapper">
-            {/* <button type="button" onClick={() => setRawText(output)}>
+          <div className="output-area" aria-live="polite">
+            {output}
+          </div>
+          {!!output && (
+            <div className="button-wrapper">
+              {/* <button type="button" onClick={() => setRawText(output)}>
               laita boksiin
             </button> */}
-            <button type="button" onClick={handleClipboardCopy}>
-              kopioi leikepöydälle
-            </button>
-            {!!snack && (
-              <div className="snack" key={interval}>
-                {snack}
-              </div>
-            )}
-          </div>
-        )}
+              <button type="button" onClick={handleClipboardCopy}>
+                kopioi leikepöydälle
+              </button>
+              {!!snack && (
+                <div className="snack" key={interval}>
+                  {snack}
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
 
       <Footer />
