@@ -10,6 +10,7 @@ const RemoveTools = ({ setOutputWith }) => {
   const [removeN, setRemoveN] = useState(3);
   const [removeOffset, setRemoveOffset] = useState(3);
   const [removePercent, setRemovePercent] = useState(33);
+  const [replace, setReplace] = useState('_');
   const [filterType, setFilterType] = useState('include');
   const [filterText, setFilterText] = useState('');
 
@@ -20,6 +21,7 @@ const RemoveTools = ({ setOutputWith }) => {
           seed,
           filterText,
           include: filterType === 'include',
+          replaceWith: replace ? '_' : '',
         })
       );
     } else {
@@ -34,6 +36,7 @@ const RemoveTools = ({ setOutputWith }) => {
         seed,
         removeN,
         removeOffset,
+        replaceWith: replace ? '_' : '',
       })
     );
   };
@@ -43,12 +46,24 @@ const RemoveTools = ({ setOutputWith }) => {
       removeRandomWords({
         seed,
         removePercent,
+        replaceWith: replace ? '_' : '',
       })
     );
   };
 
   return (
     <>
+      <div className="options-wrapper">
+        <label htmlFor="remove-type">
+          <input
+            type="checkbox"
+            id="remove-type"
+            checked={replace}
+            onChange={() => setReplace(!replace)}
+          />
+          korvaa poistetut sanat viivoilla
+        </label>
+      </div>
       <div className="button-wrapper">
         <button type="button" onClick={handleRemoveRandom}>
           Poista satunnaisesti
@@ -110,7 +125,7 @@ const RemoveTools = ({ setOutputWith }) => {
           <input
             type="radio"
             id="exclude"
-            name="filterinclude"
+            name="filterexclude"
             value="exclude"
             checked={filterType === 'exclude'}
             onChange={event => setFilterType(event.target.value)}
