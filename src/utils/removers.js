@@ -1,7 +1,12 @@
 /* From 'seed' input string, replaces every
    'removeN':th word's  characters with ____'s
    starting from 'removeOffset':th word */
-export const removeConstantWords = ({ seed, removeN, removeOffset }) => {
+export const removeConstantWords = ({
+  seed,
+  removeN,
+  removeOffset,
+  replaceWith = '_',
+}) => {
   let curOffset = removeOffset;
   return seed
     .replace(/\n/g, '\n ') // new word on line break
@@ -14,16 +19,17 @@ export const removeConstantWords = ({ seed, removeN, removeOffset }) => {
       }
       return (idx % removeN) - ((curOffset - 1) % removeN) === 0 &&
         idx >= curOffset - 1
-        ? word.replace(/./g, '_')
+        ? word.replace(/./g, replaceWith)
         : word;
     })
+    .filter(word => word) // remove empty strings
     .join(' ')
     .replace(/\n /g, '\n'); // remove earlier added spaces
 };
 
 /* From 'seed' input string, replaces each word's 
    characters with ____'s by 'removePercent' change % */
-export const removeRandomWords = ({ seed, removePercent }) =>
+export const removeRandomWords = ({ seed, removePercent, replaceWith = '_' }) =>
   seed
     .replace(/\n/g, '\n ') // new word on line break
     .split(' ')
@@ -33,15 +39,21 @@ export const removeRandomWords = ({ seed, removePercent }) =>
         return word; // skip non-words like empty lines
       }
       return Math.random() < removePercent / 100
-        ? word.replace(/./g, '_')
+        ? word.replace(/./g, replaceWith)
         : word;
     })
+    .filter(word => word) // remove empty strings
     .join(' ')
     .replace(/\n /g, '\n'); // remove earlier added spaces
 
 /* From 'seed' input string, replaces each word's 
    characters with ____'s if it includes/exludes filterText */
-export const removeFilteredWords = ({ seed, filterText, include }) =>
+export const removeFilteredWords = ({
+  seed,
+  filterText,
+  include,
+  replaceWith = '',
+}) =>
   seed
     .replace(/\n/g, '\n ') // new word on line break
     .split(' ')
@@ -50,7 +62,8 @@ export const removeFilteredWords = ({ seed, filterText, include }) =>
       ? !include
       : include)
         ? word
-        : word.replace(/./g, '_')
+        : word.replace(/./g, replaceWith)
     )
+    .filter(word => word) // remove empty strings
     .join(' ')
     .replace(/\n /g, '\n'); // remove earlier added spaces

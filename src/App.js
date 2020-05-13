@@ -3,7 +3,6 @@ import Footer from './components/Footer';
 import SortTools from './components/SortTools';
 import RemoveTools from './components/RemoveTools';
 import PlayTools from './components/PlayTools';
-import StatTools from './components/StatTools';
 import ToolTabs from './components/ToolTabs';
 import ActiveTools from './components/ActiveTools';
 import GenerateTools from './components/GenerateTools';
@@ -26,7 +25,7 @@ const getActiveToolsComponent = activeTab => {
 };
 
 function App() {
-  const [rawText, setRawText] = useState(null);
+  const [rawText, setRawText] = useState('');
   const [exampleIndex, setExampleIndex] = useState(0);
   const [output, setOutput] = useState('');
   const [activeTab, setActiveTab] = useState('sort');
