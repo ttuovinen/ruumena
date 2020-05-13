@@ -1,26 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ToolTabs = ({ activeTab, setActiveTab }) => (
+const ToolTabs = ({ activeTab, changeActiveTab }) => (
   <>
     <button
       type="button"
       className={activeTab === 'sort' ? 'tab tab__active' : 'tab'}
-      onClick={() => setActiveTab('sort')}
+      onClick={() => changeActiveTab('sort')}
     >
       Järjestä sanat
     </button>
     <button
       type="button"
       className={activeTab === 'remove' ? 'tab tab__active' : 'tab'}
-      onClick={() => setActiveTab('remove')}
+      onClick={() => changeActiveTab('remove')}
     >
       Poista sanoja
     </button>
     <button
       type="button"
       className={activeTab === 'generate' ? 'tab tab__active' : 'tab'}
-      onClick={() => setActiveTab('generate')}
+      onClick={() => changeActiveTab('generate')}
     >
       Generoi
     </button>
@@ -29,7 +29,7 @@ const ToolTabs = ({ activeTab, setActiveTab }) => (
       className={
         activeTab === 'play' ? 'tab tab__right tab__active' : 'tab tab__right'
       }
-      onClick={() => setActiveTab('play')}
+      onClick={() => changeActiveTab('play')}
     >
       Leiki
     </button>
@@ -38,7 +38,7 @@ const ToolTabs = ({ activeTab, setActiveTab }) => (
 
 ToolTabs.propTypes = {
   activeTab: PropTypes.string.isRequired,
-  setActiveTab: PropTypes.func.isRequired,
+  changeActiveTab: PropTypes.func.isRequired,
 };
 
 export default ToolTabs;
