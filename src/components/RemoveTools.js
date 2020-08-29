@@ -27,8 +27,7 @@ const RemoveTools = ({ setOutputWith }) => {
     } else {
       setOutputWith(seed => seed);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterText, filterType]);
+  }, [filterText, filterType, replace, setOutputWith]);
 
   const handleRemoveConstant = () => {
     setOutputWith(seed =>
