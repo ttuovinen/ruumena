@@ -11,7 +11,7 @@ export const removeConstantWords = ({
   return seed
     .replace(/\n/g, '\n ') // new word on line break
     .split(' ')
-    .filter(word => word) // remove empty strings
+    .filter(word => word)
     .map((word, idx) => {
       if (word.replace(/\s/g, '').length === 0) {
         curOffset += 1; // skip non-words like empty lines
@@ -22,7 +22,7 @@ export const removeConstantWords = ({
         ? word.replace(/./g, replaceWith)
         : word;
     })
-    .filter(word => word) // remove empty strings
+    .filter(word => word)
     .join(' ')
     .replace(/\n /g, '\n'); // remove earlier added spaces
 };
@@ -33,7 +33,7 @@ export const removeRandomWords = ({ seed, removePercent, replaceWith = '_' }) =>
   seed
     .replace(/\n/g, '\n ') // new word on line break
     .split(' ')
-    .filter(word => word) // remove empty strings
+    .filter(word => word)
     .map(word => {
       if (word.replace(/\s/g, '').length === 0) {
         return word; // skip non-words like empty lines
@@ -42,11 +42,11 @@ export const removeRandomWords = ({ seed, removePercent, replaceWith = '_' }) =>
         ? word.replace(/./g, replaceWith)
         : word;
     })
-    .filter(word => word) // remove empty strings
+    .filter(word => word)
     .join(' ')
     .replace(/\n /g, '\n'); // remove earlier added spaces
 
-/* From 'seed' input string, replaces each word's 
+/* From 'seed' input string, removes word / replaces each word's 
    characters with ____'s if it includes/exludes filterText */
 export const removeFilteredWords = ({
   seed,
@@ -58,12 +58,16 @@ export const removeFilteredWords = ({
     .replace(/\n/g, '\n ') // new word on line break
     .split(' ')
     .map(word =>
-      (word.toLowerCase().includes(filterText.toLowerCase())
+      (filterText
+        .toLowerCase()
+        .split(' ')
+        .filter(string => string)
+        .some(string => word.toLowerCase().includes(string))
       ? !include
       : include)
         ? word
         : word.replace(/./g, replaceWith)
     )
-    .filter(word => word) // remove empty strings
+    .filter(word => word)
     .join(' ')
     .replace(/\n /g, '\n'); // remove earlier added spaces
