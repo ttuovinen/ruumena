@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Footer from './components/Footer';
 import SortTools from './components/SortTools';
 import RemoveTools from './components/RemoveTools';
@@ -61,7 +61,9 @@ function App() {
     });
   };
 
-  const setOutputWith = operator => setOutput(operator(rawText));
+  const setOutputWith = useCallback(operator => setOutput(operator(rawText)), [
+    rawText,
+  ]);
 
   const showSnack = text => {
     setSnack(text);
