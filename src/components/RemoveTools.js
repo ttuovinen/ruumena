@@ -53,7 +53,7 @@ const RemoveTools = ({ setOutputWith }) => {
   return (
     <>
       <div className="options-wrapper">
-        <label htmlFor="remove-type">
+        <label className="checkbox-label" htmlFor="remove-type">
           <input
             type="checkbox"
             id="remove-type"
