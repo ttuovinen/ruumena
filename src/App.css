@@ -118,6 +118,8 @@ button:disabled {
   word-wrap: break-word;
 }
 .tab-wrapper {
+  display: flex;
+  flex-wrap: wrap;
   margin: 1.5rem 0;
   border-bottom: 1px solid #ccc;
   text-align: left;
@@ -134,9 +136,12 @@ button:disabled {
   outline: none;
   text-decoration: underline;
 }
-.tab__right {
-  float: right;
+@media only screen and (min-width: 600px) {
+  .tab__right {
+    margin-left: auto;
+  }
 }
+
 .tab__active {
   color: hsl(70, 20%, 10%);
   font-weight: 600;
@@ -149,9 +154,14 @@ button:disabled {
   min-height: 90vh;
 }
 .options-wrapper {
-  text-align: center;
+  display: flex;
+  justify-content: center;
   margin: 0 0 1rem;
   font-size: 1rem;
+}
+.checkbox-label {
+  display: flex;
+  align-items: center;
 }
 label:hover {
   cursor: pointer;
