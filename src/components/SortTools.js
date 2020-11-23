@@ -24,7 +24,7 @@ const SortTools = ({ setOutputWith }) => {
   return (
     <>
       <div className="options-wrapper">
-        <label htmlFor="reverse">
+        <label className="checkbox-label" htmlFor="reverse">
           <input
             type="checkbox"
             id="reverse"
@@ -33,7 +33,7 @@ const SortTools = ({ setOutputWith }) => {
           />
           takaperin
         </label>
-        <label htmlFor="no-duplicates">
+        <label className="checkbox-label" htmlFor="no-duplicates">
           <input
             type="checkbox"
             id="no-duplicates"

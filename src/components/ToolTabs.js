@@ -19,13 +19,6 @@ const ToolTabs = ({ activeTab, changeActiveTab }) => (
     </button>
     <button
       type="button"
-      className={activeTab === 'statistics' ? 'tab tab__active' : 'tab'}
-      onClick={() => changeActiveTab('statistics')}
-    >
-      Tilastoi
-    </button>
-    <button
-      type="button"
       className={activeTab === 'generate' ? 'tab tab__active' : 'tab'}
       onClick={() => changeActiveTab('generate')}
     >

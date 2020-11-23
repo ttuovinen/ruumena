@@ -29,17 +29,10 @@ export const shuffleWords = createWordLister(shuffle);
 
 /* Sort by count is a bit different case so we'll do it separately */
 export const countsortWords = ({ seed, reverse, noDuplicates }) => {
-  const words = textToWords(seed);
-  const wordCounts = countWords(words.join(' '));
-  let returnWords = [];
-  if (noDuplicates) {
-    returnWords = wordCounts.map(item => item.key);
-  } else {
-    wordCounts.forEach(({ key, count }) =>
-      returnWords.push(Array(count).fill(key))
-    );
-    returnWords = [...returnWords.flat()];
-  }
+  const wordCounts = countWords(seed);
+  const returnWords = noDuplicates
+    ? wordCounts.map(item => item.key)
+    : wordCounts.flatMap(({ key, count }) => Array(count).fill(key));
   if (reverse) {
     returnWords.reverse();
   }

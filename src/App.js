@@ -9,6 +9,8 @@ import GenerateTools from './components/GenerateTools';
 import examples from './examples';
 import './App.css';
 
+const NO_INPUT = <i>ei lähdetekstiä</i>;
+
 const getActiveToolsComponent = activeTab => {
   switch (activeTab) {
     case 'sort':
@@ -36,7 +38,7 @@ function App() {
   const interval = useRef();
 
   useEffect(() => {
-    if (output) {
+    if (output && output !== NO_INPUT) {
       window.scrollTo({
         top: tabsRef.current.offsetTop - 20,
         behavior: 'smooth',
@@ -50,20 +52,21 @@ function App() {
   };
 
   const insertExampleText = () => {
-    if (selectedExample === 'output') {
-      setRawText(output);
-    } else {
-      setRawText(examples[selectedExample].content);
-    }
+    setRawText(
+      selectedExample === 'output' ? output : examples[selectedExample].content
+    );
     window.scrollTo({
       top: exampleRef.current.offsetTop - 20,
       behavior: 'smooth',
     });
   };
 
-  const setOutputWith = useCallback(operator => setOutput(operator(rawText)), [
-    rawText,
-  ]);
+  const setOutputWith = useCallback(
+    operator => {
+      setOutput(rawText ? operator(rawText) : NO_INPUT);
+    },
+    [rawText]
+  );
 
   const showSnack = text => {
     setSnack(text);
@@ -94,14 +97,14 @@ function App() {
           <select
             id="example"
             className="example-select"
-            onChange={e => setSelectedExample(e.target.value)}
+            onChange={event => setSelectedExample(event.target.value)}
           >
             {examples.map(({ title }, index) => (
               <option key={title} value={index}>
                 {title}
               </option>
             ))}
-            {!!output && (
+            {!!output && typeof output === 'string' && (
               <option key="output" value="output">
                 KOHDETEKSTI (&quot;{output.substring(0, 32)}...&quot;)
               </option>
@@ -141,13 +144,13 @@ function App() {
           <div className="output-area" aria-live="polite">
             {output}
           </div>
-          {!!output && (
+          {output && output !== NO_INPUT && (
             <div className="button-wrapper">
               <button type="button" onClick={handleClipboardCopy}>
                 kopioi leikepöydälle
               </button>
               {!!snack && (
-                <div className="snack" key={interval}>
+                <div className="snack" key={interval.current}>
                   {snack}
                 </div>
               )}
