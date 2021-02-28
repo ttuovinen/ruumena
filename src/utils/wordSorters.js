@@ -7,7 +7,6 @@ export const fromStart = createSorter(i => i.toLowerCase());
 export const fromEnd = createSorter(i =>
   [...i.toLowerCase()].reverse().join('')
 );
-export const shuffle = createSorter(() => Math.random() - 0.5);
 
 /* Function for creating wordlist functions */
 const createWordLister = sorter => ({ seed, reverse, noDuplicates }) => {
@@ -25,7 +24,6 @@ const createWordLister = sorter => ({ seed, reverse, noDuplicates }) => {
 export const lengthsortWords = createWordLister(byLength);
 export const alphasortWords = createWordLister(fromStart);
 export const alphasortWordsFromEnd = createWordLister(fromEnd);
-export const shuffleWords = createWordLister(shuffle);
 
 /* Sort by count is a bit different case so we'll do it separately */
 export const countsortWords = ({ seed, reverse, noDuplicates }) => {
@@ -37,4 +35,21 @@ export const countsortWords = ({ seed, reverse, noDuplicates }) => {
     returnWords.reverse();
   }
   return returnWords.join(' ');
+};
+
+/* Also, let's do shuffle with Fisher-Yates algorithm to get even distributions
+   (instead of array-sort function like `() => Math.random() - 0.5`) */
+export const shuffleWords = ({ seed, reverse, noDuplicates }) => {
+  let words = textToWords(seed);
+  for (let i = words.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * i);
+    [words[i], words[j]] = [words[j], words[i]];
+  }
+  if (noDuplicates) {
+    words = [...new Set(words)];
+  }
+  if (reverse) {
+    words.reverse();
+  }
+  return words.join(' ');
 };
