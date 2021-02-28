@@ -35,7 +35,7 @@ function App() {
 
   const exampleRef = useRef();
   const tabsRef = useRef();
-  const interval = useRef();
+  let timeout = useRef();
 
   useEffect(() => {
     if (output && output !== NO_INPUT) {
@@ -70,12 +70,10 @@ function App() {
 
   const showSnack = text => {
     setSnack(text);
-    if (interval.current) {
-      clearInterval(interval.current);
-    }
-    interval.current = setInterval(() => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
       setSnack(null);
-    }, 3000);
+    }, 2000);
   };
 
   const handleClipboardCopy = () => {
@@ -149,11 +147,7 @@ function App() {
               <button type="button" onClick={handleClipboardCopy}>
                 kopioi leikepöydälle
               </button>
-              {!!snack && (
-                <div className="snack" key={interval.current}>
-                  {snack}
-                </div>
-              )}
+              {!!snack && <div className="snack">{snack}</div>}
             </div>
           )}
         </div>
