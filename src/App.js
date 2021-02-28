@@ -83,13 +83,13 @@ function App() {
 
   return (
     <>
-      <div className="main-content">
-        <div className="title-area">
+      <main className="main-content">
+        <header className="title-area">
           <h1 className="maintitle">RUUMENA</h1>
           <div className="subtitle">
             ~ työkalu menetelmällisiin tekstikokeiluihin ~
           </div>
-        </div>
+        </header>
 
         <div className="example-area" ref={exampleRef}>
           <select
@@ -147,11 +147,15 @@ function App() {
               <button type="button" onClick={handleClipboardCopy}>
                 kopioi leikepöydälle
               </button>
-              {!!snack && <div className="snack">{snack}</div>}
+              {!!snack && (
+                <div className="snack" aria-live="assertive">
+                  {snack}
+                </div>
+              )}
             </div>
           )}
         </div>
-      </div>
+      </main>
 
       <Footer />
     </>
