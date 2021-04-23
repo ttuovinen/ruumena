@@ -5,11 +5,82 @@ const examples = [
   },
   {
     title: 'Alfred de Musset: Lucia (suom: L. Onerva)',
-    content: `Ah, ystävät, sitten kun sammun pois, niin halava haudalle tuokaa! Sen kyynel-lehvikko lempeä ois, se hopeakielillä huokaa, sen itkeä ylläni suokaa: sijan pehmeän siimes sois! Oli ilta, me kahden, vaieten viereensä hiivin, pää immen vaipui ja haaveillen soittimen yllä kävi kätensä valkea vienolla hyväilyllä ladellen kuiskehen lailla silkkisin siivin kuin iltatuuli, mi heijaa kaislojen terää, niin hiljaa, hiljaa, ettei lintukaan herää. Ja hekkuma murheen-raskas leutojen öiden kaikk' kahlitsi, nurmikentät ja kukkien ummut, se taivutti oksat tammien vankkavöiden ja kyynelhelmiin hellytti laaksot ja kummut. Yö äänetön ympäröi meidät ja akkunasta tuli kevään henkäys tuoksuja tulvillaan, me istuimme synkkinä, kahden, kaksi lasta, surumietteissä suurissa viistoistavuotiaan. Ma Luciaan katsoin — tuon jouduin valkean valtaan: ei tähdet kirkkaammat vielä milloinkaan ole heijastelleet kuultoa taivahan altaan, hänet rakkaimmakseni tunsin pinnalla maan. Kuin siskolta suloiselta hän minusta näytti, niin pyhyydellä mun puhtautensa täytti. Käsi kädessä istuimme vaieten kauan aikaa, suru pehmeä varjosti otsaansa kalpeaa. Mut huolet toinen toistansa huojentaa; tuot' ensi kerran katselin kummaa taikaa: jos rinnat nuoret yhteen sykkiä saa, se kaiken vaivan parhaiten parantaa. Kuu nousi taivaalle ahteesta pilvien loman punoen ympärillemme hopeapaulaa. Hän silmiini katsoi, huomasi kuvansa oman Ja hymyi enkelin lailla ja alkoi laulaa…
+    content: `Ah, ystävät, sitten kun sammun pois,
+niin halava haudalle tuokaa!
+Sen kyynel-lehvikko lempeä ois,
+se hopeakielillä huokaa,
+sen itkeä ylläni suokaa:
+sijan pehmeän siimes sois!
+Oli ilta, me kahden, vaieten viereensä hiivin,
+pää immen vaipui ja haaveillen soittimen yllä
+kävi kätensä valkea vienolla hyväilyllä
+ladellen kuiskehen lailla silkkisin siivin
+kuin iltatuuli, mi heijaa kaislojen terää,
+niin hiljaa, hiljaa, ettei lintukaan herää.
+Ja hekkuma murheen-raskas leutojen öiden
+kaikk' kahlitsi, nurmikentät ja kukkien ummut,
+se taivutti oksat tammien vankkavöiden
+ja kyynelhelmiin hellytti laaksot ja kummut.
+Yö äänetön ympäröi meidät ja akkunasta
+tuli kevään henkäys tuoksuja tulvillaan,
+me istuimme synkkinä, kahden, kaksi lasta,
+surumietteissä suurissa viistoistavuotiaan.
+Ma Luciaan katsoin — tuon jouduin valkean valtaan:
+ei tähdet kirkkaammat vielä milloinkaan
+ole heijastelleet kuultoa taivahan altaan,
+hänet rakkaimmakseni tunsin pinnalla maan.
+Kuin siskolta suloiselta hän minusta näytti,
+niin pyhyydellä mun puhtautensa täytti.
+Käsi kädessä istuimme vaieten kauan aikaa,
+suru pehmeä varjosti otsaansa kalpeaa.
+Mut huolet toinen toistansa huojentaa;
+tuot' ensi kerran katselin kummaa taikaa:
+jos rinnat nuoret yhteen sykkiä saa,
+se kaiken vaivan parhaiten parantaa.
+Kuu nousi taivaalle ahteesta pilvien loman
+punoen ympärillemme hopeapaulaa.
+Hän silmiini katsoi, huomasi kuvansa oman
+Ja hymyi enkelin lailla ja alkoi laulaa…
 
-Oi, laulun lohtu, sa tytär tuskan ja eron, sa kieli rakkaudelle keksimä neron, sa taivaan lahja ja kauniin Italian maan, sydämen siipenä kannat sielua arkaa, tuot' impeä pelkääväistä, mi tyhjästä karkaa ja ijäti kantaa huntua kasvoillaan! Pyhä tuntematon on huokaus lapsen huulen, se on hurskasta häivää, ihmettä ilman tuulen, niin raskas ja hempee kuin on syyttömän syön. Vain katse, vain kyynel, vain povi, mi hyrskien sykkää, muu kaikki on salaisuutta ja aatosta mykkää kuin arvoitus aaltojen, aarniometsän ja yön. Me istuimme kahden, ma käännyin Lucian puoleen, Suli sävelten mainingeissa mielemme jää, ja rintaani vasten painui raueten huoleen Desdemonan tuskia tunteva lapsen pää. Ma sääliin särkyen itkusi äänen kuulin, se huulillesi huuleni hiljaa vei. Sun tuskasi suudelmaani hylkinyt ei: se otti sen vastaan kylmin, kalvahin huulin. Näin kuuta kaksi sa kalpenit, morsioks maan, se poveensa silloin liljan valkean peitti, ja hymyten henkesi majansa matalan heitti: olit korkean taivaan enkeliks luotu vaan.
+Oi, laulun lohtu, sa tytär tuskan ja eron,
+sa kieli rakkaudelle keksimä neron,
+sa taivaan lahja ja kauniin Italian maan,
+sydämen siipenä kannat sielua arkaa,
+tuot' impeä pelkääväistä, mi tyhjästä karkaa
+ja ijäti kantaa huntua kasvoillaan!
+Pyhä tuntematon on huokaus lapsen huulen,
+se on hurskasta häivää, ihmettä ilman tuulen,
+niin raskas ja hempee kuin on syyttömän syön.
+Vain katse, vain kyynel, vain povi, mi hyrskien sykkää,
+muu kaikki on salaisuutta ja aatosta mykkää
+kuin arvoitus aaltojen, aarniometsän ja yön.
+Me istuimme kahden, ma käännyin Lucian puoleen,
+Suli sävelten mainingeissa mielemme jää,
+ja rintaani vasten painui raueten huoleen
+Desdemonan tuskia tunteva lapsen pää.
+Ma sääliin särkyen itkusi äänen kuulin,
+se huulillesi huuleni hiljaa vei.
+Sun tuskasi suudelmaani hylkinyt ei:
+se otti sen vastaan kylmin, kalvahin huulin.
+Näin kuuta kaksi sa kalpenit, morsioks maan,
+se poveensa silloin liljan valkean peitti,
+ja hymyten henkesi majansa matalan heitti:
+olit korkean taivaan enkeliks luotu vaan.
 
-Pyhä puhtoisuus, se kellä on enää, kellä? Ja lapsen lempi, lapsen nauru ja laulu? Sa viattomuuden valtavan valkea taulu, mi pidätit Faustin Gretchenin kynnyksellä, ah, ei sua enää morsius-suojissa näy! Nuku rauhassa, laps, helinään laulusi lempeen. Uni uuvutti kesken kätesi kuultavan hempeen; suvi-öinä se soittimen yllä ei enää käy. Ah, ystävät, sitten kun sammun pois, niin halava haudalle tuokaa! Sen kyynel-lehvikko lempeä ois, se hopeakielillä huokaa, sen itkeä ylläni suokaa: sijan pehmeän siimes sois!`,
+Pyhä puhtoisuus, se kellä on enää, kellä?
+Ja lapsen lempi, lapsen nauru ja laulu?
+Sa viattomuuden valtavan valkea taulu,
+mi pidätit Faustin Gretchenin kynnyksellä,
+ah, ei sua enää morsius-suojissa näy!
+Nuku rauhassa, laps, helinään laulusi lempeen.
+Uni uuvutti kesken kätesi kuultavan hempeen;
+suvi-öinä se soittimen yllä ei enää käy.
+Ah, ystävät, sitten kun sammun pois,
+niin halava haudalle tuokaa!
+Sen kyynel-lehvikko lempeä ois,
+se hopeakielillä huokaa,
+sen itkeä ylläni suokaa:
+sijan pehmeän siimes sois!`,
   },
   {
     title: 'Edustaja Wuorivirran puheenvuoro (PTK_1910_I_100)',
