@@ -6,14 +6,15 @@ import {
   alphasortWordsFromEnd,
   countsortWords,
   shuffleWords,
+  softnesssortWords,
 } from '../utils/wordSorters';
 
 const SortTools = ({ setOutputWith }) => {
   const [reverse, setReverse] = useState(false);
   const [noDuplicates, setNoDuplicates] = useState(false);
 
-  const handleSortWords = wordSorter =>
-    setOutputWith(seed =>
+  const handleSortWords = (wordSorter) =>
+    setOutputWith((seed) =>
       wordSorter({
         seed,
         reverse,
@@ -58,6 +59,12 @@ const SortTools = ({ setOutputWith }) => {
         </button>
         <button type="button" onClick={() => handleSortWords(countsortWords)}>
           Esiintymien mukaan
+        </button>
+        <button
+          type="button"
+          onClick={() => handleSortWords(softnesssortWords)}
+        >
+          Pehmeyden mukaan
         </button>
         <button type="button" onClick={() => handleSortWords(shuffleWords)}>
           Sekoita
