@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = () => (
   <footer className="page-footer">
-    <p>Teemu T. Tuovinen 2019-2020</p>
+    <p>Teemu T. Tuovinen 2019-2021</p>
     <p>
       <a
         href="https://github.com/ttuovinen/ruumena"
