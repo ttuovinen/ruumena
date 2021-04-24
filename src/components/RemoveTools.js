@@ -16,7 +16,7 @@ const RemoveTools = ({ setOutputWith }) => {
 
   useEffect(() => {
     if (filterText) {
-      setOutputWith(seed =>
+      setOutputWith((seed) =>
         removeFilteredWords({
           seed,
           filterText,
@@ -25,12 +25,12 @@ const RemoveTools = ({ setOutputWith }) => {
         })
       );
     } else {
-      setOutputWith(seed => seed);
+      setOutputWith((seed) => seed);
     }
   }, [filterText, filterType, replace, setOutputWith]);
 
   const handleRemoveConstant = () => {
-    setOutputWith(seed =>
+    setOutputWith((seed) =>
       removeConstantWords({
         seed,
         removeN,
@@ -41,7 +41,7 @@ const RemoveTools = ({ setOutputWith }) => {
   };
 
   const handleRemoveRandom = () => {
-    setOutputWith(seed =>
+    setOutputWith((seed) =>
       removeRandomWords({
         seed,
         removePercent,
@@ -74,7 +74,7 @@ const RemoveTools = ({ setOutputWith }) => {
           max="99"
           step="1"
           value={removePercent}
-          onChange={event => setRemovePercent(event.target.value)}
+          onChange={(event) => setRemovePercent(Number(event.target.value))}
         />
         {removePercent}% sanoista
       </div>
@@ -90,9 +90,9 @@ const RemoveTools = ({ setOutputWith }) => {
           max="20"
           step="1"
           value={removeN}
-          onChange={event => {
-            setRemoveN(event.target.value);
-            setRemoveOffset(event.target.value);
+          onChange={(event) => {
+            setRemoveN(Number(event.target.value));
+            setRemoveOffset(Number(event.target.value));
           }}
         />
         {removeN}. sana alkaen
@@ -103,7 +103,7 @@ const RemoveTools = ({ setOutputWith }) => {
           max="20"
           step="1"
           value={removeOffset}
-          onChange={event => setRemoveOffset(event.target.value)}
+          onChange={(event) => setRemoveOffset(Number(event.target.value))}
         />
         {removeOffset}.
       </div>
@@ -116,7 +116,7 @@ const RemoveTools = ({ setOutputWith }) => {
             name="filterinclude"
             value="include"
             checked={filterType === 'include'}
-            onChange={event => setFilterType(event.target.value)}
+            onChange={(event) => setFilterType(event.target.value)}
           />
           {' sisältävät '}
         </label>
@@ -127,7 +127,7 @@ const RemoveTools = ({ setOutputWith }) => {
             name="filterexclude"
             value="exclude"
             checked={filterType === 'exclude'}
-            onChange={event => setFilterType(event.target.value)}
+            onChange={(event) => setFilterType(event.target.value)}
           />
           {' eivät sisällä'}
         </label>
@@ -135,7 +135,7 @@ const RemoveTools = ({ setOutputWith }) => {
           type="text"
           name="filtertext"
           value={filterText}
-          onChange={event => {
+          onChange={(event) => {
             setFilterText(event.target.value);
           }}
         />

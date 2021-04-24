@@ -11,7 +11,6 @@ export const removeConstantWords = ({
   return seed
     .replace(/\n/g, '\n ') // new word on line break
     .split(' ')
-    .filter(word => word)
     .map((word, idx) => {
       if (word.replace(/\s/g, '').length === 0) {
         curOffset += 1; // skip non-words like empty lines
@@ -22,9 +21,9 @@ export const removeConstantWords = ({
         ? word.replace(/./g, replaceWith)
         : word;
     })
-    .filter(word => word)
+    .filter((word) => word)
     .join(' ')
-    .replace(/\n /g, '\n'); // remove earlier added spaces
+    .replace(replaceWith ? /\n /g : /\n\s+/g, '\n'); // remove earlier added spaces (and multilinebreaks if no replace)
 };
 
 /* From 'seed' input string, replaces each word's 
@@ -33,18 +32,17 @@ export const removeRandomWords = ({ seed, removePercent, replaceWith = '_' }) =>
   seed
     .replace(/\n/g, '\n ') // new word on line break
     .split(' ')
-    .filter(word => word)
-    .map(word => {
+    .map((word) => {
       if (word.replace(/\s/g, '').length === 0) {
-        return word; // skip non-words like empty lines
+        return word;
       }
       return Math.random() < removePercent / 100
         ? word.replace(/./g, replaceWith)
         : word;
     })
-    .filter(word => word)
+    .filter((word) => word)
     .join(' ')
-    .replace(/\n /g, '\n'); // remove earlier added spaces
+    .replace(replaceWith ? /\n /g : /\n\s+/g, '\n'); // remove earlier added spaces (and multilinebreaks if no replace)
 
 /* From 'seed' input string, removes word / replaces each word's 
    characters with ____'s if it includes/exludes filterText */
@@ -57,17 +55,19 @@ export const removeFilteredWords = ({
   seed
     .replace(/\n/g, '\n ') // new word on line break
     .split(' ')
-    .map(word =>
-      (filterText
-        .toLowerCase()
-        .split(' ')
-        .filter(string => string)
-        .some(string => word.toLowerCase().includes(string))
-      ? !include
-      : include)
+    .map((word) =>
+      (
+        filterText
+          .toLowerCase()
+          .split(' ')
+          .filter((string) => string)
+          .some((string) => word.toLowerCase().includes(string))
+          ? !include
+          : include
+      )
         ? word
         : word.replace(/./g, replaceWith)
     )
-    .filter(word => word)
+    .filter((word) => word)
     .join(' ')
-    .replace(/\n /g, '\n'); // remove earlier added spaces
+    .replace(replaceWith ? /\n /g : /\n\s+/g, '\n'); // remove earlier added spaces (and multilinebreaks if no replace)
