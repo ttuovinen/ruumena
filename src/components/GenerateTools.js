@@ -8,7 +8,7 @@ const GenerateTools = ({ setOutputWith }) => {
   const [beginning, setBeginning] = useState('');
 
   const handleGenerate = () => {
-    setOutputWith(seed =>
+    setOutputWith((seed) =>
       markovMe(seed, parseInt(nSize, 10), outputSize, beginning)
     );
   };
@@ -24,7 +24,7 @@ const GenerateTools = ({ setOutputWith }) => {
           max="10"
           step="1"
           value={nSize}
-          onChange={event => setNsize(event.target.value)}
+          onChange={(event) => setNsize(event.target.value)}
         />
         {nSize}:n edellisen perusteella
       </div>
@@ -37,7 +37,7 @@ const GenerateTools = ({ setOutputWith }) => {
           max="5000"
           step="100"
           value={outputSize}
-          onChange={event => setOutputSize(event.target.value)}
+          onChange={(event) => setOutputSize(event.target.value)}
         />
         {outputSize} merkkiä
       </div>
@@ -47,7 +47,7 @@ const GenerateTools = ({ setOutputWith }) => {
           type="text"
           name="beginning"
           value={beginning}
-          onChange={event => {
+          onChange={(event) => {
             setBeginning(event.target.value);
           }}
         />

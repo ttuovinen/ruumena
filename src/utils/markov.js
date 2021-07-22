@@ -1,9 +1,9 @@
-const randomFrom = arr => arr[Math.floor(Math.random() * arr.length)];
+const randomFrom = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-const isLowerCaseLetter = char =>
+const isLowerCaseLetter = (char) =>
   char === char.toLowerCase() && char !== char.toUpperCase();
 
-const isUpperCaseLetter = char =>
+const isUpperCaseLetter = (char) =>
   char === char.toUpperCase() && char !== char.toLowerCase();
 
 const getSafeBeginning = (chain, nSize, beginning) => {
@@ -13,18 +13,18 @@ const getSafeBeginning = (chain, nSize, beginning) => {
     return (
       randomFrom(
         chainKeys.filter(
-          item => isUpperCaseLetter(item[0]) && isLowerCaseLetter(item[1])
+          (item) => isUpperCaseLetter(item[0]) && isLowerCaseLetter(item[1])
         )
       ) || randomFrom(chainKeys)
     );
 
   // if beginning shorter than nSize
   if (beginning.length < nSize) {
-    let options = chainKeys.filter(item => item.startsWith(beginning));
+    let options = chainKeys.filter((item) => item.startsWith(beginning));
     // best case: beginning exists in some gram
     if (options.length) return randomFrom(options);
     // 2nd best case: beginning exists in grams in other cases
-    options = chainKeys.filter(item =>
+    options = chainKeys.filter((item) =>
       item.toLowerCase().startsWith(beginning.toLowerCase())
     );
     if (options.length) return randomFrom(options);
@@ -35,7 +35,7 @@ const getSafeBeginning = (chain, nSize, beginning) => {
     if (chainKeys[beginGram]) return beginning;
     // 2nd best case: beginning exists in grams in other cases
     const options = chainKeys.filter(
-      item => item.toLowerCase() === beginGram.toLowerCase()
+      (item) => item.toLowerCase() === beginGram.toLowerCase()
     );
     if (options.length) {
       return `${beginning.substr(0, beginning.length - nSize)}${randomFrom(
@@ -44,8 +44,10 @@ const getSafeBeginning = (chain, nSize, beginning) => {
     }
   }
   // if all else fails
-  return `${beginning}${randomFrom(chainKeys.filter(item => item[0] === ' ')) ||
-    randomFrom(chainKeys)}`;
+  return `${beginning}${
+    randomFrom(chainKeys.filter((item) => item[0] === ' ')) ||
+    randomFrom(chainKeys)
+  }`;
 };
 
 const buildChain = (seed, nSize) => {
@@ -68,11 +70,13 @@ export const markovMe = (seed, nSize = 5, outputSize = 200, beginning) => {
     const nextChar =
       randomFrom(chain[gram]) ||
       // if we hit the last gram, let's try to start a new sentence
-      ` ${randomFrom(
-        Object.keys(chain).filter(
-          item => isUpperCaseLetter(item[0]) && isLowerCaseLetter(item[1])
-        )
-      ) || randomFrom(Object.keys(chain))}`;
+      ` ${
+        randomFrom(
+          Object.keys(chain).filter(
+            (item) => isUpperCaseLetter(item[0]) && isLowerCaseLetter(item[1])
+          )
+        ) || randomFrom(Object.keys(chain))
+      }`;
     result += nextChar;
   }
   return result.lastIndexOf(' ') > 0
