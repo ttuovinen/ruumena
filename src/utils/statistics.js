@@ -1,13 +1,11 @@
-import { by, specialChars, textToWords } from './metaUtils';
+import { by, textToItems } from './metaUtils';
 
-// counts amount of each item in text
-// and return it in form
+// Count amount of each item in text and return them as
 // [{ item: 'a', count: 523, percent 16,23 }, {...}...]
-
-const createCounter = preProcess => input => {
+export const countItems = (seed, unit) => {
   const buckets = {};
-  const items = preProcess(input);
-  items.forEach(item => {
+  const items = textToItems(seed, unit);
+  items.forEach((item) => {
     buckets[item] = (buckets[item] || 0) + 1;
   });
   const total = items.length;
@@ -21,19 +19,3 @@ const createCounter = preProcess => input => {
     .sort(by('count'))
     .reverse();
 };
-
-export const countCharacters = createCounter(input => input.split(''));
-export const countLetters = createCounter(input =>
-  input
-    .replace(specialChars, '')
-    .replace(/[ 0-9]/g, '')
-    .toUpperCase()
-    .split('')
-);
-export const countWords = createCounter(input => textToWords(input));
-export const countSentences = createCounter(input =>
-  input.split(' ').filter(item => item)
-);
-export const countLines = createCounter(input =>
-  input.split('\n').filter(item => item)
-);
