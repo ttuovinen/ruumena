@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  removeConstantWords,
-  removeRandomWords,
-  removeFilteredWords,
+  removeConstantItems,
+  removeRandomItems,
+  removeFilteredItems,
 } from '../utils/removers';
+import { getUnitLabel } from '../constants';
 
-const RemoveTools = ({ setOutputWith }) => {
+const RemoveTools = ({ setOutputWith, unit }) => {
   const [removeN, setRemoveN] = useState(3);
   const [removeOffset, setRemoveOffset] = useState(3);
   const [removePercent, setRemovePercent] = useState(33);
@@ -17,8 +18,9 @@ const RemoveTools = ({ setOutputWith }) => {
   useEffect(() => {
     if (filterText) {
       setOutputWith((seed) =>
-        removeFilteredWords({
+        removeFilteredItems({
           seed,
+          unit,
           filterText,
           include: filterType === 'include',
           replaceWith: replace ? '_' : '',
@@ -27,12 +29,13 @@ const RemoveTools = ({ setOutputWith }) => {
     } else {
       setOutputWith((seed) => seed);
     }
-  }, [filterText, filterType, replace, setOutputWith]);
+  }, [filterText, filterType, replace, setOutputWith, unit]);
 
   const handleRemoveConstant = () => {
     setOutputWith((seed) =>
-      removeConstantWords({
+      removeConstantItems({
         seed,
+        unit,
         removeN,
         removeOffset,
         replaceWith: replace ? '_' : '',
@@ -42,8 +45,9 @@ const RemoveTools = ({ setOutputWith }) => {
 
   const handleRemoveRandom = () => {
     setOutputWith((seed) =>
-      removeRandomWords({
+      removeRandomItems({
         seed,
+        unit,
         removePercent,
         replaceWith: replace ? '_' : '',
       })
@@ -52,17 +56,6 @@ const RemoveTools = ({ setOutputWith }) => {
 
   return (
     <>
-      <div className="options-wrapper">
-        <label className="checkbox-label" htmlFor="remove-type">
-          <input
-            type="checkbox"
-            id="remove-type"
-            checked={replace}
-            onChange={() => setReplace(!replace)}
-          />
-          korvaa poistetut sanat viivoilla
-        </label>
-      </div>
       <div className="button-wrapper">
         <button type="button" onClick={handleRemoveRandom}>
           Poista satunnaisesti
@@ -76,7 +69,7 @@ const RemoveTools = ({ setOutputWith }) => {
           value={removePercent}
           onChange={(event) => setRemovePercent(Number(event.target.value))}
         />
-        {removePercent}% sanoista
+        {removePercent}% {getUnitLabel('pluralElative', unit)}
       </div>
       <div className="button-wrapper">
         <button type="button" onClick={handleRemoveConstant}>
@@ -95,7 +88,7 @@ const RemoveTools = ({ setOutputWith }) => {
             setRemoveOffset(Number(event.target.value));
           }}
         />
-        {removeN}. sana alkaen
+        {removeN}. {getUnitLabel('nominative', unit)} alkaen
         <input
           type="range"
           name="offset"
@@ -108,7 +101,7 @@ const RemoveTools = ({ setOutputWith }) => {
         {removeOffset}.
       </div>
       <div className="button-wrapper">
-        {'Poista sanat, jotka '}
+        {`Poista ${getUnitLabel('pluralNominative', unit)}, jotka `}
         <label htmlFor="include">
           <input
             type="radio"
@@ -140,12 +133,24 @@ const RemoveTools = ({ setOutputWith }) => {
           }}
         />
       </div>
+      <div className="options-wrapper">
+        <label className="checkbox-label" htmlFor="remove-type">
+          <input
+            type="checkbox"
+            id="remove-type"
+            checked={replace}
+            onChange={() => setReplace(!replace)}
+          />
+          korvaa poistetut {getUnitLabel('pluralNominative', unit)} viivoilla
+        </label>
+      </div>
     </>
   );
 };
 
 RemoveTools.propTypes = {
   setOutputWith: PropTypes.func.isRequired,
+  unit: PropTypes.string.isRequired,
 };
 
 export default RemoveTools;

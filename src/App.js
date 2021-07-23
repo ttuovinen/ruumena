@@ -1,36 +1,23 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+} from 'react';
 import Footer from './components/Footer';
-import SortTools from './components/SortTools';
-import RemoveTools from './components/RemoveTools';
-import PlayTools from './components/PlayTools';
 import ToolTabs from './components/ToolTabs';
 import ActiveTools from './components/ActiveTools';
-import GenerateTools from './components/GenerateTools';
 import examples from './examples';
 import './App.css';
-
-const NO_INPUT = <i>ei lähdetekstiä</i>;
-
-const getActiveToolsComponent = activeTab => {
-  switch (activeTab) {
-    case 'sort':
-      return SortTools;
-    case 'remove':
-      return RemoveTools;
-    case 'generate':
-      return GenerateTools;
-    case 'play':
-      return PlayTools;
-    default:
-      return null;
-  }
-};
+import { NO_INPUT, UNITS } from './constants';
 
 function App() {
   const [rawText, setRawText] = useState('');
   const [selectedExample, setSelectedExample] = useState('0');
   const [output, setOutput] = useState('');
   const [activeTab, setActiveTab] = useState('sort');
+  const [unit, setUnit] = useState('word');
   const [snack, setSnack] = useState(null);
 
   const exampleRef = useRef();
@@ -46,7 +33,22 @@ function App() {
     }
   }, [output]);
 
-  const changeActiveTab = newTab => {
+  // Show warning if selected unit is not reasonable for input text
+  const unitWarning = useMemo(() => {
+    if (!rawText || unit === 'word') {
+      return null;
+    }
+    const linebreakRatio = rawText.split('\n').length / rawText.length;
+    if (linebreakRatio > 0.01 && unit === 'sentence') {
+      return 'toimii parhaiten kertovan/asiatekstin kanssa';
+    }
+    if (linebreakRatio < 0.005 && unit === 'line') {
+      return 'toimii parhaiten runomuotoisen tekstin kanssa';
+    }
+    return null;
+  }, [rawText, unit]);
+
+  const changeActiveTab = (newTab) => {
     setActiveTab(newTab);
     setOutput(null);
   };
@@ -62,13 +64,13 @@ function App() {
   };
 
   const setOutputWith = useCallback(
-    operator => {
+    (operator) => {
       setOutput(rawText ? operator(rawText) : NO_INPUT);
     },
     [rawText]
   );
 
-  const showSnack = text => {
+  const showSnack = (text) => {
     setSnack(text);
     clearTimeout(timeout);
     timeout = setTimeout(() => {
@@ -95,7 +97,7 @@ function App() {
           <select
             id="example"
             className="example-select"
-            onChange={event => setSelectedExample(event.target.value)}
+            onChange={(event) => setSelectedExample(event.target.value)}
           >
             {examples.map(({ title }, index) => (
               <option key={title} value={index}>
@@ -125,7 +127,7 @@ function App() {
           value={rawText}
           spellCheck="false"
           rows="12"
-          onChange={event => setRawText(event.target.value)}
+          onChange={(event) => setRawText(event.target.value)}
           placeholder="Liitä lähdeteksti tähän tai valitse esimerkkiteksti yltä. Käsittele sitä alta löytyvillä työkaluilla."
         />
 
@@ -134,11 +136,33 @@ function App() {
         </div>
 
         <div className="output-area-wrapper">
+          {/* Unit selector */}
+          {['sort', 'remove'].includes(activeTab) && (
+            <div className="unit-selector-wrapper">
+              Jaa lähdeteksti&nbsp;
+              <select
+                className="unit-select"
+                value={unit}
+                onChange={(event) => setUnit(event.target.value)}
+              >
+                {UNITS.map(({ key, pluralIllative: label }) => (
+                  <option key={key} value={key}>
+                    {label}
+                  </option>
+                ))}
+              </select>
+              &nbsp;ja
+              {!!unitWarning && (
+                <div className="unit-warning">({unitWarning})</div>
+              )}
+            </div>
+          )}
+
           <ActiveTools
-            component={getActiveToolsComponent(activeTab)}
+            activeTab={activeTab}
+            unit={unit}
             setOutputWith={setOutputWith}
           />
-
           <div className="output-area" aria-live="polite">
             {output}
           </div>

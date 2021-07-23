@@ -65,16 +65,16 @@ select {
   -webkit-appearance: menulist-button;
   font-size: 0.8rem;
   margin-right: 5px;
-  height: 30px;
+  padding: 5px;
 }
 .example-select {
-  width: 390px;
+  width: 380px;
   max-width: 100%;
   margin: 0 5px 5px 0;
 }
 button {
   padding: 6px 10px;
-  margin: 0 5px 5px;
+  margin: 0 0.5rem 1rem;;
   font-size: 0.8rem;
   min-width: 50px;
   border-radius: 2px;
@@ -101,7 +101,6 @@ button:disabled {
 }
 .button-wrapper {
   text-align: center;
-  margin-bottom: 5px;
 }
 .editor {
   display: block;
@@ -152,12 +151,24 @@ button:disabled {
 }
 .output-area-wrapper {
   min-height: 90vh;
+  font-size: 1rem;
 }
 .options-wrapper {
   display: flex;
   justify-content: center;
-  margin: 0 0 1rem;
+  margin: 1rem 0;
   font-size: 1rem;
+}
+.tools {
+  line-height: 2;
+}
+.unit-selector-wrapper {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+.unit-warning {
+  font-style: italic;
+  color: hsl(0, 77%, 39%);
 }
 .checkbox-label {
   display: flex;
@@ -183,6 +194,7 @@ input[type='text'] {
 }
 .output-area {
   margin: 2rem 0;
+  font-size: 1.1rem;
   word-wrap: break-word;
   white-space: pre-wrap;
   font-family: 'Courier New', Courier, monospace;

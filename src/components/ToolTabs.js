@@ -8,14 +8,14 @@ const ToolTabs = ({ activeTab, changeActiveTab }) => (
       className={activeTab === 'sort' ? 'tab tab__active' : 'tab'}
       onClick={() => changeActiveTab('sort')}
     >
-      Järjestä sanat
+      Järjestä
     </button>
     <button
       type="button"
       className={activeTab === 'remove' ? 'tab tab__active' : 'tab'}
       onClick={() => changeActiveTab('remove')}
     >
-      Poista sanoja
+      Poista
     </button>
     <button
       type="button"
