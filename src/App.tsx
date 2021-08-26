@@ -11,21 +11,22 @@ import ActiveTools from './components/ActiveTools';
 import examples from './examples';
 import './App.css';
 import { NO_INPUT, UNITS } from './constants';
+import { TabOptions, UnitOptions } from './types/types';
 
-function App() {
+const App: React.FC = () => {
   const [rawText, setRawText] = useState('');
   const [selectedExample, setSelectedExample] = useState('0');
   const [output, setOutput] = useState('');
-  const [activeTab, setActiveTab] = useState('sort');
-  const [unit, setUnit] = useState('word');
-  const [snack, setSnack] = useState(null);
+  const [activeTab, setActiveTab] = useState<TabOptions>('sort');
+  const [unit, setUnit] = useState<UnitOptions>('word');
+  const [snack, setSnack] = useState('');
 
-  const exampleRef = useRef();
-  const tabsRef = useRef();
-  let timeout = useRef();
+  const exampleRef = useRef<HTMLDivElement>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  let timeoutRef: { current: NodeJS.Timeout | null } = useRef(null);
 
   useEffect(() => {
-    if (output && output !== NO_INPUT) {
+    if (output && output !== NO_INPUT && tabsRef?.current) {
       window.scrollTo({
         top: tabsRef.current.offsetTop - 20,
         behavior: 'smooth',
@@ -48,38 +49,40 @@ function App() {
     return null;
   }, [rawText, unit]);
 
-  const changeActiveTab = (newTab) => {
+  const changeActiveTab = (newTab: TabOptions) => {
     setActiveTab(newTab);
-    setOutput(null);
+    setOutput('');
   };
 
   const insertExampleText = () => {
     setRawText(
-      selectedExample === 'output' ? output : examples[selectedExample].content
+      selectedExample === 'output' ? output : examples[+selectedExample].content
     );
-    window.scrollTo({
-      top: exampleRef.current.offsetTop - 20,
-      behavior: 'smooth',
-    });
+    if (exampleRef?.current) {
+      window.scrollTo({
+        top: exampleRef.current.offsetTop - 20,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const setOutputWith = useCallback(
-    (operator) => {
+    (operator: (seed: string) => string) => {
       setOutput(rawText ? operator(rawText) : NO_INPUT);
     },
     [rawText]
   );
 
-  const showSnack = (text) => {
+  const showSnack = (text: string) => {
     setSnack(text);
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      setSnack(null);
+    const id = setTimeout(() => {
+      setSnack('');
     }, 2000);
+    timeoutRef.current = id;
   };
 
   const handleClipboardCopy = () => {
-    navigator.clipboard.writeText(output);
+    navigator.clipboard.writeText(`${output}`);
     showSnack('kohdeteksti kopioitu leikepöydälle');
   };
 
@@ -126,7 +129,7 @@ function App() {
           className="editor"
           value={rawText}
           spellCheck="false"
-          rows="12"
+          rows={12}
           onChange={(event) => setRawText(event.target.value)}
           placeholder="Liitä lähdeteksti tähän tai valitse esimerkkiteksti yltä. Käsittele sitä alta löytyvillä työkaluilla."
         />
@@ -143,7 +146,7 @@ function App() {
               <select
                 className="unit-select"
                 value={unit}
-                onChange={(event) => setUnit(event.target.value)}
+                onChange={(event) => setUnit(event.target.value as UnitOptions)}
               >
                 {UNITS.map(({ key, pluralIllative: label }) => (
                   <option key={key} value={key}>
@@ -184,6 +187,6 @@ function App() {
       <Footer />
     </>
   );
-}
+};
 
 export default App;

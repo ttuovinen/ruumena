@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import {
   removeConstantItems,
   removeRandomItems,
@@ -7,11 +6,16 @@ import {
 } from '../utils/removers';
 import { getUnitLabel } from '../constants';
 
-const RemoveTools = ({ setOutputWith, unit }) => {
+interface Props {
+  setOutputWith: (operator: (input: string) => string) => void;
+  unit: string;
+}
+
+const RemoveTools: React.FC<Props> = ({ setOutputWith, unit }) => {
   const [removeN, setRemoveN] = useState(3);
   const [removeOffset, setRemoveOffset] = useState(3);
   const [removePercent, setRemovePercent] = useState(33);
-  const [replace, setReplace] = useState('_');
+  const [replace, setReplace] = useState(true);
   const [filterType, setFilterType] = useState('include');
   const [filterText, setFilterText] = useState('');
 
@@ -146,11 +150,6 @@ const RemoveTools = ({ setOutputWith, unit }) => {
       </div>
     </>
   );
-};
-
-RemoveTools.propTypes = {
-  setOutputWith: PropTypes.func.isRequired,
-  unit: PropTypes.string.isRequired,
 };
 
 export default RemoveTools;

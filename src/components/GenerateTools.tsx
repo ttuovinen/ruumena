@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { markovMe } from '../utils/markov';
 
-const GenerateTools = ({ setOutputWith }) => {
+interface Props {
+  setOutputWith: (operator: (input: string) => string) => void;
+}
+
+const GenerateTools: React.FC<Props> = ({ setOutputWith }) => {
   const [nSize, setNsize] = useState(5);
   const [outputSize, setOutputSize] = useState(500);
   const [beginning, setBeginning] = useState('');
 
   const handleGenerate = () => {
-    setOutputWith((seed) =>
-      markovMe(seed, parseInt(nSize, 10), outputSize, beginning)
-    );
+    setOutputWith((seed) => markovMe(seed, nSize, outputSize, beginning));
   };
 
   return (
@@ -24,7 +25,7 @@ const GenerateTools = ({ setOutputWith }) => {
           max="10"
           step="1"
           value={nSize}
-          onChange={(event) => setNsize(event.target.value)}
+          onChange={(event) => setNsize(+event.target.value)}
         />
         {nSize}:n edellisen perusteella
       </div>
@@ -37,7 +38,7 @@ const GenerateTools = ({ setOutputWith }) => {
           max="5000"
           step="100"
           value={outputSize}
-          onChange={(event) => setOutputSize(event.target.value)}
+          onChange={(event) => setOutputSize(+event.target.value)}
         />
         {outputSize} merkkiä
       </div>
@@ -59,10 +60,6 @@ const GenerateTools = ({ setOutputWith }) => {
       </div>
     </>
   );
-};
-
-GenerateTools.propTypes = {
-  setOutputWith: PropTypes.func.isRequired,
 };
 
 export default GenerateTools;

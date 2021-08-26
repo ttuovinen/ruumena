@@ -1,9 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// @ts-ignore
 import sananmuunnos from 'sananmuunnos';
 import { emoticonize } from '../utils/emoticons';
 
-const PlayTools = ({ setOutputWith }) => {
+interface Props {
+  setOutputWith: (operator: (input: string) => string) => void;
+}
+
+const PlayTools: React.FC<Props> = ({ setOutputWith }) => {
   const handleKontti = () => {
     setOutputWith((seed) =>
       seed
@@ -24,7 +28,7 @@ const PlayTools = ({ setOutputWith }) => {
     setOutputWith((seed) => emoticonize(seed));
   };
 
-  const uniVowelize = (vowel) => {
+  const uniVowelize = (vowel: string) => {
     setOutputWith((seed) =>
       seed
         .replace(/[aeiouyåäö]/g, vowel.toLowerCase())
@@ -42,11 +46,11 @@ const PlayTools = ({ setOutputWith }) => {
           duhainen
         </button>
         <button type="button" onClick={handleEmoticonize}>
-          =)
+          {'=)'}
         </button>
       </div>
       <div className="button-wrapper">
-        {[...'aeiouyäö'].map((vowel) => (
+        {'aeiouyäö'.split('').map((vowel) => (
           <button type="button" key={vowel} onClick={() => uniVowelize(vowel)}>
             {vowel}
           </button>
@@ -54,10 +58,6 @@ const PlayTools = ({ setOutputWith }) => {
       </div>
     </>
   );
-};
-
-PlayTools.propTypes = {
-  setOutputWith: PropTypes.func.isRequired,
 };
 
 export default PlayTools;

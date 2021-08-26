@@ -1,7 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { TabOptions } from '../types/types';
 
-const ToolTabs = ({ activeTab, changeActiveTab }) => (
+interface Props {
+  activeTab: TabOptions;
+  changeActiveTab: (tab: TabOptions) => void;
+}
+
+const ToolTabs: React.FC<Props> = ({ activeTab, changeActiveTab }) => (
   <>
     <button
       type="button"
@@ -35,10 +40,5 @@ const ToolTabs = ({ activeTab, changeActiveTab }) => (
     </button>
   </>
 );
-
-ToolTabs.propTypes = {
-  activeTab: PropTypes.string.isRequired,
-  changeActiveTab: PropTypes.func.isRequired,
-};
 
 export default ToolTabs;

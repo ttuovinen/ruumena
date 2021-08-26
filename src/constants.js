@@ -1,4 +1,4 @@
-export const NO_INPUT = <i>ei lähdetekstiä</i>;
+export const NO_INPUT = 'ei lähdetekstiä';
 
 export const UNITS = [
   {

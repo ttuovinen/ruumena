@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import {
   lengthsortItems,
   alphasortItems,
@@ -10,7 +9,9 @@ import {
 } from '../utils/sorters';
 import { getUnitLabel } from '../constants';
 
-const SORTERS = {
+const SORTERS: {
+  [key: string]: { label: string; sorterFunction: Function };
+} = {
   alpha: { label: 'Aakkosta', sorterFunction: alphasortItems },
   alphaEnd: {
     label: 'Aakkosta lopusta',
@@ -31,14 +32,19 @@ const SORTERS = {
   random: { label: 'Sekoita', sorterFunction: shuffleItems },
 };
 
-const SortTools = ({ setOutputWith, unit }) => {
-  const [action, setAction] = useState({ type: null, index: 0 });
+interface Props {
+  setOutputWith: (operator: (input: string) => string) => void;
+  unit: string;
+}
+
+const SortTools: React.FC<Props> = ({ setOutputWith, unit }) => {
+  const [action, setAction] = useState({ type: '', index: 0 });
   const [reverse, setReverse] = useState(false);
   const [noDuplicates, setNoDuplicates] = useState(false);
 
   useEffect(() => {
     if (action.type) {
-      const sorter = SORTERS[action.type].sorterFunction;
+      const sorter = SORTERS[action.type]!.sorterFunction;
       setOutputWith((seed) =>
         sorter({
           seed,
@@ -93,11 +99,6 @@ const SortTools = ({ setOutputWith, unit }) => {
       </div>
     </>
   );
-};
-
-SortTools.propTypes = {
-  setOutputWith: PropTypes.func.isRequired,
-  unit: PropTypes.string.isRequired,
 };
 
 export default SortTools;
