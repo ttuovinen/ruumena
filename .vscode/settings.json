@@ -6,6 +6,7 @@
   "files.associations": {
     "*.js": "javascriptreact"
   },
+  "typescript.validate.enable":true,
   // Set the default
   "editor.formatOnSave": false,
   // Enable per-language

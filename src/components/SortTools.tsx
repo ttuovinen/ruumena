@@ -8,6 +8,7 @@ import {
   softnesssortItems,
 } from '../utils/sorters';
 import { getUnitLabel } from '../constants';
+import { SetOutputFunction, UnitOptions } from '../types/types';
 
 const SORTERS: {
   [key: string]: { label: string; sorterFunction: Function };
@@ -33,8 +34,8 @@ const SORTERS: {
 };
 
 interface Props {
-  setOutputWith: (operator: (input: string) => string) => void;
-  unit: string;
+  setOutputWith: SetOutputFunction;
+  unit: UnitOptions;
 }
 
 const SortTools: React.FC<Props> = ({ setOutputWith, unit }) => {

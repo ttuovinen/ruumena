@@ -1,10 +1,11 @@
 import React from 'react';
 // @ts-ignore
 import sananmuunnos from 'sananmuunnos';
+import { SetOutputFunction } from '../types/types';
 import { emoticonize } from '../utils/emoticons';
 
 interface Props {
-  setOutputWith: (operator: (input: string) => string) => void;
+  setOutputWith: SetOutputFunction;
 }
 
 const PlayTools: React.FC<Props> = ({ setOutputWith }) => {

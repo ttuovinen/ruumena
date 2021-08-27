@@ -3,7 +3,7 @@ import { TabOptions } from '../types/types';
 
 interface Props {
   activeTab: TabOptions;
-  changeActiveTab: (tab: TabOptions) => void;
+  changeActiveTab: (newTab: TabOptions) => void;
 }
 
 const ToolTabs: React.FC<Props> = ({ activeTab, changeActiveTab }) => (

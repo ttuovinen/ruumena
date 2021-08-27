@@ -3,7 +3,7 @@ import SortTools from './SortTools';
 import RemoveTools from './RemoveTools';
 import PlayTools from './PlayTools';
 import GenerateTools from './GenerateTools';
-import { TabOptions, UnitOptions } from '../types/types';
+import { SetOutputFunction, TabOptions, UnitOptions } from '../types/types';
 
 const getToolComponent = (activeTab: TabOptions) => {
   switch (activeTab) {
@@ -22,7 +22,7 @@ const getToolComponent = (activeTab: TabOptions) => {
 interface Props {
   activeTab: TabOptions;
   unit: UnitOptions;
-  setOutputWith: (operator: (input: string) => string) => void;
+  setOutputWith: SetOutputFunction;
 }
 
 const ActiveTools: React.FC<Props> = ({ activeTab, unit, setOutputWith }) => {

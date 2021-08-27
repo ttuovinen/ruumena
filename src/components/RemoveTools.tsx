@@ -5,10 +5,11 @@ import {
   removeFilteredItems,
 } from '../utils/removers';
 import { getUnitLabel } from '../constants';
+import { SetOutputFunction, UnitOptions } from '../types/types';
 
 interface Props {
-  setOutputWith: (operator: (input: string) => string) => void;
-  unit: string;
+  setOutputWith: SetOutputFunction;
+  unit: UnitOptions;
 }
 
 const RemoveTools: React.FC<Props> = ({ setOutputWith, unit }) => {

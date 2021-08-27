@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { SetOutputFunction } from '../types/types';
 import { markovMe } from '../utils/markov';
 
 interface Props {
-  setOutputWith: (operator: (input: string) => string) => void;
+  setOutputWith: SetOutputFunction;
 }
 
 const GenerateTools: React.FC<Props> = ({ setOutputWith }) => {
