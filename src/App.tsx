@@ -40,10 +40,10 @@ const App: React.FC = () => {
       return null;
     }
     const linebreakRatio = rawText.split('\n').length / rawText.length;
-    if (linebreakRatio > 0.01 && unit === 'sentence') {
+    if (linebreakRatio > 0.02 && unit === 'sentence') {
       return 'toimii parhaiten kertovan/asiatekstin kanssa';
     }
-    if (linebreakRatio < 0.005 && unit === 'line') {
+    if (linebreakRatio < 0.012 && unit === 'line') {
       return 'toimii parhaiten runomuotoisen tekstin kanssa';
     }
     return null;
