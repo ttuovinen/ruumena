@@ -11,7 +11,20 @@ export const by = (key) => createSorter((i) => i[key]);
 export const specialChars = /[^ a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9]/g;
 
 // Regex for detecting sentence breaks
-export const sentenceBreaks = /(?<=[.?!…])\s+(?=[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ])/g;
+// TMP: Crude workaround while waiting for
+// Safari to implement regex lookbehind
+let sentenceBreaks1;
+try {
+  sentenceBreaks1 = new RegExp(
+    `(?<=[.?!…])\\s+(?=[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ])`,
+    'g'
+  );
+} catch (err) {
+  // Sub-par fallback which removes periods ect. from sentence ends
+  sentenceBreaks1 = /(?:[.?!…])\s+(?=[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ])/g;
+}
+
+export const sentenceBreaks = sentenceBreaks1;
 
 // Process input text into array of words
 const textToWords = (seed) =>
