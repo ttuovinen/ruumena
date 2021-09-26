@@ -14,9 +14,9 @@ import { NO_INPUT, UNITS } from './constants';
 import { TabOptions, UnitOptions } from './types/types';
 
 const App: React.FC = () => {
-  const [rawText, setRawText] = useState('');
+  const [inputText, setInputText] = useState('');
+  const [outputText, setOutputText] = useState('');
   const [selectedExample, setSelectedExample] = useState('0');
-  const [output, setOutput] = useState('');
   const [activeTab, setActiveTab] = useState<TabOptions>('sort');
   const [unit, setUnit] = useState<UnitOptions>('word');
   const [snack, setSnack] = useState('');
@@ -26,20 +26,19 @@ const App: React.FC = () => {
   let timeoutRef: { current: NodeJS.Timeout | null } = useRef(null);
 
   useEffect(() => {
-    if (output && output !== NO_INPUT && tabsRef?.current) {
+    if (outputText && outputText !== NO_INPUT && tabsRef?.current) {
       window.scrollTo({
         top: tabsRef.current.offsetTop - 20,
-        behavior: 'smooth',
       });
     }
-  }, [output]);
+  }, [outputText]);
 
   // Show warning if selected unit is not reasonable for input text
   const unitWarning = useMemo(() => {
-    if (!rawText || unit === 'word') {
+    if (!inputText || unit === 'word') {
       return null;
     }
-    const linebreakRatio = rawText.split('\n').length / rawText.length;
+    const linebreakRatio = inputText.split('\n').length / inputText.length;
     if (linebreakRatio > 0.02 && unit === 'sentence') {
       return 'toimii parhaiten kertovan/asiatekstin kanssa';
     }
@@ -47,43 +46,54 @@ const App: React.FC = () => {
       return 'toimii parhaiten runomuotoisen tekstin kanssa';
     }
     return null;
-  }, [rawText, unit]);
+  }, [inputText, unit]);
 
   const changeActiveTab = (newTab: TabOptions) => {
     setActiveTab(newTab);
-    setOutput('');
+    setOutputText('');
   };
 
   const insertExampleText = () => {
-    setRawText(
-      selectedExample === 'output' ? output : examples[+selectedExample].content
+    setInputText(
+      selectedExample === 'output'
+        ? outputText
+        : examples[+selectedExample].content
     );
     if (exampleRef?.current) {
       window.scrollTo({
         top: exampleRef.current.offsetTop - 20,
-        behavior: 'smooth',
       });
     }
   };
 
   const setOutputWith = useCallback(
     (operator: (seed: string) => string) => {
-      setOutput(rawText ? operator(rawText) : NO_INPUT);
+      setOutputText(inputText ? operator(inputText) : NO_INPUT);
     },
-    [rawText]
+    [inputText]
   );
 
   const showSnack = (text: string) => {
     setSnack(text);
     const id = setTimeout(() => {
       setSnack('');
-    }, 2000);
+    }, 2500);
     timeoutRef.current = id;
   };
 
   const handleClipboardCopy = () => {
-    navigator.clipboard.writeText(`${output}`);
+    navigator.clipboard.writeText(`${outputText}`);
     showSnack('kohdeteksti kopioitu leikepöydälle');
+  };
+
+  const handlePutOutputToInput = () => {
+    setInputText(outputText);
+    showSnack('kohdeteksti kopioitu lähdetekstiksi');
+    if (exampleRef?.current) {
+      window.scrollTo({
+        top: exampleRef.current.offsetTop - 20,
+      });
+    }
   };
 
   return (
@@ -107,9 +117,9 @@ const App: React.FC = () => {
                 {title}
               </option>
             ))}
-            {!!output && typeof output === 'string' && (
+            {!!outputText && typeof outputText === 'string' && (
               <option key="output" value="output">
-                KOHDETEKSTI (&quot;{output.substring(0, 32)}...&quot;)
+                KOHDETEKSTI (&quot;{outputText.substring(0, 32)}...&quot;)
               </option>
             )}
           </select>
@@ -119,18 +129,18 @@ const App: React.FC = () => {
           <button
             type="button"
             className="no-border"
-            onClick={() => setRawText('')}
-            disabled={!rawText}
+            onClick={() => setInputText('')}
+            disabled={!inputText}
           >
             tyhjennä
           </button>
         </div>
         <textarea
           className="editor"
-          value={rawText}
+          value={inputText}
           spellCheck="false"
           rows={12}
-          onChange={(event) => setRawText(event.target.value)}
+          onChange={(event) => setInputText(event.target.value)}
           placeholder="Liitä lähdeteksti tähän tai valitse esimerkkiteksti yltä. Käsittele sitä alta löytyvillä työkaluilla."
         />
 
@@ -167,12 +177,15 @@ const App: React.FC = () => {
             setOutputWith={setOutputWith}
           />
           <div className="output-area" aria-live="polite">
-            {output}
+            {outputText}
           </div>
-          {output && output !== NO_INPUT && (
+          {outputText && outputText !== NO_INPUT && (
             <div className="button-wrapper">
               <button type="button" onClick={handleClipboardCopy}>
                 kopioi leikepöydälle
+              </button>
+              <button type="button" onClick={handlePutOutputToInput}>
+                kopioi lähdetekstiksi
               </button>
               {!!snack && (
                 <div className="snack" aria-live="assertive">
