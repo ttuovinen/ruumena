@@ -9,6 +9,7 @@ import {
 } from '../utils/sorters';
 import { getUnitLabel } from '../constants';
 import { SetOutputFunction, UnitOptions } from '../types/types';
+import Toggler from './Toggler';
 
 const SORTERS: {
   [key: string]: { label: string; sorterFunction: Function };
@@ -75,28 +76,24 @@ const SortTools: React.FC<Props> = ({ setOutputWith, unit }) => {
         ))}
       </div>
       <div className="options-wrapper">
-        <label className="checkbox-label" htmlFor="reverse">
-          <input
-            type="checkbox"
-            id="reverse"
-            checked={reverse}
-            onChange={() => {
-              setReverse(!reverse);
-            }}
-          />
+        <Toggler
+          name="reverse"
+          checked={reverse}
+          onChange={() => {
+            setReverse(!reverse);
+          }}
+        >
           käänteinen järjestys
-        </label>
-        <label className="checkbox-label" htmlFor="no-duplicates">
-          <input
-            type="checkbox"
-            id="no-duplicates"
-            checked={noDuplicates}
-            onChange={() => {
-              setNoDuplicates(!noDuplicates);
-            }}
-          />
+        </Toggler>
+        <Toggler
+          name="no-duplicates"
+          checked={noDuplicates}
+          onChange={() => {
+            setNoDuplicates(!noDuplicates);
+          }}
+        >
           kukin {getUnitLabel('nominative', unit)} vain kerran
-        </label>
+        </Toggler>
       </div>
     </>
   );

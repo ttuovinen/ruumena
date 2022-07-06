@@ -1,16 +1,17 @@
 import React, {
-  useEffect,
-  useState,
-  useRef,
   useCallback,
+  useEffect,
   useMemo,
+  useRef,
+  useState,
 } from 'react';
+import './App.css';
+import ActiveTools from './components/ActiveTools';
+import DarkModeSwitch from './components/DarkModeSwitch';
 import Footer from './components/Footer';
 import ToolTabs from './components/ToolTabs';
-import ActiveTools from './components/ActiveTools';
-import examples from './examples';
-import './App.css';
 import { NO_INPUT, UNITS } from './constants';
+import examples from './examples';
 import { TabOptions, UnitOptions } from './types/types';
 
 const App: React.FC = () => {
@@ -77,7 +78,7 @@ const App: React.FC = () => {
     setSnack(text);
     const id = setTimeout(() => {
       setSnack('');
-    }, 2500);
+    }, 3000);
     timeoutRef.current = id;
   };
 
@@ -98,6 +99,7 @@ const App: React.FC = () => {
 
   return (
     <>
+      <DarkModeSwitch />
       <main className="main-content">
         <header className="title-area">
           <h1 className="maintitle">RUUMENA</h1>
@@ -117,11 +119,13 @@ const App: React.FC = () => {
                 {title}
               </option>
             ))}
-            {!!outputText && typeof outputText === 'string' && (
-              <option key="output" value="output">
-                KOHDETEKSTI (&quot;{outputText.substring(0, 32)}...&quot;)
-              </option>
-            )}
+            {!!outputText &&
+              typeof outputText === 'string' &&
+              outputText !== NO_INPUT && (
+                <option key="output" value="output">
+                  KOHDETEKSTI (&quot;{outputText.substring(0, 32)}...&quot;)
+                </option>
+              )}
           </select>
           <button type="button" onClick={insertExampleText}>
             käytä lähdetekstinä
@@ -176,6 +180,7 @@ const App: React.FC = () => {
             unit={unit}
             setOutputWith={setOutputWith}
           />
+
           <div className="output-area" aria-live="polite">
             {outputText}
           </div>

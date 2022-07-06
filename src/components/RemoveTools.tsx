@@ -6,6 +6,7 @@ import {
 } from '../utils/removers';
 import { getUnitLabel } from '../constants';
 import { SetOutputFunction, UnitOptions } from '../types/types';
+import Toggler from './Toggler';
 
 interface Props {
   setOutputWith: SetOutputFunction;
@@ -139,15 +140,13 @@ const RemoveTools: React.FC<Props> = ({ setOutputWith, unit }) => {
         />
       </div>
       <div className="options-wrapper">
-        <label className="checkbox-label" htmlFor="remove-type">
-          <input
-            type="checkbox"
-            id="remove-type"
-            checked={replace}
-            onChange={() => setReplace(!replace)}
-          />
+        <Toggler
+          name="remove-type"
+          checked={replace}
+          onChange={() => setReplace(!replace)}
+        >
           korvaa poistetut {getUnitLabel('pluralNominative', unit)} viivoilla
-        </label>
+        </Toggler>
       </div>
     </>
   );
