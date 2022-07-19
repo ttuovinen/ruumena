@@ -12,11 +12,11 @@ import Footer from './components/Footer';
 import ToolTabs from './components/ToolTabs';
 import { NO_INPUT, UNITS } from './constants';
 import examples from './examples';
-import { TabOptions, UnitOptions } from './types/types';
+import { SetOutputFunction, TabOptions, UnitOptions } from './types/types';
 
 const App: React.FC = () => {
   const [inputText, setInputText] = useState('');
-  const [outputText, setOutputText] = useState('');
+  const [outputText, setOutputText] = useState<string | React.ReactNode>('');
   const [selectedExample, setSelectedExample] = useState('0');
   const [activeTab, setActiveTab] = useState<TabOptions>('sort');
   const [unit, setUnit] = useState<UnitOptions>('word');
@@ -57,7 +57,7 @@ const App: React.FC = () => {
   const insertExampleText = () => {
     setInputText(
       selectedExample === 'output'
-        ? outputText
+        ? (outputText as string)
         : examples[+selectedExample].content
     );
     if (exampleRef?.current) {
@@ -67,8 +67,8 @@ const App: React.FC = () => {
     }
   };
 
-  const setOutputWith = useCallback(
-    (operator: (seed: string) => string) => {
+  const setOutputWith: SetOutputFunction = useCallback(
+    (operator) => {
       setOutputText(inputText ? operator(inputText) : NO_INPUT);
     },
     [inputText]
@@ -88,7 +88,7 @@ const App: React.FC = () => {
   };
 
   const handlePutOutputToInput = () => {
-    setInputText(outputText);
+    setInputText(outputText as string);
     showSnack('kohdeteksti kopioitu lähdetekstiksi');
     if (exampleRef?.current) {
       window.scrollTo({

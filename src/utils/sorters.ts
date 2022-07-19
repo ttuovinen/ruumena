@@ -1,20 +1,35 @@
 import { countItems } from './statistics';
 import { createSorter, specialChars, textToItems } from './metaUtils';
+import { UnitOptions } from '../types/types';
+
+type CompareFn = (a: string, b: string) => number | boolean;
+
+interface ListerProps {
+  seed: string;
+  unit: UnitOptions;
+  reverse: boolean;
+  noDuplicates: boolean;
+}
 
 // Helpers
-const getJoiner = (unit) => (unit === 'word' ? ' ' : '\n\n');
+const getJoiner = (unit: string) => (unit === 'word' ? ' ' : '\n\n');
 
 // Sorter functions
-const byLength = createSorter((i) => i.length);
-const fromStart = createSorter((i) =>
+const byLength = createSorter((i: string) => i.length);
+const fromStart = createSorter((i: string) =>
   i.toLowerCase().replace(specialChars, '').trim()
 );
-const fromEnd = createSorter((i) =>
+const fromEnd = createSorter((i: string) =>
   [...i.toLowerCase().replace(specialChars, '').trim()].reverse().join('')
 );
 
 // Lister creator
-const createLister = (sorter) => ({ seed, unit, reverse, noDuplicates }) => {
+const createLister = (sorter: CompareFn) => ({
+  seed,
+  unit,
+  reverse,
+  noDuplicates,
+}: ListerProps) => {
   let items = textToItems(seed, unit).sort(sorter);
   if (noDuplicates) {
     items = [...new Set(items)];
@@ -31,7 +46,12 @@ export const alphasortItems = createLister(fromStart);
 export const alphasortItemsFromEnd = createLister(fromEnd);
 
 // Sort by count is a bit different case so we'll do it separately
-export const countsortItems = ({ seed, unit, reverse, noDuplicates }) => {
+export const countsortItems = ({
+  seed,
+  unit,
+  reverse,
+  noDuplicates,
+}: ListerProps) => {
   const counts = countItems(seed, unit);
   const returnItems = noDuplicates
     ? counts.map((item) => item.key)
@@ -43,7 +63,12 @@ export const countsortItems = ({ seed, unit, reverse, noDuplicates }) => {
 };
 
 // Also, let's do shuffle with Fisher-Yates algorithm to get even distributions
-export const shuffleItems = ({ seed, unit, reverse, noDuplicates }) => {
+export const shuffleItems = ({
+  seed,
+  unit,
+  reverse,
+  noDuplicates,
+}: ListerProps) => {
   let items = textToItems(seed, unit);
   if (noDuplicates) {
     items = [...new Set(items)];
@@ -64,8 +89,13 @@ const semiSoftLetters = 'aou';
 const semiHarshLetters = 'bsyüäö';
 const harshLetters = 'dkprt';
 
-export const softnesssortItems = ({ seed, unit, reverse, noDuplicates }) => {
-  let items = textToItems(seed, unit);
+export const softnesssortItems = ({
+  seed,
+  unit,
+  reverse,
+  noDuplicates,
+}: ListerProps) => {
+  let items: string[] = textToItems(seed, unit);
   if (noDuplicates) {
     items = [...new Set(items)];
   }
@@ -88,10 +118,13 @@ export const softnesssortItems = ({ seed, unit, reverse, noDuplicates }) => {
         return soFar;
       }, 0);
       // give small handicap to shorter items
-      return [item, value / Math.log(Math.log(letters.length + 1) + 0.5)];
+      return {
+        key: item,
+        value: value / Math.log(Math.log(letters.length + 1) + 0.5),
+      };
     })
-    .sort((a, b) => b[1] - a[1])
-    .map((item) => item[0]);
+    .sort((a, b) => b.value - a.value)
+    .map((item) => item.key);
   if (reverse) {
     items.reverse();
   }
