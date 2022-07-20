@@ -31,6 +31,13 @@ const ToolTabs: React.FC<Props> = ({ activeTab, changeActiveTab }) => (
     </button>
     <button
       type="button"
+      className={activeTab === 'statistics' ? 'tab tab__active' : 'tab'}
+      onClick={() => changeActiveTab('statistics')}
+    >
+      Tilastoi
+    </button>
+    <button
+      type="button"
       className={
         activeTab === 'play' ? 'tab tab__right tab__active' : 'tab tab__right'
       }

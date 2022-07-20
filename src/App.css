@@ -226,7 +226,7 @@ input[type='text'] {
   right: 1rem;
 }
 .darkmode-switch .switch__toggle::before,
-.darkmode-switch  input:checked + .switch__toggle::before {
+.darkmode-switch input:checked + .switch__toggle::before {
   background: var(--col-disabled);
 }
 
@@ -234,17 +234,14 @@ input[type='text'] {
   content: '☀';
   font-size: 0.9rem;
   color: orange;
-  background:white;
+  background: white;
 }
-.darkmode-switch  input:checked + .switch__toggle::after {
+.darkmode-switch input:checked + .switch__toggle::after {
   content: '☾';
   color: yellow;
   background: var(--col-border-light);
 }
 
-.no-border {
-  border: none;
-}
 .button-wrapper {
   text-align: center;
 }
@@ -361,4 +358,39 @@ label:hover {
   75% {
     opacity: 1;
   }
+}
+
+.barchart {
+  display: flex;
+  gap: 8px;
+}
+.barchart--vertical {
+  align-items: flex-end;
+}
+.barchart--horizontal {
+  flex-direction: column;
+}
+.barchart__bar {
+  width: 32px;
+  border: 1px solid;
+  background: var(--col-accent);
+}
+
+.barchart--horizontal .barchart__bar{
+  height: 1.5em;
+}
+.barchart--horizontal .barchart__bar{
+  width: 32px;
+}
+
+/* Utils */
+.no-border {
+  border: none;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+.flex-row {
+  display: flex;
+  gap: 8px;
 }

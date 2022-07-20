@@ -8,7 +8,10 @@ export const createSorter = (preProcess) => (a, b) => {
 export const by = (key) => createSorter((i) => i[key]);
 
 // Regex for detecting non-space-or-alphanumeric characters
-export const specialChars = /[^ a-zA-ZáàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ0-9]/g;
+export const specialChars = /[^ a-záàâäãåßçéèêëíìîïñóòôöõúùûüýÿæœ0-9]/gi;
+
+// Regex for detecting non-letters
+export const nonLetters = /[^a-záàâäãåßçéèêëíìîïñóòôöõúùûüýÿæœ]/gi;
 
 // Regex for detecting sentence breaks
 // TMP: Crude workaround while waiting for
@@ -25,6 +28,13 @@ try {
 }
 
 export const sentenceBreaks = sentenceBreaks1;
+
+// voc / cons tools
+const vocals = 'aeiouyáàâäãåéèêëíìîïóòôöõúùûüýÿæœ'.split('');
+const consonants = 'bcdfghjklmnpqrstvwxzßçñ'.split('');
+export const isVocal = (letter) => vocals.includes(letter.toLowerCase());
+export const isConsonant = (letter) =>
+  consonants.includes(letter.toLowerCase());
 
 // Process input text into array of words
 const textToWords = (seed) =>
@@ -49,6 +59,14 @@ const textToSentences = (seed) =>
     .map((item) => item.trim())
     .filter((item) => item);
 
+// Process input text into array of characters
+const textToCharacters = (seed) =>
+  seed.replaceAll('\n', '⏎').replaceAll('\t', '⇒').split('');
+
+// Process input text into array of letters
+const textToLetters = (seed) =>
+  seed.toLowerCase().replace(nonLetters, '').split('');
+
 export const textToItems = (seed, unit) => {
   switch (unit) {
     case 'sentence':
@@ -56,6 +74,12 @@ export const textToItems = (seed, unit) => {
 
     case 'line':
       return textToLines(seed);
+
+    case 'char':
+      return textToCharacters(seed);
+
+    case 'letter':
+      return textToLetters(seed);
 
     case 'word':
     default:

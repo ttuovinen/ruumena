@@ -4,6 +4,7 @@ import RemoveTools from './RemoveTools';
 import PlayTools from './PlayTools';
 import GenerateTools from './GenerateTools';
 import { SetOutputFunction, TabOptions, UnitOptions } from '../types/types';
+import StatTools from './StatTools';
 
 const getToolComponent = (activeTab: TabOptions) => {
   switch (activeTab) {
@@ -11,6 +12,8 @@ const getToolComponent = (activeTab: TabOptions) => {
       return RemoveTools;
     case 'generate':
       return GenerateTools;
+    case 'statistics':
+      return StatTools;
     case 'play':
       return PlayTools;
     case 'sort':
@@ -31,7 +34,7 @@ const ActiveTools: React.FC<Props> = ({ activeTab, unit, setOutputWith }) => {
   return (
     <div className="tools">
       <Tool
-        key={activeTab === 'remove' ? unit : null} // reset remove tools on unit change
+        key={unit} // reset tools on unit change
         setOutputWith={setOutputWith}
         unit={unit}
       />

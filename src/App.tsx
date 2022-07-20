@@ -184,21 +184,23 @@ const App: React.FC = () => {
           <div className="output-area" aria-live="polite">
             {outputText}
           </div>
-          {outputText && outputText !== NO_INPUT && (
-            <div className="button-wrapper">
-              <button type="button" onClick={handleClipboardCopy}>
-                kopioi leikepöydälle
-              </button>
-              <button type="button" onClick={handlePutOutputToInput}>
-                kopioi lähdetekstiksi
-              </button>
-              {!!snack && (
-                <div className="snack" aria-live="assertive">
-                  {snack}
-                </div>
-              )}
-            </div>
-          )}
+          {!['statistics'].includes(activeTab) &&
+            outputText &&
+            outputText !== NO_INPUT && (
+              <div className="button-wrapper">
+                <button type="button" onClick={handleClipboardCopy}>
+                  kopioi leikepöydälle
+                </button>
+                <button type="button" onClick={handlePutOutputToInput}>
+                  kopioi lähdetekstiksi
+                </button>
+                {!!snack && (
+                  <div className="snack" aria-live="assertive">
+                    {snack}
+                  </div>
+                )}
+              </div>
+            )}
         </div>
       </main>
 
