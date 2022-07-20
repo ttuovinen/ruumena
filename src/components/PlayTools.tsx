@@ -38,8 +38,8 @@ const PlayTools: React.FC<Props> = ({ setOutputWith }) => {
   };
 
   return (
-    <>
-      <div className="button-wrapper">
+    <div className="flex-column">
+      <div className="flex-row justify-center">
         <button type="button" onClick={handleKontti}>
           kontinkieli
         </button>
@@ -50,14 +50,14 @@ const PlayTools: React.FC<Props> = ({ setOutputWith }) => {
           {'=)'}
         </button>
       </div>
-      <div className="button-wrapper">
+      <div className="flex-row justify-center">
         {'aeiouyäö'.split('').map((vowel) => (
           <button type="button" key={vowel} onClick={() => uniVowelize(vowel)}>
             {vowel}
           </button>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

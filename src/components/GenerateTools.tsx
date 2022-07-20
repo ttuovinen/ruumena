@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { SetOutputFunction } from '../types/types';
 import { markovMe } from '../utils/markov';
 
@@ -6,7 +6,7 @@ interface Props {
   setOutputWith: SetOutputFunction;
 }
 
-const GenerateTools: React.FC<Props> = ({ setOutputWith }) => {
+const GenerateTools = ({ setOutputWith }: Props) => {
   const [nSize, setNsize] = useState(5);
   const [outputSize, setOutputSize] = useState(500);
   const [beginning, setBeginning] = useState('');
@@ -16,8 +16,8 @@ const GenerateTools: React.FC<Props> = ({ setOutputWith }) => {
   };
 
   return (
-    <>
-      <div className="button-wrapper">
+    <div className="flex-column">
+      <div className="flex-row justify-center">
         Valikoi merkki aina
         <input
           type="range"
@@ -30,7 +30,7 @@ const GenerateTools: React.FC<Props> = ({ setOutputWith }) => {
         />
         {nSize}:n edellisen perusteella
       </div>
-      <div className="button-wrapper">
+      <div className="flex-row justify-center">
         Generoi enintään
         <input
           type="range"
@@ -43,7 +43,7 @@ const GenerateTools: React.FC<Props> = ({ setOutputWith }) => {
         />
         {outputSize} merkkiä
       </div>
-      <div className="button-wrapper">
+      <div className="flex-row justify-center">
         Aloita tällä
         <input
           type="text"
@@ -54,12 +54,12 @@ const GenerateTools: React.FC<Props> = ({ setOutputWith }) => {
           }}
         />
       </div>
-      <div className="button-wrapper">
+      <div className="flex-row justify-center">
         <button type="button" onClick={handleGenerate}>
           Luo teksti
         </button>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -13,7 +13,7 @@ interface Props {
   unit: UnitOptions;
 }
 
-const RemoveTools: React.FC<Props> = ({ setOutputWith, unit }) => {
+const RemoveTools = ({ setOutputWith, unit }: Props) => {
   const [removeN, setRemoveN] = useState(3);
   const [removeOffset, setRemoveOffset] = useState(3);
   const [removePercent, setRemovePercent] = useState(33);
@@ -62,82 +62,84 @@ const RemoveTools: React.FC<Props> = ({ setOutputWith, unit }) => {
 
   return (
     <>
-      <div className="button-wrapper">
-        <button type="button" onClick={handleRemoveRandom}>
-          Poista satunnaisesti
-        </button>
-        <input
-          type="range"
-          name="percent"
-          min="1"
-          max="99"
-          step="1"
-          value={removePercent}
-          onChange={(event) => setRemovePercent(Number(event.target.value))}
-        />
-        {removePercent}% {getUnitLabel('pluralElative', unit)}
-      </div>
-      <div className="button-wrapper">
-        <button type="button" onClick={handleRemoveConstant}>
-          Poista säännöllisesti
-        </button>
-        {' joka'}
-        <input
-          type="range"
-          name="step"
-          min="2"
-          max="20"
-          step="1"
-          value={removeN}
-          onChange={(event) => {
-            setRemoveN(Number(event.target.value));
-            setRemoveOffset(Number(event.target.value));
-          }}
-        />
-        {removeN}. {getUnitLabel('nominative', unit)} alkaen
-        <input
-          type="range"
-          name="offset"
-          min="1"
-          max="20"
-          step="1"
-          value={removeOffset}
-          onChange={(event) => setRemoveOffset(Number(event.target.value))}
-        />
-        {removeOffset}.
-      </div>
-      <div className="button-wrapper">
-        {`Poista ${getUnitLabel('pluralNominative', unit)}, jotka `}
-        <label htmlFor="include">
+      <div className="flex-column">
+        <div className="flex-row justify-center">
+          <button type="button" onClick={handleRemoveRandom}>
+            Poista satunnaisesti
+          </button>
           <input
-            type="radio"
-            id="include"
-            name="filterinclude"
-            value="include"
-            checked={filterType === 'include'}
-            onChange={(event) => setFilterType(event.target.value)}
+            type="range"
+            name="percent"
+            min="1"
+            max="99"
+            step="1"
+            value={removePercent}
+            onChange={(event) => setRemovePercent(Number(event.target.value))}
           />
-          {' sisältävät '}
-        </label>
-        <label htmlFor="exclude">
+          {removePercent}% {getUnitLabel('pluralElative', unit)}
+        </div>
+        <div className="flex-row justify-center">
+          <button type="button" onClick={handleRemoveConstant}>
+            Poista säännöllisesti
+          </button>
+          {' joka'}
           <input
-            type="radio"
-            id="exclude"
-            name="filterexclude"
-            value="exclude"
-            checked={filterType === 'exclude'}
-            onChange={(event) => setFilterType(event.target.value)}
+            type="range"
+            name="step"
+            min="2"
+            max="20"
+            step="1"
+            value={removeN}
+            onChange={(event) => {
+              setRemoveN(Number(event.target.value));
+              setRemoveOffset(Number(event.target.value));
+            }}
           />
-          {' eivät sisällä'}
-        </label>
-        <input
-          type="text"
-          name="filtertext"
-          value={filterText}
-          onChange={(event) => {
-            setFilterText(event.target.value);
-          }}
-        />
+          {removeN}. {getUnitLabel('nominative', unit)} alkaen
+          <input
+            type="range"
+            name="offset"
+            min="1"
+            max="20"
+            step="1"
+            value={removeOffset}
+            onChange={(event) => setRemoveOffset(Number(event.target.value))}
+          />
+          {removeOffset}.
+        </div>
+        <div className="flex-row justify-center">
+          {`Poista ${getUnitLabel('pluralNominative', unit)}, jotka `}
+          <label htmlFor="include">
+            <input
+              type="radio"
+              id="include"
+              name="filterinclude"
+              value="include"
+              checked={filterType === 'include'}
+              onChange={(event) => setFilterType(event.target.value)}
+            />
+            {' sisältävät '}
+          </label>
+          <label htmlFor="exclude">
+            <input
+              type="radio"
+              id="exclude"
+              name="filterexclude"
+              value="exclude"
+              checked={filterType === 'exclude'}
+              onChange={(event) => setFilterType(event.target.value)}
+            />
+            {' eivät sisällä'}
+          </label>
+          <input
+            type="text"
+            name="filtertext"
+            value={filterText}
+            onChange={(event) => {
+              setFilterText(event.target.value);
+            }}
+          />
+        </div>
       </div>
       <div className="options-wrapper">
         <Toggler

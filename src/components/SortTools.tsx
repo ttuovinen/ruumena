@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   lengthsortItems,
   alphasortItems,
@@ -39,7 +39,7 @@ interface Props {
   unit: UnitOptions;
 }
 
-const SortTools: React.FC<Props> = ({ setOutputWith, unit }) => {
+const SortTools = ({ setOutputWith, unit }: Props) => {
   const [action, setAction] = useState({ type: '', index: 0 });
   const [reverse, setReverse] = useState(false);
   const [noDuplicates, setNoDuplicates] = useState(false);
@@ -62,7 +62,7 @@ const SortTools: React.FC<Props> = ({ setOutputWith, unit }) => {
 
   return (
     <>
-      <div className="button-wrapper">
+      <div className="flex-row justify-center gap-16">
         {Object.entries(SORTERS).map(([key, { label }]) => (
           <button
             key={key}

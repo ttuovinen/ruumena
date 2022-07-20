@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { CountData } from '../utils/statistics';
 // import { mapToScale } from '../utils/metaUtils';
@@ -28,8 +27,18 @@ const HorizontalBarChart = ({ data }: Props) => {
   // const maxValue = Math.max(...Object.values(buckets));
   const maxValue = Math.max(...data.map((item) => item.count));
 
+  console.log(window.innerWidth / 3);
+
   const getSize = (value: number) =>
-    Math.ceil(mapToScale(value, 0, maxValue, 0, CHART_SIZE));
+    Math.ceil(
+      mapToScale(
+        value,
+        0,
+        maxValue,
+        0,
+        Math.min(CHART_SIZE, window.innerWidth * 0.4)
+      )
+    );
 
   // const barData = Object.entries(buckets)
   //   .sort((a, b) => Number(a[0]) - Number(b[0]))
@@ -44,10 +53,10 @@ const HorizontalBarChart = ({ data }: Props) => {
     <div>
       <div className="barchart barchart--horizontal">
         {barData.map(({ key, count, percent }) => (
-          <div className="flex-row">
-            <div className="uppercase">{key}</div>
+          <div key={key} className="flex-row">
+            <div className="barchart__key uppercase">{key}</div>
             <div className="barchart__bar" style={{ width: getSize(count) }} />
-            <div>
+            <div className="barchart__value">
               {count} ({percent}%)
             </div>
           </div>

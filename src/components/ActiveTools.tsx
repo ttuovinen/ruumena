@@ -1,4 +1,3 @@
-import React from 'react';
 import SortTools from './SortTools';
 import RemoveTools from './RemoveTools';
 import PlayTools from './PlayTools';
@@ -28,7 +27,7 @@ interface Props {
   setOutputWith: SetOutputFunction;
 }
 
-const ActiveTools: React.FC<Props> = ({ activeTab, unit, setOutputWith }) => {
+const ActiveTools = ({ activeTab, unit, setOutputWith }: Props) => {
   const Tool = getToolComponent(activeTab);
 
   return (

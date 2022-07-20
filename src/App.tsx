@@ -108,7 +108,7 @@ const App: React.FC = () => {
           </div>
         </header>
 
-        <div className="example-area" ref={exampleRef}>
+        <div className="example-area flex-row" ref={exampleRef}>
           <select
             id="example"
             className="example-select"
@@ -155,8 +155,8 @@ const App: React.FC = () => {
         <div className="output-area-wrapper">
           {/* Unit selector */}
           {['sort', 'remove'].includes(activeTab) && (
-            <div className="unit-selector-wrapper">
-              Jaa lähdeteksti&nbsp;
+            <div className="unit-selector-wrapper flex-row justify-center">
+              Jaa lähdeteksti
               <select
                 className="unit-select"
                 value={unit}
@@ -168,7 +168,7 @@ const App: React.FC = () => {
                   </option>
                 ))}
               </select>
-              &nbsp;ja
+              ja
               {!!unitWarning && (
                 <div className="unit-warning">({unitWarning})</div>
               )}
@@ -187,7 +187,7 @@ const App: React.FC = () => {
           {!['statistics'].includes(activeTab) &&
             outputText &&
             outputText !== NO_INPUT && (
-              <div className="button-wrapper">
+              <div className="flex-row justify-center">
                 <button type="button" onClick={handleClipboardCopy}>
                   kopioi leikepöydälle
                 </button>

@@ -1,6 +1,4 @@
-import React from 'react';
-
-const Footer: React.FC = () => (
+const Footer = () => (
   <footer className="page-footer">
     <p>Teemu T. Tuovinen 2019-2022</p>
     <p>

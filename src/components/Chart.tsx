@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { CountData } from '../utils/statistics';
 // import { mapToScale } from '../utils/metaUtils';
