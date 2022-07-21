@@ -74,6 +74,9 @@ ul {
   display: inline-block;
   text-align: left;
 }
+li {
+  margin-left: 16px;
+}
 
 .main-content {
   max-width: 680px;
@@ -408,6 +411,7 @@ label:hover {
 
 .barchart__bar {
   background: var(--col-accent);
+  flex-shrink: 0;
 }
 
 .barchart--horizontal .barchart__bar {
@@ -418,12 +422,12 @@ label:hover {
 }
 
 .barchart__value {
-  width: 10em;
   flex-shrink: 0;
 }
 
 [data-tooltip] {
   position: relative;
+  color: var(--col-accent);
 }
 
 [data-tooltip]:before {
@@ -472,6 +476,9 @@ label:hover {
 }
 .justify-center {
   justify-content: center;
+}
+.nowrap {
+  flex-wrap: nowrap;
 }
 .gap-16 {
   gap: 16px;

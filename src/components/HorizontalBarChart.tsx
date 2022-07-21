@@ -17,7 +17,7 @@ const HorizontalBarChart = ({ data }: Props) => {
         0,
         maxValue,
         0,
-        Math.min(CHART_SIZE, window.innerWidth * 0.4)
+        Math.min(CHART_SIZE, window.innerWidth * 0.33)
       )
     );
 
@@ -25,7 +25,7 @@ const HorizontalBarChart = ({ data }: Props) => {
     <div>
       <div className="barchart barchart--horizontal">
         {data.map(({ key, count, percent, items }) => (
-          <div key={key} className="flex-row">
+          <div key={key} className="flex-row nowrap">
             <div
               className="barchart__key uppercase"
               data-tooltip={items?.join(', ')}

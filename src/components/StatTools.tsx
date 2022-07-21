@@ -113,17 +113,15 @@ const StatTools = ({ setOutputWith }: Props) => {
         <div className="text-center">
           <h2 className="output-title">Sanat</h2>
           Yhteensä {words.length} sanaa, joista uniikkeja {uniqueWordsTotal}
-          <ul>
-            <li>sanojen keskipituus on {meanLength} kirjainta</li>
-            <li>kukin sana esiintyy keskimäärin {meanCount} kertaa</li>
-          </ul>
           <h3 className="output-subtitle">
             Sanat pituuden mukaan ryhmiteltynä
           </h3>
+          <p>keskipituus: {meanLength} kirjainta</p>
           <HorizontalBarChart data={lengthData} />
           <h3 className="output-subtitle">
             Sanat esiintymiskertojen mukaan ryhmiteltynä
           </h3>
+          <p>sanat esiintyvät keskimäärin {meanCount} kertaa</p>
           <HorizontalBarChart data={countData} />
         </div>
       );
