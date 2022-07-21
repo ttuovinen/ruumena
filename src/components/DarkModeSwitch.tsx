@@ -38,13 +38,15 @@ function DarkModeSwitch() {
   }, []);
 
   return (
-    <Toggler
-      className="darkmode-switch"
-      name="darkmode"
-      ariaLabel="vaihda väritila (vaalea/tumma)"
-      checked={isOn}
-      onChange={toggleDarkMode}
-    />
+    <header>
+      <Toggler
+        className="darkmode-switch"
+        name="darkmode"
+        ariaLabel="vaihda väritila (vaalea/tumma)"
+        checked={isOn}
+        onChange={toggleDarkMode}
+      />
+    </header>
   );
 }
 

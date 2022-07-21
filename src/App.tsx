@@ -113,6 +113,7 @@ const App: React.FC = () => {
             id="example"
             className="example-select"
             onChange={(event) => setSelectedExample(event.target.value)}
+            aria-label="valitse esimerkkiteksti"
           >
             {examples.map(({ title }, index) => (
               <option key={title} value={index}>
@@ -161,6 +162,7 @@ const App: React.FC = () => {
                 className="unit-select"
                 value={unit}
                 onChange={(event) => setUnit(event.target.value as UnitOptions)}
+                aria-label="valitse yksikkö"
               >
                 {UNITS.map(({ key, pluralIllative: label }) => (
                   <option key={key} value={key}>
