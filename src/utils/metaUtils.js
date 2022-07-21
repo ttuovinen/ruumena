@@ -29,7 +29,7 @@ try {
 
 export const sentenceBreaks = sentenceBreaks1;
 
-// voc / cons tools
+// Vocal/consonsonant tools
 const vocals = 'aeiouyáàâäãåéèêëíìîïóòôöõúùûüýÿæœ'.split('');
 const consonants = 'bcdfghjklmnpqrstvwxzßçñ'.split('');
 export const isVocal = (letter) => vocals.includes(letter.toLowerCase());
@@ -86,3 +86,7 @@ export const textToItems = (seed, unit) => {
       return textToWords(seed);
   }
 };
+
+/* general math helpers */
+export const mapToScale = (num, inMin, inMax, outMin, outMax) =>
+  ((num - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;

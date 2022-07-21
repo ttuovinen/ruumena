@@ -391,7 +391,7 @@ label:hover {
 .barchart {
   display: flex;
   gap: 8px;
-  margin: 32px auto;
+  margin: 32px auto 64px;
 }
 .barchart--vertical {
   align-items: flex-end;
@@ -420,6 +420,34 @@ label:hover {
 .barchart__value {
   width: 10em;
   flex-shrink: 0;
+}
+
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]:before {
+  position: absolute;
+  content: attr(data-tooltip);
+  border-left: 40px solid transparent;
+  opacity: 0;
+  display: none;
+  text-transform: none;
+  background: var(--col-primary-dark);
+  background-clip: padding-box;
+  color: var(--col-bg);
+  padding: 10px;
+  max-height: 9rem;
+  width: min(400px, 80vw);
+  overflow-y: auto;
+  text-align: left;
+  font-size: 0.9rem;
+  transition: opacity 0.3s ease-in;
+}
+
+[data-tooltip]:hover:before {
+  opacity: 1;
+  display: block;
 }
 
 /* Utils */

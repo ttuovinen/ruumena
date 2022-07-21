@@ -5,6 +5,7 @@ export interface CountDataItem {
   key: string;
   count: number;
   percent: number;
+  items?: string[];
 }
 
 export type CountData = CountDataItem[];
