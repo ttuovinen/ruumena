@@ -1,4 +1,4 @@
-import { isVocal, textToItems } from '../utils/metaUtils';
+import { isVowel, textToItems } from '../utils/metaUtils';
 import { countItems, percentFrom } from '../utils/statistics';
 import { SetOutputFunction, UnitOptions } from '../types/types';
 import HorizontalBarChart from './HorizontalBarChart';
@@ -30,10 +30,10 @@ const StatTools = ({ setOutputWith }: Props) => {
     setOutputWith((seed: string) => {
       const counts = countItems(seed.toLowerCase(), 'letter');
       const totalCount = counts.reduce((soFar, cur) => soFar + cur.count, 0);
-      const vocalCount = counts
-        .filter((item) => isVocal(item.key))
+      const vowelCount = counts
+        .filter((item) => isVowel(item.key))
         .reduce((soFar, cur) => soFar + cur.count, 0);
-      const consonantCount = totalCount - vocalCount;
+      const consonantCount = totalCount - vowelCount;
 
       const buckets: Record<string, number> = {};
       counts.forEach(({ count }) => {
@@ -46,7 +46,7 @@ const StatTools = ({ setOutputWith }: Props) => {
           <p>Yhteensä {totalCount} kirjainta, joista </p>
           <ul>
             <li>
-              vokaaleita {vocalCount} ({percentFrom(vocalCount, totalCount)}%)
+              vokaaleita {vowelCount} ({percentFrom(vowelCount, totalCount)}%)
             </li>
             <li>
               konsonantteja {consonantCount} (

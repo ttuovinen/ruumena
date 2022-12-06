@@ -1,5 +1,12 @@
 import { countItems } from './statistics';
-import { createSorter, specialChars, textToItems } from './metaUtils';
+import {
+  createSorter,
+  isConsonant,
+  isVowel,
+  nonLetters,
+  specialChars,
+  textToItems,
+} from './metaUtils';
 import { UnitOptions } from '../types/types';
 
 type CompareFn = (a: string, b: string) => number | boolean;
@@ -22,28 +29,65 @@ const fromStart = createSorter((i: string) =>
 const fromEnd = createSorter((i: string) =>
   [...i.toLowerCase().replace(specialChars, '').trim()].reverse().join('')
 );
+const vowelFromStart = createSorter((i: string) =>
+  i
+    .toLowerCase()
+    .replace(/[^aeiouyäö]/g, '')
+    .replace(specialChars, '')
+    .trim()
+);
+const vowelFromEnd = createSorter((i: string) =>
+  [
+    ...i
+      .toLowerCase()
+      .replace(/[^aeiouyäö]/g, '')
+      .replace(specialChars, '')
+      .trim(),
+  ]
+    .reverse()
+    .join('')
+);
+const consonantFromStart = createSorter((i: string) =>
+  i
+    .toLowerCase()
+    .replace(/[aeiouyäö]/g, '')
+    .replace(specialChars, '')
+    .trim()
+);
+const consonantFromEnd = createSorter((i: string) =>
+  [
+    ...i
+      .toLowerCase()
+      .replace(/[aeiouyäö]/g, '')
+      .replace(specialChars, '')
+      .trim(),
+  ]
+    .reverse()
+    .join('')
+);
 
 // Lister creator
-const createLister = (sorter: CompareFn) => ({
-  seed,
-  unit,
-  reverse,
-  noDuplicates,
-}: ListerProps) => {
-  let items = textToItems(seed, unit).sort(sorter);
-  if (noDuplicates) {
-    items = [...new Set(items)];
-  }
-  if (reverse) {
-    items.reverse();
-  }
-  return items.join(getJoiner(unit));
-};
+const createLister =
+  (sorter: CompareFn) =>
+  ({ seed, unit, reverse, noDuplicates }: ListerProps) => {
+    let items = textToItems(seed, unit).sort(sorter);
+    if (noDuplicates) {
+      items = [...new Set(items)];
+    }
+    if (reverse) {
+      items.reverse();
+    }
+    return items.join(getJoiner(unit));
+  };
 
 // Create a bunch of listers with our sorters
 export const lengthsortItems = createLister(byLength);
 export const alphasortItems = createLister(fromStart);
 export const alphasortItemsFromEnd = createLister(fromEnd);
+export const alphasortItemsVowel = createLister(vowelFromStart);
+export const alphasortItemsVowelFromEnd = createLister(vowelFromEnd);
+export const alphasortItemsConsonant = createLister(consonantFromStart);
+export const alphasortItemsConsonantlFromEnd = createLister(consonantFromEnd);
 
 // Sort by count is a bit different case so we'll do it separately
 export const countsortItems = ({
@@ -125,6 +169,69 @@ export const softnesssortItems = ({
     })
     .sort((a, b) => b.value - a.value)
     .map((item) => item.key);
+  if (reverse) {
+    items.reverse();
+  }
+  return items.join(getJoiner(unit));
+};
+
+// Sort by variation frequence between vowels and consonants
+// eg. "Kalevala" has high variation and "Elias Lönnrot" has quite low
+export const soundClassVariationSortItems = ({
+  seed,
+  unit,
+  reverse,
+  noDuplicates,
+}: ListerProps) => {
+  let items: string[] = textToItems(seed, unit);
+  if (noDuplicates) {
+    items = [...new Set(items)];
+  }
+  items = items
+    .map((item): [x: string, y: number] => {
+      const letters = item
+        .replace(nonLetters, '')
+        .split('')
+        .map((letter) => (isVowel(letter) ? 1 : 0));
+      let score = 0;
+      let previous = -1;
+      for (const letter of letters) {
+        if (letter === previous) {
+          score += 1;
+        }
+        previous = letter;
+      }
+      return [item, score / item.length];
+    })
+    .sort((a, b) => a[1] - b[1])
+    .map((item) => item[0]);
+
+  if (reverse) {
+    items.reverse();
+  }
+  return items.join(getJoiner(unit));
+};
+
+// Sort by vowel/consonant-ratio
+export const vowelDensitySortItems = ({
+  seed,
+  unit,
+  reverse,
+  noDuplicates,
+}: ListerProps) => {
+  let items: string[] = textToItems(seed, unit);
+  if (noDuplicates) {
+    items = [...new Set(items)];
+  }
+  items = items
+    .map((item): [x: string, y: number] => {
+      const vowelCount = item.split('').filter(isVowel).length;
+      const consonantCount = item.split('').filter(isConsonant).length;
+      return [item, vowelCount / consonantCount];
+    })
+    .sort((a, b) => a[1] - b[1])
+    .map((item) => item[0]);
+
   if (reverse) {
     items.reverse();
   }

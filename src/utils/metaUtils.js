@@ -29,10 +29,10 @@ try {
 
 export const sentenceBreaks = sentenceBreaks1;
 
-// Vocal/consonsonant tools
-const vocals = 'aeiouyáàâäãåéèêëíìîïóòôöõúùûüýÿæœ'.split('');
-const consonants = 'bcdfghjklmnpqrstvwxzßçñ'.split('');
-export const isVocal = (letter) => vocals.includes(letter.toLowerCase());
+// Vowel/consonsonant tools
+const vowels = 'aeiouyáàâäãåéèêëíìîïóòôöõúùûüýÿæœ';
+const consonants = 'bcdfghjklmnpqrstvwxzßçñ';
+export const isVowel = (letter) => vowels.includes(letter.toLowerCase());
 export const isConsonant = (letter) =>
   consonants.includes(letter.toLowerCase());
 
