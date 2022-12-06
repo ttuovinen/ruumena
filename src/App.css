@@ -40,6 +40,7 @@ body {
   --col-disabled: #bdbdbd;
   --col-border: hsl(70, 10%, 40%);
   --col-border-light: hsl(70, 10%, 80%);
+  --col-warning: hsl(0, 77%, 39%);
   background: var(--col-bg);
   color: var(--col-text);
   accent-color: var(--col-accent);
@@ -57,6 +58,7 @@ body.dark {
   --col-border: hsl(70deg 5% 45%);
   --col-border-light: hsl(70, 5%, 30%);
   --col-disabled: #656565;
+  --col-warning:hsl(0deg 100% 76%);
   accent-color: var(--col-accent);
 }
 
@@ -323,7 +325,7 @@ input[type='text'] {
 }
 .unit-warning {
   font-style: italic;
-  color: hsl(0, 77%, 39%);
+  color: var(--col-warning);
 }
 .checkbox-label {
   display: flex;

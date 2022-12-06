@@ -14,7 +14,7 @@ import { NO_INPUT, UNITS } from './constants';
 import examples from './examples';
 import { SetOutputFunction, TabOptions, UnitOptions } from './types/types';
 
-const App: React.FC = () => {
+const App = () => {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState<string | React.ReactNode>('');
   const [selectedExample, setSelectedExample] = useState('0');
@@ -54,12 +54,18 @@ const App: React.FC = () => {
     setOutputText('');
   };
 
+  const changeUnit = (newUnit: UnitOptions) => {
+    setUnit(newUnit);
+    setOutputText('');
+  };
+
   const insertExampleText = () => {
     setInputText(
       selectedExample === 'output'
         ? (outputText as string)
         : examples[+selectedExample].content
     );
+    setOutputText('');
     if (exampleRef?.current) {
       window.scrollTo({
         top: exampleRef.current.offsetTop - 20,
@@ -156,23 +162,27 @@ const App: React.FC = () => {
         <div className="output-area-wrapper">
           {/* Unit selector */}
           {['sort', 'remove'].includes(activeTab) && (
-            <div className="unit-selector-wrapper flex-row justify-center">
-              Jaa lähdeteksti
-              <select
-                className="unit-select"
-                value={unit}
-                onChange={(event) => setUnit(event.target.value as UnitOptions)}
-                aria-label="valitse yksikkö"
-              >
-                {UNITS.map(({ key, pluralIllative: label }) => (
-                  <option key={key} value={key}>
-                    {label}
-                  </option>
-                ))}
-              </select>
-              ja
+            <div className="unit-selector-wrapper">
+              <div className=" flex-row justify-center">
+                Jaa lähdeteksti
+                <select
+                  className="unit-select"
+                  value={unit}
+                  onChange={(event) =>
+                    changeUnit(event.target.value as UnitOptions)
+                  }
+                  aria-label="valitse yksikkö"
+                >
+                  {UNITS.map(({ key, pluralIllative: label }) => (
+                    <option key={key} value={key}>
+                      {label}
+                    </option>
+                  ))}
+                </select>
+                ja
+              </div>
               {!!unitWarning && (
-                <div className="unit-warning">({unitWarning})</div>
+                <div className="unit-warning text-center">({unitWarning})</div>
               )}
             </div>
           )}
