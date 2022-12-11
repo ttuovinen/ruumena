@@ -22,6 +22,9 @@ export const nonLetters = /[^a-záàâäãåßçéèêëíìîïñóòôöõúù
 // Regex for detecting sentence breaks
 // TMP: Crude workaround while waiting for
 // Safari to implement regex lookbehind
+let regexLookbehindSupported = true;
+export const isLookbehindSupported = () => regexLookbehindSupported;
+
 let sentenceBreaks1;
 try {
   sentenceBreaks1 = new RegExp(
@@ -29,6 +32,7 @@ try {
     'g'
   );
 } catch (err) {
+  regexLookbehindSupported = false;
   console.warn(
     'This browser does not support regex lookbehind. Using sub-par fallback for sentence breaks.'
   );

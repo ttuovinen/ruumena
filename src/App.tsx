@@ -13,6 +13,7 @@ import ToolTabs from './components/ToolTabs';
 import { NO_INPUT, UNITS } from './constants';
 import examples from './examples';
 import { SetOutputFunction, TabOptions, Unit } from './types/types';
+import { isLookbehindSupported } from './utils/metaUtils';
 
 const App = () => {
   const [inputText, setInputText] = useState('');
@@ -45,6 +46,9 @@ const App = () => {
     }
     if (linebreakRatio < 0.012 && unit === Unit.line) {
       return 'toimii parhaiten runomuotoisen tekstin kanssa';
+    }
+    if (unit === Unit.sentence && !isLookbehindSupported()) {
+      return 'lauseisiin jakaminen ei täysin toimi tässä selaimessa';
     }
     return null;
   }, [inputText, unit]);
