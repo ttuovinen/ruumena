@@ -5,8 +5,17 @@ import {
   removeFilteredItems,
 } from '../utils/removers';
 import { getUnitLabel } from '../constants';
-import { SetOutputFunction, Unit } from '../types/types';
+import { FilterType, SetOutputFunction, Unit } from '../types/types';
 import Toggler from './Toggler';
+
+const FILTER_TYPES = [
+  { key: FilterType.includes, label: 'sisältävät' },
+  { key: FilterType.excludes, label: 'eivät sisällä' },
+  { key: FilterType.startsWith, label: 'alkavat' },
+  { key: FilterType.notStartsWith, label: 'eivät ala' },
+  { key: FilterType.endsWith, label: 'päättyvät' },
+  { key: FilterType.notEndsWith, label: 'eivät pääty' },
+];
 
 interface Props {
   setOutputWith: SetOutputFunction;
@@ -18,7 +27,7 @@ const RemoveTools = ({ setOutputWith, unit }: Props) => {
   const [removeOffset, setRemoveOffset] = useState(3);
   const [removePercent, setRemovePercent] = useState(33);
   const [replace, setReplace] = useState(true);
-  const [filterType, setFilterType] = useState('include');
+  const [filterType, setFilterType] = useState(FilterType.includes);
   const [filterText, setFilterText] = useState('');
 
   useEffect(() => {
@@ -27,8 +36,8 @@ const RemoveTools = ({ setOutputWith, unit }: Props) => {
         removeFilteredItems({
           seed,
           unit,
+          filterType,
           filterText,
-          include: filterType === 'include',
           replaceWith: replace ? '_' : '',
         })
       );
@@ -109,28 +118,19 @@ const RemoveTools = ({ setOutputWith, unit }: Props) => {
         </div>
         <div className="flex-row justify-center">
           {`Poista ${getUnitLabel('pluralNominative', unit)}, jotka `}
-          <label htmlFor="include">
-            <input
-              type="radio"
-              id="include"
-              name="filterinclude"
-              value="include"
-              checked={filterType === 'include'}
-              onChange={(event) => setFilterType(event.target.value)}
-            />
-            {' sisältävät '}
-          </label>
-          <label htmlFor="exclude">
-            <input
-              type="radio"
-              id="exclude"
-              name="filterexclude"
-              value="exclude"
-              checked={filterType === 'exclude'}
-              onChange={(event) => setFilterType(event.target.value)}
-            />
-            {' eivät sisällä'}
-          </label>
+          <select
+            value={filterType}
+            onChange={(event) =>
+              setFilterType(event.target.value as FilterType)
+            }
+            aria-label="valitse poistamisehto"
+          >
+            {FILTER_TYPES.map(({ key, label }) => (
+              <option key={key} value={key}>
+                {label}
+              </option>
+            ))}
+          </select>
           <input
             type="text"
             name="filtertext"
@@ -138,6 +138,7 @@ const RemoveTools = ({ setOutputWith, unit }: Props) => {
             onChange={(event) => {
               setFilterText(event.target.value);
             }}
+            aria-label="kirjoita ehdolle merkkijono"
           />
         </div>
       </div>

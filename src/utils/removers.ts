@@ -1,5 +1,5 @@
-import { Unit } from '../types/types';
-import { sentenceBreaks } from './metaUtils';
+import { FilterType, Unit } from '../types/types';
+import { sentenceBreaks, specialChars } from './metaUtils';
 
 type BaseRemoveArgs = {
   unit: Unit;
@@ -17,8 +17,8 @@ type RemoveRandomArgs = {
 };
 type RemoveFilteredArgs = {
   seed: string;
+  filterType: FilterType;
   filterText: string;
-  include: boolean;
   replaceWith?: string;
 };
 
@@ -145,11 +145,31 @@ const removeRandomSentences = ({
     .join(' ');
 
 // From 'seed' input string, removes item / replaces each item's
-// characters with ____'s if it includes/exludes filterText
+// characters with ____'s if it matches condition and filterText
+interface FilterFunctionArgs {
+  item: string;
+  filters: string[];
+}
+
+const filterFunctions = {
+  [FilterType.includes]: ({ item, filters }: FilterFunctionArgs) =>
+    !filters.some((filter) => item.toLowerCase().includes(filter)),
+  [FilterType.excludes]: ({ item, filters }: FilterFunctionArgs) =>
+    filters.some((filter) => item.toLowerCase().includes(filter)),
+  [FilterType.startsWith]: ({ item, filters }: FilterFunctionArgs) =>
+    !filters.some((filter) => item.toLowerCase().startsWith(filter)),
+  [FilterType.notStartsWith]: ({ item, filters }: FilterFunctionArgs) =>
+    filters.some((filter) => item.toLowerCase().startsWith(filter)),
+  [FilterType.endsWith]: ({ item, filters }: FilterFunctionArgs) =>
+    !filters.some((filter) => item.toLowerCase().endsWith(filter)),
+  [FilterType.notEndsWith]: ({ item, filters }: FilterFunctionArgs) =>
+    filters.some((filter) => item.toLowerCase().endsWith(filter)),
+};
+
 const removeFilteredWords = ({
   seed,
+  filterType,
   filterText,
-  include,
   replaceWith = '',
 }: RemoveFilteredArgs) => {
   const filters = filterText
@@ -160,14 +180,13 @@ const removeFilteredWords = ({
   return seed
     .replace(/\n/g, '\n ') // new word on line break
     .split(' ')
-    .map((word: string) =>
-      (
-        filters.some((string: any) => word.toLowerCase().includes(string))
-          ? !include
-          : include
-      )
-        ? word
-        : word.replace(/./g, replaceWith)
+    .map((item) =>
+      filterFunctions[filterType]({
+        filters,
+        item: item.replace(specialChars, ''),
+      })
+        ? item
+        : item.replace(/./g, replaceWith)
     )
     .filter((word: any) => word)
     .join(' ')
@@ -176,8 +195,8 @@ const removeFilteredWords = ({
 
 const removeFilteredLines = ({
   seed,
+  filterType,
   filterText,
-  include,
   replaceWith = '',
 }: RemoveFilteredArgs) => {
   const filters = filterText
@@ -187,12 +206,8 @@ const removeFilteredLines = ({
 
   return seed
     .split('\n')
-    .map((item: string) =>
-      (
-        filters.some((string: any) => item.toLowerCase().includes(string))
-          ? !include
-          : include
-      )
+    .map((item) =>
+      filterFunctions[filterType]({ filters, item })
         ? item
         : item.replace(/./g, replaceWith)
     )
@@ -202,8 +217,8 @@ const removeFilteredLines = ({
 
 const removeFilteredSentences = ({
   seed,
+  filterType,
   filterText,
-  include,
   replaceWith = '',
 }: RemoveFilteredArgs) => {
   const filters = filterText
@@ -213,12 +228,8 @@ const removeFilteredSentences = ({
 
   return seed
     .split(sentenceBreaks)
-    .map((item: string) =>
-      (
-        filters.some((string: any) => item.toLowerCase().includes(string))
-          ? !include
-          : include
-      )
+    .map((item) =>
+      filterFunctions[filterType]({ filters, item })
         ? item
         : item.replace(/./g, replaceWith)
     )

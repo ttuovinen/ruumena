@@ -5,6 +5,7 @@ export enum TabOptions {
   statistics = 'statistics',
   play = 'play',
 }
+
 export enum Unit {
   word = 'word',
   line = 'line',
@@ -30,6 +31,15 @@ export interface UnitVocabulary {
   pluralNominative: string;
   pluralElative: string;
   pluralIllative: string;
+}
+
+export enum FilterType {
+  includes = 'includes',
+  excludes = 'excludes',
+  startsWith = 'startsWith',
+  notStartsWith = 'notStartsWith',
+  endsWith = 'endsWith',
+  notEndsWith = 'notEndsWith',
 }
 
 export type SetOutputFunction = (
