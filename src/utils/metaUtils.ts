@@ -1,11 +1,17 @@
-// Function for creating sorter functions
-export const createSorter = (preProcess) => (a, b) => {
-  const [a2, b2] = [a, b].map((i) => preProcess(i));
-  return (a2 > b2) - (a2 < b2);
-};
+export const randomFrom = (options: any[]) =>
+  options[Math.floor(Math.random() * options.length)];
 
-// And while we're on it, let's create and export a handy general purpose sorter
-export const by = (key) => createSorter((i) => i[key]);
+// Function for creating sorter functions
+export const createSorter =
+  (preProcess: { (i: string): any }) => (a: any, b: any) => {
+    const [a2, b2] = [a, b].map((i) => preProcess(i));
+    return typeof a2 === 'string' && typeof b2 === 'string'
+      ? a2.localeCompare(b2, 'FI-fi')
+      : Number(a2) - Number(b2);
+  };
+
+// General purpose sorter
+export const by = (key: string) => createSorter((i: any) => i[key]);
 
 // Regex for detecting non-space-or-alphanumeric characters
 export const specialChars = /[^ a-záàâäãåßçéèêëíìîïñóòôöõúùûüýÿæœ0-9]/gi;
@@ -23,6 +29,9 @@ try {
     'g'
   );
 } catch (err) {
+  console.warn(
+    'This browser does not support regex lookbehind. Using sub-par fallback for sentence breaks.'
+  );
   // Sub-par fallback which removes periods ect. from sentence ends
   sentenceBreaks1 = /(?:[.?!…])\s+(?=[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ])/g;
 }
@@ -32,42 +41,43 @@ export const sentenceBreaks = sentenceBreaks1;
 // Vowel/consonsonant tools
 const vowels = 'aeiouyáàâäãåéèêëíìîïóòôöõúùûüýÿæœ';
 const consonants = 'bcdfghjklmnpqrstvwxzßçñ';
-export const isVowel = (letter) => vowels.includes(letter.toLowerCase());
-export const isConsonant = (letter) =>
+export const isVowel = (letter: string) =>
+  vowels.includes(letter.toLowerCase());
+export const isConsonant = (letter: string) =>
   consonants.includes(letter.toLowerCase());
 
 // Process input text into array of words
-const textToWords = (seed) =>
+const textToWords = (seed: string) =>
   seed
     .replace(/\s+/g, ' ')
     .replace(specialChars, '')
     .toLowerCase()
     .split(' ')
-    .filter((item) => item);
+    .filter(Boolean);
 
 // Process input text into array of lines
-const textToLines = (seed) =>
+const textToLines = (seed: string) =>
   seed
     .split('\n')
     .map((item) => item.trim())
-    .filter((item) => item);
+    .filter(Boolean);
 
 // Process input text into array of sentences
-const textToSentences = (seed) =>
+const textToSentences = (seed: string) =>
   seed
     .split(sentenceBreaks)
     .map((item) => item.trim())
-    .filter((item) => item);
+    .filter(Boolean);
 
 // Process input text into array of characters
-const textToCharacters = (seed) =>
+const textToCharacters = (seed: string) =>
   seed.replaceAll('\n', '⏎').replaceAll('\t', '⇒').split('');
 
 // Process input text into array of letters
-const textToLetters = (seed) =>
+const textToLetters = (seed: string) =>
   seed.toLowerCase().replace(nonLetters, '').split('');
 
-export const textToItems = (seed, unit) => {
+export const textToItems = (seed: string, unit: string) => {
   switch (unit) {
     case 'sentence':
       return textToSentences(seed);
@@ -88,5 +98,10 @@ export const textToItems = (seed, unit) => {
 };
 
 /* general math helpers */
-export const mapToScale = (num, inMin, inMax, outMin, outMax) =>
-  ((num - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
+export const mapToScale = (
+  num: number,
+  inMin: number,
+  inMax: number,
+  outMin: number,
+  outMax: number
+) => ((num - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;

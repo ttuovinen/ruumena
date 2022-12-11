@@ -12,14 +12,14 @@ import Footer from './components/Footer';
 import ToolTabs from './components/ToolTabs';
 import { NO_INPUT, UNITS } from './constants';
 import examples from './examples';
-import { SetOutputFunction, TabOptions, UnitOptions } from './types/types';
+import { SetOutputFunction, TabOptions, Unit } from './types/types';
 
 const App = () => {
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState<string | React.ReactNode>('');
   const [selectedExample, setSelectedExample] = useState('0');
-  const [activeTab, setActiveTab] = useState<TabOptions>('sort');
-  const [unit, setUnit] = useState<UnitOptions>('word');
+  const [activeTab, setActiveTab] = useState<TabOptions>(TabOptions.sort);
+  const [unit, setUnit] = useState<Unit>(Unit.word);
   const [snack, setSnack] = useState('');
 
   const exampleRef = useRef<HTMLDivElement>(null);
@@ -36,14 +36,14 @@ const App = () => {
 
   // Show warning if selected unit is not reasonable for input text
   const unitWarning = useMemo(() => {
-    if (!inputText || unit === 'word') {
+    if (!inputText || unit === Unit.word) {
       return null;
     }
     const linebreakRatio = inputText.split('\n').length / inputText.length;
-    if (linebreakRatio > 0.02 && unit === 'sentence') {
+    if (linebreakRatio > 0.02 && unit === Unit.sentence) {
       return 'toimii parhaiten kertovan/asiatekstin kanssa';
     }
-    if (linebreakRatio < 0.012 && unit === 'line') {
+    if (linebreakRatio < 0.012 && unit === Unit.line) {
       return 'toimii parhaiten runomuotoisen tekstin kanssa';
     }
     return null;
@@ -54,7 +54,7 @@ const App = () => {
     setOutputText('');
   };
 
-  const changeUnit = (newUnit: UnitOptions) => {
+  const changeUnit = (newUnit: Unit) => {
     setUnit(newUnit);
     setOutputText('');
   };
@@ -168,9 +168,7 @@ const App = () => {
                 <select
                   className="unit-select"
                   value={unit}
-                  onChange={(event) =>
-                    changeUnit(event.target.value as UnitOptions)
-                  }
+                  onChange={(event) => changeUnit(event.target.value as Unit)}
                   aria-label="valitse yksikkö"
                 >
                   {UNITS.map(({ key, pluralIllative: label }) => (

@@ -1,4 +1,4 @@
-import { ExtendedUnitOption } from '../types/types';
+import { ExtendedUnit } from '../types/types';
 import { by, textToItems } from './metaUtils';
 
 export interface CountDataItem {
@@ -15,10 +15,7 @@ export const percentFrom = (value: number, total: number): number =>
 
 // Count amount of each item in text and return them as
 // [{ item: 'a', count: 523, percent 16,23 }, {...}...]
-export const countItems = (
-  seed: string,
-  unit: ExtendedUnitOption
-): CountData => {
+export const countItems = (seed: string, unit: ExtendedUnit): CountData => {
   const buckets: Record<string, number> = {};
   const items = textToItems(seed, unit);
   items.forEach((item: string) => {

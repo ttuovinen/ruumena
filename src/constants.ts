@@ -1,22 +1,24 @@
+import { Unit, UnitVocabulary, UnitVocabularyVariant } from './types/types';
+
 export const NO_INPUT = 'ei lähdetekstiä';
 
-export const UNITS = [
+export const UNITS: UnitVocabulary[] = [
   {
-    key: 'word',
+    key: Unit.word,
     nominative: 'sana',
     pluralNominative: 'sanat',
     pluralElative: 'sanoista',
     pluralIllative: 'sanoihin',
   },
   {
-    key: 'line',
+    key: Unit.line,
     nominative: 'säe',
     pluralNominative: 'säkeet',
     pluralElative: 'säkeistä',
     pluralIllative: 'säkeisiin',
   },
   {
-    key: 'sentence',
+    key: Unit.sentence,
     nominative: 'lause',
     pluralNominative: 'lauseet',
     pluralElative: 'lauseista',
@@ -24,6 +26,5 @@ export const UNITS = [
   },
 ];
 
-export const getUnitLabel = (variant, unit) => {
-  return UNITS.find((item) => item.key === unit)?.[variant] || '???';
-};
+export const getUnitLabel = (variant: UnitVocabularyVariant, unit: Unit) =>
+  UNITS.find((item) => item.key === unit)?.[variant] ?? '???';

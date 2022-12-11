@@ -2,20 +2,20 @@ import SortTools from './SortTools';
 import RemoveTools from './RemoveTools';
 import PlayTools from './PlayTools';
 import GenerateTools from './GenerateTools';
-import { SetOutputFunction, TabOptions, UnitOptions } from '../types/types';
+import { SetOutputFunction, TabOptions, Unit } from '../types/types';
 import StatTools from './StatTools';
 
 const getToolComponent = (activeTab: TabOptions) => {
   switch (activeTab) {
-    case 'remove':
+    case TabOptions.remove:
       return RemoveTools;
-    case 'generate':
+    case TabOptions.generate:
       return GenerateTools;
-    case 'statistics':
+    case TabOptions.statistics:
       return StatTools;
-    case 'play':
+    case TabOptions.play:
       return PlayTools;
-    case 'sort':
+    case TabOptions.sort:
     default:
       return SortTools;
   }
@@ -23,7 +23,7 @@ const getToolComponent = (activeTab: TabOptions) => {
 
 interface Props {
   activeTab: TabOptions;
-  unit: UnitOptions;
+  unit: Unit;
   setOutputWith: SetOutputFunction;
 }
 

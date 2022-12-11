@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   removeConstantItems,
   removeRandomItems,
   removeFilteredItems,
 } from '../utils/removers';
 import { getUnitLabel } from '../constants';
-import { SetOutputFunction, UnitOptions } from '../types/types';
+import { SetOutputFunction, Unit } from '../types/types';
 import Toggler from './Toggler';
 
 interface Props {
   setOutputWith: SetOutputFunction;
-  unit: UnitOptions;
+  unit: Unit;
 }
 
 const RemoveTools = ({ setOutputWith, unit }: Props) => {

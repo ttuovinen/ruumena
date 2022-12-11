@@ -1,12 +1,14 @@
-const randomFrom = (arr) => arr[Math.floor(Math.random() * arr.length)];
+import { randomFrom } from './metaUtils';
 
-const isLowerCaseLetter = (char) =>
+type Chain = Record<string, string[]>;
+
+const isLowerCaseLetter = (char: string) =>
   char === char.toLowerCase() && char !== char.toUpperCase();
 
-const isUpperCaseLetter = (char) =>
+const isUpperCaseLetter = (char: string) =>
   char === char.toUpperCase() && char !== char.toLowerCase();
 
-const getSafeBeginning = (chain, nSize, beginning) => {
+const getSafeBeginning = (chain: Chain, nSize: number, beginning: string) => {
   const chainKeys = Object.keys(chain);
   // if no beginning given use random gram (which preferably starts with uppercase)
   if (!beginning)
@@ -30,9 +32,9 @@ const getSafeBeginning = (chain, nSize, beginning) => {
     if (options.length) return randomFrom(options);
   }
   if (beginning.length >= nSize) {
-    const beginGram = beginning.substr(-1 * nSize, nSize);
+    const beginGram = beginning.substring(-1 * nSize, nSize);
     // best case: beginGram in grams
-    if (chainKeys[beginGram]) return beginning;
+    if (chainKeys.includes(beginGram)) return beginning;
     // 2nd best case: beginning exists in grams in other cases
     const options = chainKeys.filter(
       (item) => item.toLowerCase() === beginGram.toLowerCase()
@@ -50,8 +52,8 @@ const getSafeBeginning = (chain, nSize, beginning) => {
   }`;
 };
 
-const buildChain = (seed, nSize) => {
-  const chain = {};
+const buildChain = (seed: string, nSize: number) => {
+  const chain: Chain = {};
   for (let i = 0; i <= seed.length - nSize; i += 1) {
     const gram = seed.substring(i, i + nSize);
     const next = seed.charAt(i + nSize);
@@ -61,7 +63,12 @@ const buildChain = (seed, nSize) => {
   return chain;
 };
 
-export const markovMe = (seed, nSize = 5, outputSize = 200, beginning) => {
+export const markovMe = (
+  seed: string,
+  nSize = 5,
+  outputSize = 200,
+  beginning: string
+) => {
   if (seed.length < nSize) return seed;
   const chain = buildChain(seed, nSize);
   let result = getSafeBeginning(chain, nSize, beginning);

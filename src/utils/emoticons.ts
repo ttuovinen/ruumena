@@ -1,15 +1,13 @@
+import { randomFrom } from './metaUtils';
+
 // Random retro-emoticons =o :P ;DD
-
-const randomFrom = (options) =>
-  options[Math.floor(Math.random() * options.length)];
-
 const emoEyes = [':', ':', ':', ';', '='];
 const emoMouths = [')', ')', ')', 'D', 'DD', '(', 'o', 'P', '|', '/'];
 
 export const randomEmoticon = () =>
   `${randomFrom(emoEyes)}${randomFrom(emoMouths)}`;
 
-export const emoticonize = (seed) => {
+export const emoticonize = (seed: string) => {
   let newText = seed;
   // replace between-sentences punctuations with random emoticons...
   while (newText.match(/[.!?] /)) {

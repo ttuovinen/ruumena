@@ -1,14 +1,37 @@
+import { Unit } from '../types/types';
 import { sentenceBreaks } from './metaUtils';
 
-// Mapping functions
-const removeRandomly = (removePercent, replaceWith) => (item) => {
-  if (item.replace(/\s/g, '').length === 0) {
-    return item;
-  }
-  return Math.random() < removePercent / 100
-    ? item.replace(/./g, replaceWith)
-    : item;
+type BaseRemoveArgs = {
+  unit: Unit;
 };
+type RemoveConstantArgs = {
+  seed: string;
+  removeN: number;
+  removeOffset: number;
+  replaceWith?: string;
+};
+type RemoveRandomArgs = {
+  seed: string;
+  removePercent: number;
+  replaceWith?: string;
+};
+type RemoveFilteredArgs = {
+  seed: string;
+  filterText: string;
+  include: boolean;
+  replaceWith?: string;
+};
+
+// Mapping functions
+const removeRandomly =
+  (removePercent: number, replaceWith: string) => (item: string) => {
+    if (item.replace(/\s/g, '').length === 0) {
+      return item;
+    }
+    return Math.random() < removePercent / 100
+      ? item.replace(/./g, replaceWith)
+      : item;
+  };
 
 // From 'seed' input string, replaces every
 // 'removeN':th item's  characters with ____'s
@@ -18,7 +41,7 @@ export const removeConstantWords = ({
   removeN,
   removeOffset,
   replaceWith = '_',
-}) => {
+}: RemoveConstantArgs) => {
   let curOffset = removeOffset;
   return seed
     .replace(/\n/g, '\n ') // new word on line break
@@ -33,7 +56,7 @@ export const removeConstantWords = ({
         ? word.replace(/./g, replaceWith)
         : word;
     })
-    .filter((word) => word)
+    .filter((word: any) => word)
     .join(' ')
     .replace(replaceWith ? /\n /g : /\n\s+/g, '\n'); // remove earlier added spaces (and multilinebreaks if no replace)
 };
@@ -43,7 +66,7 @@ export const removeConstantLines = ({
   removeN,
   removeOffset,
   replaceWith = '_',
-}) => {
+}: RemoveConstantArgs) => {
   let curOffset = removeOffset;
   return seed
     .split('\n')
@@ -57,7 +80,7 @@ export const removeConstantLines = ({
         ? item.replace(/./g, replaceWith)
         : item;
     })
-    .filter((item) => item)
+    .filter((item: any) => item)
     .join('\n');
 };
 
@@ -66,7 +89,7 @@ export const removeConstantSentences = ({
   removeN,
   removeOffset,
   replaceWith = '_',
-}) => {
+}: RemoveConstantArgs) => {
   let curOffset = removeOffset;
   return seed
     .split(sentenceBreaks)
@@ -80,33 +103,45 @@ export const removeConstantSentences = ({
         ? item.replace(/./g, replaceWith)
         : item;
     })
-    .filter((item) => item)
+    .filter((item: any) => item)
     .join(' ');
 };
 
 // From 'seed' input string, replaces each item's
 // characters with ____'s by 'removePercent' change %
-const removeRandomWords = ({ seed, removePercent, replaceWith = '_' }) =>
+const removeRandomWords = ({
+  seed,
+  removePercent,
+  replaceWith = '_',
+}: RemoveRandomArgs) =>
   seed
     .replace(/\n/g, '\n ') // new word on line break
     .split(' ')
     .map(removeRandomly(removePercent, replaceWith))
-    .filter((item) => item)
+    .filter((item: any) => item)
     .join(' ')
     .replace(replaceWith ? /\n /g : /\n\s+/g, '\n'); // remove earlier added spaces (and multilinebreaks if no replace)
 
-const removeRandomLines = ({ seed, removePercent, replaceWith = '_' }) =>
+const removeRandomLines = ({
+  seed,
+  removePercent,
+  replaceWith = '_',
+}: RemoveRandomArgs) =>
   seed
     .split('\n')
     .map(removeRandomly(removePercent, replaceWith))
-    .filter((item) => replaceWith || item)
+    .filter((item: any) => replaceWith || item)
     .join('\n');
 
-const removeRandomSentences = ({ seed, removePercent, replaceWith = '_' }) =>
+const removeRandomSentences = ({
+  seed,
+  removePercent,
+  replaceWith = '_',
+}: RemoveRandomArgs) =>
   seed
     .split(sentenceBreaks)
     .map(removeRandomly(removePercent, replaceWith))
-    .filter((item) => replaceWith || item)
+    .filter((item: any) => replaceWith || item)
     .join(' ');
 
 // From 'seed' input string, removes item / replaces each item's
@@ -116,25 +151,25 @@ const removeFilteredWords = ({
   filterText,
   include,
   replaceWith = '',
-}) => {
+}: RemoveFilteredArgs) => {
   const filters = filterText
     .toLowerCase()
     .split(' ')
-    .filter((item) => item);
+    .filter((item: any) => item);
 
   return seed
     .replace(/\n/g, '\n ') // new word on line break
     .split(' ')
-    .map((word) =>
+    .map((word: string) =>
       (
-        filters.some((string) => word.toLowerCase().includes(string))
+        filters.some((string: any) => word.toLowerCase().includes(string))
           ? !include
           : include
       )
         ? word
         : word.replace(/./g, replaceWith)
     )
-    .filter((word) => word)
+    .filter((word: any) => word)
     .join(' ')
     .replace(replaceWith ? /\n /g : /\n\s+/g, '\n'); // remove earlier added spaces (and multilinebreaks if no replace)
 };
@@ -144,24 +179,24 @@ const removeFilteredLines = ({
   filterText,
   include,
   replaceWith = '',
-}) => {
+}: RemoveFilteredArgs) => {
   const filters = filterText
     .toLowerCase()
     .split(' ')
-    .filter((item) => item);
+    .filter((item: any) => item);
 
   return seed
     .split('\n')
-    .map((item) =>
+    .map((item: string) =>
       (
-        filters.some((string) => item.toLowerCase().includes(string))
+        filters.some((string: any) => item.toLowerCase().includes(string))
           ? !include
           : include
       )
         ? item
         : item.replace(/./g, replaceWith)
     )
-    .filter((item) => item)
+    .filter((item: any) => item)
     .join('\n');
 };
 
@@ -170,28 +205,31 @@ const removeFilteredSentences = ({
   filterText,
   include,
   replaceWith = '',
-}) => {
+}: RemoveFilteredArgs) => {
   const filters = filterText
     .toLowerCase()
     .split(' ')
-    .filter((item) => item);
+    .filter((item: any) => item);
 
   return seed
     .split(sentenceBreaks)
-    .map((item) =>
+    .map((item: string) =>
       (
-        filters.some((string) => item.toLowerCase().includes(string))
+        filters.some((string: any) => item.toLowerCase().includes(string))
           ? !include
           : include
       )
         ? item
         : item.replace(/./g, replaceWith)
     )
-    .filter((item) => item)
+    .filter((item: any) => item)
     .join(' ');
 };
 
-export const removeConstantItems = ({ unit, ...props }) => {
+export const removeConstantItems = ({
+  unit,
+  ...props
+}: BaseRemoveArgs & RemoveConstantArgs) => {
   switch (unit) {
     case 'sentence':
       return removeConstantSentences(props);
@@ -205,7 +243,10 @@ export const removeConstantItems = ({ unit, ...props }) => {
   }
 };
 
-export const removeRandomItems = ({ unit, ...props }) => {
+export const removeRandomItems = ({
+  unit,
+  ...props
+}: BaseRemoveArgs & RemoveRandomArgs) => {
   switch (unit) {
     case 'sentence':
       return removeRandomSentences(props);
@@ -219,7 +260,10 @@ export const removeRandomItems = ({ unit, ...props }) => {
   }
 };
 
-export const removeFilteredItems = ({ unit, ...props }) => {
+export const removeFilteredItems = ({
+  unit,
+  ...props
+}: BaseRemoveArgs & RemoveFilteredArgs) => {
   switch (unit) {
     case 'sentence':
       return removeFilteredSentences(props);

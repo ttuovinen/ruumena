@@ -1,17 +1,17 @@
 import { isVowel, textToItems } from '../utils/metaUtils';
 import { countItems, percentFrom } from '../utils/statistics';
-import { SetOutputFunction, UnitOptions } from '../types/types';
+import { ExtraUnit, SetOutputFunction, Unit } from '../types/types';
 import HorizontalBarChart from './HorizontalBarChart';
 
 interface Props {
   setOutputWith: SetOutputFunction;
-  unit: UnitOptions;
+  unit: Unit;
 }
 
 const StatTools = ({ setOutputWith }: Props) => {
   const handleCharCount = () => {
     setOutputWith((seed: string) => {
-      const counts = countItems(seed.toLowerCase(), 'char').filter(
+      const counts = countItems(seed.toLowerCase(), ExtraUnit.char).filter(
         (item) => item.key
       );
       const totalCount = counts.reduce((soFar, cur) => soFar + cur.count, 0);
@@ -28,7 +28,7 @@ const StatTools = ({ setOutputWith }: Props) => {
 
   const handleLetterCount = () => {
     setOutputWith((seed: string) => {
-      const counts = countItems(seed.toLowerCase(), 'letter');
+      const counts = countItems(seed.toLowerCase(), ExtraUnit.letter);
       const totalCount = counts.reduce((soFar, cur) => soFar + cur.count, 0);
       const vowelCount = counts
         .filter((item) => isVowel(item.key))
@@ -62,9 +62,9 @@ const StatTools = ({ setOutputWith }: Props) => {
 
   const handleWordCount = () => {
     setOutputWith((seed: string) => {
-      const words = textToItems(seed, 'word');
+      const words = textToItems(seed, Unit.word);
       const uniqueWordsTotal = [...new Set(words)].length;
-      const counts = countItems(seed.toLowerCase(), 'word');
+      const counts = countItems(seed.toLowerCase(), Unit.word);
       const lenghtBuckets: Record<number, string[]> = {};
       words.forEach((word: string) => {
         lenghtBuckets[word.length] = [

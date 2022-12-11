@@ -7,13 +7,13 @@ import {
   specialChars,
   textToItems,
 } from './metaUtils';
-import { UnitOptions } from '../types/types';
+import { Unit } from '../types/types';
 
-type CompareFn = (a: string, b: string) => number | boolean;
+type CompareFn = (a: string, b: string) => number;
 
 interface ListerProps {
   seed: string;
-  unit: UnitOptions;
+  unit: Unit;
   reverse: boolean;
   noDuplicates: boolean;
 }
@@ -22,21 +22,21 @@ interface ListerProps {
 const getJoiner = (unit: string) => (unit === 'word' ? ' ' : '\n\n');
 
 // Sorter functions
-const byLength = createSorter((i: string) => i.length);
-const fromStart = createSorter((i: string) =>
+const byLength = createSorter((i) => i.length);
+const fromStart = createSorter((i) =>
   i.toLowerCase().replace(specialChars, '').trim()
 );
-const fromEnd = createSorter((i: string) =>
+const fromEnd = createSorter((i) =>
   [...i.toLowerCase().replace(specialChars, '').trim()].reverse().join('')
 );
-const vowelFromStart = createSorter((i: string) =>
+const vowelFromStart = createSorter((i) =>
   i
     .toLowerCase()
     .replace(/[^aeiouyäö]/g, '')
     .replace(specialChars, '')
     .trim()
 );
-const vowelFromEnd = createSorter((i: string) =>
+const vowelFromEnd = createSorter((i) =>
   [
     ...i
       .toLowerCase()
@@ -47,14 +47,14 @@ const vowelFromEnd = createSorter((i: string) =>
     .reverse()
     .join('')
 );
-const consonantFromStart = createSorter((i: string) =>
+const consonantFromStart = createSorter((i) =>
   i
     .toLowerCase()
     .replace(/[aeiouyäö]/g, '')
     .replace(specialChars, '')
     .trim()
 );
-const consonantFromEnd = createSorter((i: string) =>
+const consonantFromEnd = createSorter((i) =>
   [
     ...i
       .toLowerCase()

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getUnitLabel } from '../constants';
 import { useTools } from '../contexts/ToolContext';
-import { SetOutputFunction, UnitOptions } from '../types/types';
+import { SetOutputFunction, Unit } from '../types/types';
 import {
   alphasortItems,
   alphasortItemsConsonant,
@@ -73,7 +73,7 @@ const EXTRA_SORTERS: Sorter = {
 
 interface Props {
   setOutputWith: SetOutputFunction;
-  unit: UnitOptions;
+  unit: Unit;
 }
 
 const SortTools = ({ setOutputWith, unit }: Props) => {
