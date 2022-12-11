@@ -26,7 +26,7 @@ output {
   scroll-behavior: smooth;
 }
 body {
-  font-family: 'Helvetica neue', Arial, Helvetica, sans-serif;
+  font-family: var(--font-main);
   font-size: 18px;
   line-height: 1.8;
   --col-bg: hsl(250, 9%, 94%);
@@ -41,6 +41,9 @@ body {
   --col-border: hsl(70, 10%, 40%);
   --col-border-light: hsl(70, 10%, 80%);
   --col-warning: hsl(0, 77%, 39%);
+  --font-main: 'Helvetica neue', Arial, Helvetica, sans-serif;
+  --font-mono: 'Courier New', Courier, monospace;
+  font-family: var(--font-main);
   background: var(--col-bg);
   color: var(--col-text);
   accent-color: var(--col-accent);
@@ -82,7 +85,7 @@ li {
 
 .main-content {
   max-width: 680px;
-  padding: 0 20px;
+  padding: 0 16px;
   margin: 100px auto;
 }
 
@@ -104,7 +107,7 @@ li {
 }
 .subtitle {
   font-size: 1.1rem;
-  font-family: monospace;
+  font-family: var(--font-mono);
   margin: 0 auto;
   color: var(--col-primary);
 }
@@ -118,8 +121,7 @@ select {
   border: 1px solid var(--col-border);
 }
 .example-select {
-  width: 360px;
-  max-width: 100%;
+  width: 100%;
 }
 button {
   padding: 6px 10px;
@@ -209,7 +211,7 @@ input[type='text'] {
   box-shadow: 0 0 1px 1px #0003;
   content: '✓';
   color: var(--col-disabled);
-  font-family: Helvetica, Arial, sans-serif;
+  font-family: var(--font-main);
   text-align: center;
   line-height: 0;
   display: flex;
@@ -259,8 +261,23 @@ input[type='text'] {
   text-align: center;
 }
 .example-area {
-  margin-bottom: 8px;
+  margin-bottom: 16px;
+  gap: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
+.example-area button {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+@media screen and (min-width: 600px) {
+  .example-area {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+  }
+}
+
 .editor {
   display: block;
   background: var(--col-bg-contrast);
@@ -270,7 +287,7 @@ input[type='text'] {
   border-radius: 2px;
   margin: 0 auto 16px;
   box-sizing: border-box;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: var(--font-mono);
   font-size: 1rem;
   padding: 1rem;
   line-height: 1.8;
@@ -280,7 +297,7 @@ input[type='text'] {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 1.5rem 0;
+  margin: 24px 0;
   border-bottom: 1px solid var(--col-border-light);
   text-align: left;
 }
@@ -327,20 +344,16 @@ input[type='text'] {
   font-style: italic;
   color: var(--col-warning);
 }
-.checkbox-label {
-  display: flex;
-  align-items: center;
-}
 label:hover {
   cursor: pointer;
 }
 
 .output-area {
-  margin: 2rem 0;
+  margin: 24px 0;
   font-size: 1.1rem;
   word-wrap: break-word;
   white-space: pre-wrap;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: var(--font-mono);
 }
 .output-title {
   text-align: center;
@@ -358,7 +371,7 @@ label:hover {
 }
 .page-footer {
   text-align: center;
-  padding: 2rem;
+  padding: 24px;
   color: var(--color-primary-light);
   font-size: 0.9rem;
 }
@@ -372,13 +385,13 @@ label:hover {
 }
 .snack {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 16px;
+  right: 16px;
   border-radius: 3px;
-  padding: 5px 15px;
+  padding: 4px 16px;
   box-shadow: 1px 1px 3px #0003;
-  background: col(--col-primary);
-  color: white;
+  color: var(--col-bg);
+  background: var(--col-text);
   opacity: 0;
   animation: fade 2s linear;
 }

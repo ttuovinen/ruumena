@@ -114,11 +114,11 @@ const App = () => {
         <header className="title-area">
           <h1 className="maintitle">RUUMENA</h1>
           <div className="subtitle">
-            ~ työkalu menetelmällisiin tekstikokeiluihin ~
+            ~&nbsp;työkalu menetelmällisiin tekstikokeiluihin&nbsp;~
           </div>
         </header>
 
-        <div className="example-area flex-row" ref={exampleRef}>
+        <div className="example-area" ref={exampleRef}>
           <select
             id="example"
             className="example-select"
