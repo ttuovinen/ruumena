@@ -1,3 +1,14 @@
+export const isLowerCaseLetter = (char: string) =>
+  char === char.toLowerCase() && char !== char.toUpperCase();
+
+export const isUpperCaseLetter = (char: string) =>
+  char === char.toUpperCase() && char !== char.toLowerCase();
+
+export const capitalize = (input: string) => {
+  const [first, ...rest] = input.split('');
+  return [first.toUpperCase(), ...rest].join('');
+};
+
 export const randomFrom = (options: any[]) =>
   options[Math.floor(Math.random() * options.length)];
 
@@ -14,10 +25,10 @@ export const createSorter =
 export const by = (key: string) => createSorter((i: any) => i[key]);
 
 // Regex for detecting non-space-or-alphanumeric characters
-export const specialChars = /[^ a-záàâäãåßçéèêëíìîïñóòôöõúùûüýÿæœ0-9]/gi;
+export const specialChars = /[^ a-záàâäãåßçéèêëíìîïñóòôöõßúùûüýÿæœþ0-9]/gi;
 
 // Regex for detecting non-letters
-export const nonLetters = /[^a-záàâäãåßçéèêëíìîïñóòôöõúùûüýÿæœ]/gi;
+export const nonLetters = /[^a-záàâäãåßçéèêëíìîïñóòôöõßúùûüýÿæœþ]/gi;
 
 // Regex for detecting sentence breaks
 // TMP: Crude workaround while waiting for
@@ -28,7 +39,7 @@ export const isLookbehindSupported = () => regexLookbehindSupported;
 let sentenceBreaks1;
 try {
   sentenceBreaks1 = new RegExp(
-    `(?<=[.?!…])\\s+(?=[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ])`,
+    `(?<=[.?!…])\\s+(?=[A-ZÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒÞ])`,
     'g'
   );
 } catch (err) {

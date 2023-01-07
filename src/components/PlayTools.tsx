@@ -3,6 +3,7 @@ import React from 'react';
 import sananmuunnos from 'sananmuunnos';
 import { SetOutputFunction } from '../types/types';
 import { emoticonize } from '../utils/emoticons';
+import { grimmify, ungrimmify } from '../utils/grimm';
 
 interface Props {
   setOutputWith: SetOutputFunction;
@@ -37,6 +38,14 @@ const PlayTools: React.FC<Props> = ({ setOutputWith }) => {
     );
   };
 
+  const handleGrimmify = () => {
+    setOutputWith(grimmify);
+  };
+
+  const handleUngrimmify = () => {
+    setOutputWith(ungrimmify);
+  };
+
   return (
     <div className="flex-column">
       <div className="flex-row justify-center gap-16">
@@ -49,6 +58,10 @@ const PlayTools: React.FC<Props> = ({ setOutputWith }) => {
         <button type="button" onClick={handleEmoticonize}>
           {'=)'}
         </button>
+      </div>
+      <div className="flex-row justify-center gap-16">
+        <button onClick={handleGrimmify}>Pakota Grimmin laki</button>
+        <button onClick={handleUngrimmify}>Kumoa Grimmin laki</button>
       </div>
       <div className="flex-row justify-center gap-16">
         {'aeiouyäö'.split('').map((vowel) => (
