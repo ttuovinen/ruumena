@@ -56,7 +56,7 @@ export const removeConstantWords = ({
         ? word.replace(/./g, replaceWith)
         : word;
     })
-    .filter((word: any) => word)
+    .filter(Boolean)
     .join(' ')
     .replace(replaceWith ? /\n /g : /\n\s+/g, '\n'); // remove earlier added spaces (and multilinebreaks if no replace)
 };
@@ -80,7 +80,7 @@ export const removeConstantLines = ({
         ? item.replace(/./g, replaceWith)
         : item;
     })
-    .filter((item: any) => item)
+    .filter(Boolean)
     .join('\n');
 };
 
@@ -103,7 +103,7 @@ export const removeConstantSentences = ({
         ? item.replace(/./g, replaceWith)
         : item;
     })
-    .filter((item: any) => item)
+    .filter(Boolean)
     .join(' ');
 };
 
@@ -118,7 +118,7 @@ const removeRandomWords = ({
     .replace(/\n/g, '\n ') // new word on line break
     .split(' ')
     .map(removeRandomly(removePercent, replaceWith))
-    .filter((item: any) => item)
+    .filter(Boolean)
     .join(' ')
     .replace(replaceWith ? /\n /g : /\n\s+/g, '\n'); // remove earlier added spaces (and multilinebreaks if no replace)
 
@@ -130,7 +130,7 @@ const removeRandomLines = ({
   seed
     .split('\n')
     .map(removeRandomly(removePercent, replaceWith))
-    .filter((item: any) => replaceWith || item)
+    .filter((item) => replaceWith || item)
     .join('\n');
 
 const removeRandomSentences = ({
@@ -141,7 +141,7 @@ const removeRandomSentences = ({
   seed
     .split(sentenceBreaks)
     .map(removeRandomly(removePercent, replaceWith))
-    .filter((item: any) => replaceWith || item)
+    .filter((item) => replaceWith || item)
     .join(' ');
 
 // From 'seed' input string, removes item / replaces each item's
@@ -172,10 +172,7 @@ const removeFilteredWords = ({
   filterText,
   replaceWith = '',
 }: RemoveFilteredArgs) => {
-  const filters = filterText
-    .toLowerCase()
-    .split(' ')
-    .filter((item: any) => item);
+  const filters = filterText.toLowerCase().split(' ').filter(Boolean);
 
   return seed
     .replace(/\n/g, '\n ') // new word on line break
@@ -188,7 +185,7 @@ const removeFilteredWords = ({
         ? item
         : item.replace(/./g, replaceWith)
     )
-    .filter((word: any) => word)
+    .filter(Boolean)
     .join(' ')
     .replace(replaceWith ? /\n /g : /\n\s+/g, '\n'); // remove earlier added spaces (and multilinebreaks if no replace)
 };
@@ -199,10 +196,7 @@ const removeFilteredLines = ({
   filterText,
   replaceWith = '',
 }: RemoveFilteredArgs) => {
-  const filters = filterText
-    .toLowerCase()
-    .split(' ')
-    .filter((item: any) => item);
+  const filters = filterText.toLowerCase().split(' ').filter(Boolean);
 
   return seed
     .split('\n')
@@ -211,7 +205,7 @@ const removeFilteredLines = ({
         ? item
         : item.replace(/./g, replaceWith)
     )
-    .filter((item: any) => item)
+    .filter(Boolean)
     .join('\n');
 };
 
@@ -221,10 +215,7 @@ const removeFilteredSentences = ({
   filterText,
   replaceWith = '',
 }: RemoveFilteredArgs) => {
-  const filters = filterText
-    .toLowerCase()
-    .split(' ')
-    .filter((item: any) => item);
+  const filters = filterText.toLowerCase().split(' ').filter(Boolean);
 
   return seed
     .split(sentenceBreaks)
@@ -233,7 +224,7 @@ const removeFilteredSentences = ({
         ? item
         : item.replace(/./g, replaceWith)
     )
-    .filter((item: any) => item)
+    .filter(Boolean)
     .join(' ');
 };
 
