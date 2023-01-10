@@ -15,6 +15,7 @@ import {
   shuffleItems,
   softnesssortItems,
   vowelDensitySortItems,
+  keepOriginalOrder,
 } from '../utils/sorters';
 import Toggler from './Toggler';
 
@@ -69,6 +70,10 @@ const EXTRA_SORTERS: Sorter = {
     label: 'Järjestä vokaalitiheyden mukaan',
     sorterFunction: vowelDensitySortItems,
   },
+  original: {
+    label: 'Säilytä järjestys',
+    sorterFunction: keepOriginalOrder,
+  },
 };
 
 interface Props {
@@ -122,6 +127,8 @@ const SortTools = ({ setOutputWith, unit }: Props) => {
           {Object.entries(SORTERS).map(renderSorterButton)}
           {showExtraSorters &&
             Object.entries(EXTRA_SORTERS).map(renderSorterButton)}
+        </div>
+        <div className="flex-row justify-center full-width">
           <button
             type="button"
             className="no-border"

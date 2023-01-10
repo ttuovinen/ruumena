@@ -88,6 +88,7 @@ export const alphasortItemsVowel = createLister(vowelFromStart);
 export const alphasortItemsVowelFromEnd = createLister(vowelFromEnd);
 export const alphasortItemsConsonant = createLister(consonantFromStart);
 export const alphasortItemsConsonantlFromEnd = createLister(consonantFromEnd);
+export const keepOriginalOrder = createLister(() => 0);
 
 // Sort by count is a bit different case so we'll do it separately
 export const countsortItems = ({

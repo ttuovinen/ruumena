@@ -498,3 +498,6 @@ label:hover {
 .gap-16 {
   gap: 16px;
 }
+.full-width {
+  width: 100%;
+}
