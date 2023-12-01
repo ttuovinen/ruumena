@@ -10,10 +10,15 @@ import ActiveTools from './components/ActiveTools';
 import DarkModeSwitch from './components/DarkModeSwitch';
 import Footer from './components/Footer';
 import ToolTabs from './components/ToolTabs';
+import Dialog from './components/Dialog';
 import { NO_INPUT, UNITS } from './constants';
 import examples from './examples';
 import { SetOutputFunction, TabOptions, Unit } from './types/types';
 import { isLookbehindSupported } from './utils/metaUtils';
+import {
+  isProbablyGutenbergEbook,
+  removeProjectGutenbergHeaderAndFooter,
+} from './utils/inputUtils';
 
 const App = () => {
   const [inputText, setInputText] = useState('');
@@ -22,6 +27,7 @@ const App = () => {
   const [activeTab, setActiveTab] = useState<TabOptions>(TabOptions.sort);
   const [unit, setUnit] = useState<Unit>(Unit.word);
   const [snack, setSnack] = useState('');
+  const [isGutenbergDialogOpen, setIsGutenbergDialogOpen] = useState(false);
 
   const exampleRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
@@ -92,6 +98,17 @@ const App = () => {
     timeoutRef.current = id;
   };
 
+  const handleUpdateInput = (newInput: string) => {
+    setInputText(newInput);
+    if (isProbablyGutenbergEbook(newInput)) {
+      setIsGutenbergDialogOpen(true);
+    }
+  };
+
+  const handleRemoveGutenbergHeaderAndFooter = () => {
+    setInputText(removeProjectGutenbergHeaderAndFooter(inputText));
+  };
+
   const handleClipboardCopy = () => {
     navigator.clipboard.writeText(`${outputText}`);
     showSnack('kohdeteksti kopioitu leikepöydälle');
@@ -150,14 +167,41 @@ const App = () => {
             tyhjennä
           </button>
         </div>
-        <textarea
-          className="editor"
-          value={inputText}
-          spellCheck="false"
-          rows={12}
-          onChange={(event) => setInputText(event.target.value)}
-          placeholder="Liitä lähdeteksti tähän tai valitse esimerkkiteksti yltä. Käsittele sitä alta löytyvillä työkaluilla."
-        />
+        <div className="editor-wrapper">
+          <textarea
+            className="editor"
+            value={inputText}
+            spellCheck="false"
+            rows={12}
+            onChange={(event) => handleUpdateInput(event.target.value)}
+            placeholder="Liitä lähdeteksti tähän tai valitse esimerkkiteksti yltä. Käsittele sitä alta löytyvillä työkaluilla."
+          />
+          <Dialog className="editor-dialog" open={isGutenbergDialogOpen}>
+            <p className="editor-dialog-text">
+              Tämä vaikuttaa Project Gutenberg -teokselta. Poistetaanko yleiset
+              Gutenberg-tekstit alusta ja lopusta? (Ei koske teokseen kuuluvia
+              tekijätietoja tms.)
+            </p>
+            <div className="flex-row justify-center">
+              <button
+                onClick={() => {
+                  setIsGutenbergDialogOpen(false);
+                }}
+              >
+                ei
+              </button>
+              <button
+                className="invert"
+                onClick={() => {
+                  handleRemoveGutenbergHeaderAndFooter();
+                  setIsGutenbergDialogOpen(false);
+                }}
+              >
+                kyllä
+              </button>
+            </div>
+          </Dialog>
+        </div>
 
         <div className="tab-wrapper" ref={tabsRef}>
           <ToolTabs activeTab={activeTab} changeActiveTab={changeActiveTab} />

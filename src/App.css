@@ -146,6 +146,11 @@ button:disabled {
   border-color: #999;
   cursor: initial;
 }
+button.invert {
+  background: var(--col-primary);
+  color: var(--col-bg);
+  border: none;
+}
 
 input[type='checkbox'] {
   margin: 0 0.25rem 0 0.75rem;
@@ -278,6 +283,9 @@ input[type='text'] {
   }
 }
 
+.editor-wrapper {
+  position: relative;
+}
 .editor {
   display: block;
   background: var(--col-bg-contrast);
@@ -292,6 +300,19 @@ input[type='text'] {
   padding: 1rem;
   line-height: 1.8;
   word-wrap: break-word;
+}
+.editor-dialog {
+  border: 3px solid var(--col-border);
+  background-color: var(--col-bg);
+  color: var(--col-text);
+  font-size: 1rem;
+  padding: 16px;
+  bottom: 0;
+  width: 100%;
+}
+.editor-dialog-text {
+  text-align: center;
+  margin-bottom: 16px;
 }
 .tab-wrapper {
   display: flex;
