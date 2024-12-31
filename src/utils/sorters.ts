@@ -19,7 +19,17 @@ interface ListerProps {
 }
 
 // Helpers
-const getJoiner = (unit: string) => (unit === 'word' ? ' ' : '\n\n');
+const getJoiner = (unit: Unit) => {
+  switch (unit) {
+    case Unit.word:
+      return ' ';
+    case Unit.line:
+      return '\n';
+    case Unit.sentence:
+    default:
+      return '\n\n';
+  }
+};
 
 // Sorter functions
 const byLength = createSorter((i) => i.length);

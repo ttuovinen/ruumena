@@ -233,13 +233,13 @@ export const removeConstantItems = ({
   ...props
 }: BaseRemoveArgs & RemoveConstantArgs) => {
   switch (unit) {
-    case 'sentence':
+    case Unit.sentence:
       return removeConstantSentences(props);
 
-    case 'line':
+    case Unit.line:
       return removeConstantLines(props);
 
-    case 'word':
+    case Unit.word:
     default:
       return removeConstantWords(props);
   }
@@ -250,13 +250,13 @@ export const removeRandomItems = ({
   ...props
 }: BaseRemoveArgs & RemoveRandomArgs) => {
   switch (unit) {
-    case 'sentence':
+    case Unit.sentence:
       return removeRandomSentences(props);
 
-    case 'line':
+    case Unit.line:
       return removeRandomLines(props);
 
-    case 'word':
+    case Unit.word:
     default:
       return removeRandomWords(props);
   }
@@ -267,13 +267,13 @@ export const removeFilteredItems = ({
   ...props
 }: BaseRemoveArgs & RemoveFilteredArgs) => {
   switch (unit) {
-    case 'sentence':
+    case Unit.sentence:
       return removeFilteredSentences(props);
 
-    case 'line':
+    case Unit.line:
       return removeFilteredLines(props);
 
-    case 'word':
+    case Unit.word:
     default:
       return removeFilteredWords(props);
   }

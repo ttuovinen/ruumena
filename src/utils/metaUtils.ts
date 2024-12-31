@@ -92,8 +92,8 @@ const textToCharacters = (seed: string) =>
 const textToLetters = (seed: string) =>
   seed.toLowerCase().replace(nonLetters, '').split('');
 
-export const textToItems = (seed: string, unit: string) => {
-  switch (unit) {
+export const textToItems = (seed: string, extendedUnit: string) => {
+  switch (extendedUnit) {
     case 'sentence':
       return textToSentences(seed);
 

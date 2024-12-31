@@ -1,10 +1,11 @@
+import { Unit } from '../types/types';
 import { textToItems } from './metaUtils';
 
 describe('Text to words', () =>
   it('splits text to words correctly', () => {
     const text = textToItems(
       'Päivä oli jo niin matalalla kuin ennen muinoin Turussa.',
-      'word'
+      Unit.word
     );
     expect(text).toEqual([
       'päivä',
